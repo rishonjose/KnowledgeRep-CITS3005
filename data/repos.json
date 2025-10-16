@@ -1,0 +1,20 @@
+[
+  {
+    "repo_id": 79648391,
+    "repo_name": "codersforcauses/guild-volunteering",
+    "repo_description": "CodersForCauses project for Guild Volunteering UWA - An alternative to physical logbooks",
+    "repo_language": "JavaScript",
+    "repo_stars": 0,
+    "repo_forks": 0,
+    "repo_url": "https://github.com/codersforcauses/guild-volunteering"
+  },
+  {
+    "repo_id": 1050347935,
+    "repo_name": "cmdr2/github-actions-wizard",
+    "repo_description": "A simple wizard for generating GitHub Actions workflows for common deployment tasks",
+    "repo_language": "Python",
+    "repo_stars": 0,
+    "repo_forks": 0,
+    "repo_url": "https://github.com/cmdr2/github-actions-wizard"
+  }
+]
