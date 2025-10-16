@@ -110,12 +110,21 @@ def authors():
 def sparql():
     results = []
     query = ""
+    error = None
+
     if request.method == "POST":
-        query = request.form["query"]
-        g = Graph()
-        g.parse("ontology/git-onto-logic.owl")
-        results = [row for row in g.query(query)]
-    return render_template("sparql.html", query=query, results=results)
+        query = request.form["query"].strip()
+        if query:
+            try:
+                g = Graph()
+                g.parse("ontology/git-onto-logic.owl")
+                results = [row for row in g.query(query)]
+            except Exception as e:
+                error = f"SPARQL error: {e.__class__.__name__} – {str(e)}"
+        else:
+            error = "Query cannot be empty."
+
+    return render_template("sparql.html", query=query, results=results, error=error)
 
 @bp.route("/validate")
 def validate():
