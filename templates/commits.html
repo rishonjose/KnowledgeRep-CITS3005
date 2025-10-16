@@ -1,11 +1,11 @@
 {% extends "base.html" %}
 {% block content %}
-  <h2 class="mb-3">Commits in {{ branch }}</h2>
+  <h2>Commits in {{ branch }}</h2>
   {% if commits %}
     <div class="list-group">
       {% for c in commits %}
         <div class="list-group-item">
-          <h6 class="mb-1">{{ c.message }}</h6>
+          <h6>{{ c.message }}</h6>
           <small>Author: {{ c.author }}</small>
           {% if c.label %}
             <span class="badge bg-info ms-2">{{ c.label }}</span>
@@ -16,5 +16,9 @@
   {% else %}
     <p>No commits found for this branch.</p>
   {% endif %}
-  <a href="/repositories" class="btn btn-link mt-3">← Back</a>
+  {% if repo %}
+    <a href="{{ url_for('routes.view_repository', name=repo) }}" class="btn btn-secondary mt-3">← Back to {{ repo }}</a>
+  {% else %}
+    <a href="{{ url_for('routes.repositories') }}" class="btn btn-secondary mt-3">← Back</a>
+  {% endif %}
 {% endblock %}

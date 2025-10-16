@@ -89,13 +89,17 @@ def view_repository(name):
 @bp.route("/commits/<branch>")
 def commits(branch):
     commits = []
+    repo_name = None
     for c in onto.Commit.instances():
         if hasattr(c, "onBranch") and c.onBranch and c.onBranch[0].hasName[0].lower() == branch.lower():
+            b = c.onBranch[0]
+            if hasattr(b, "belongsTo") and b.belongsTo:
+                repo_name = b.belongsTo[0].hasName[0]
             msg = c.message[0] if hasattr(c, "message") else "(no message)"
             author = c.authoredBy[0].hasName[0] if hasattr(c, "authoredBy") and c.authoredBy else "(unknown)"
             label = "Merge" if c in onto.MergeCommit.instances() else "Initial" if c in onto.InitialCommit.instances() else ""
             commits.append({"message": msg, "author": author, "label": label})
-    return render_template("commits.html", branch=branch, commits=commits)
+    return render_template("commits.html", branch=branch, commits=commits, repo=repo_name)
 
 @bp.route("/authors")
 def authors():

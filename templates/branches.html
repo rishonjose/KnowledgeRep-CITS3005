@@ -1,16 +1,17 @@
 {% extends "base.html" %}
 {% block content %}
-  <h2 class="mb-3">Branches in {{ repo }}</h2>
+  <h2>Branches in {{ repo }}</h2>
   {% if branches %}
     <ul class="list-group">
       {% for branch in branches %}
         <li class="list-group-item">
-          <a href="/commits/{{ branch }}">{{ branch }}</a>
+          <a href="{{ url_for('routes.commits', branch=branch) }}">{{ branch }}</a>
         </li>
       {% endfor %}
     </ul>
   {% else %}
-    <p>No branches found for this repository.</p>
+    <p>No branches found.</p>
   {% endif %}
-  <a href="/repositories" class="btn btn-link mt-3">← Back to Repositories</a>
+  <a href="{{ url_for('routes.repositories') }}" class="btn btn-secondary mt-3">← Back to Repositories</a>
 {% endblock %}
+
