@@ -1,13 +1,20 @@
-<!DOCTYPE html>
-<html>
-<head><title>Commits by Author</title></head>
-<body>
-  <h2>Commits by {{ author }}</h2>
-  <ul>
-    {% for commit in commits %}
-      <li>{{ commit }}</li>
-    {% endfor %}
-  </ul>
-  <a href="/">Back</a>
-</body>
-</html>
+{% extends "base.html" %}
+{% block content %}
+  <h2 class="mb-3">Commits in {{ branch }}</h2>
+  {% if commits %}
+    <div class="list-group">
+      {% for c in commits %}
+        <div class="list-group-item">
+          <h6 class="mb-1">{{ c.message }}</h6>
+          <small>Author: {{ c.author }}</small>
+          {% if c.label %}
+            <span class="badge bg-info ms-2">{{ c.label }}</span>
+          {% endif %}
+        </div>
+      {% endfor %}
+    </div>
+  {% else %}
+    <p>No commits found for this branch.</p>
+  {% endif %}
+  <a href="/repositories" class="btn btn-link mt-3">← Back</a>
+{% endblock %}

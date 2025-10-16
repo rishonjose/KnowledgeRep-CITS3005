@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block content %}
+  <h2 class="mb-3">SPARQL Query Console</h2>
+
+  <form method="POST" action="/sparql">
+    <div class="mb-3">
+      <textarea name="query" class="form-control" rows="6" placeholder="Enter SPARQL query here...">{{ query }}</textarea>
+    </div>
+    <button type="submit" class="btn btn-primary">Run Query</button>
+  </form>
+
+  {% if results %}
+    <h4 class="mt-4">Results</h4>
+    <table class="table table-bordered table-sm">
+      <tbody>
+        {% for row in results %}
+          <tr>
+            {% for col in row %}
+              <td>{{ col }}</td>
+            {% endfor %}
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% elif query %}
+    <p class="mt-3 text-muted">No results found.</p>
+  {% endif %}
+{% endblock %}
