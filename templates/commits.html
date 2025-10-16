@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+<head><title>Commits by Author</title></head>
+<body>
+  <h2>Commits by {{ author }}</h2>
+  <ul>
+    {% for commit in commits %}
+      <li>{{ commit }}</li>
+    {% endfor %}
+  </ul>
+  <a href="/">Back</a>
+</body>
+</html>
