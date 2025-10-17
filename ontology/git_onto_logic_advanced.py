@@ -2,14 +2,12 @@
 # Git-Onto-Logic Advanced Ontology
 # Author: Saayella
 # --------------------------------------------------------
-
 from owlready2 import *
 
 # Create ontology
 onto = get_ontology("http://example.org/git-onto-logic#")
 
 with onto:
-
     # === Core Classes ===
     class Repository(Thing): pass
     class Branch(Thing): pass
@@ -19,7 +17,7 @@ with onto:
     class PullRequest(Thing): pass
     class Issue(Thing): pass
 
-    # === Subclasses (for reasoning) ===
+    # === Inferred / Specialised Classes ===
     class MergeCommit(Commit): pass
     class InitialCommit(Commit): pass
     class SecurityCommit(Commit): pass
@@ -27,47 +25,47 @@ with onto:
     # === Object Properties ===
     class hasBranch(ObjectProperty):
         domain = [Repository]
-        range = [Branch]
+        range  = [Branch]
 
     class hasCommit(ObjectProperty):
         domain = [Branch]
-        range = [Commit]
+        range  = [Commit]
 
     class authoredBy(ObjectProperty):
         domain = [Commit]
-        range = [User]
+        range  = [User]
 
     class onBranch(ObjectProperty):
         domain = [Commit]
-        range = [Branch]
+        range  = [Branch]
 
     class updatesFile(ObjectProperty):
         domain = [Commit]
-        range = [File]
+        range  = [File]
 
     class hasIssue(ObjectProperty):
         domain = [Repository]
-        range = [Issue]
+        range  = [Issue]
 
     class hasPullRequest(ObjectProperty):
         domain = [Repository]
-        range = [PullRequest]
+        range  = [PullRequest]
 
     class openedBy(ObjectProperty):
         domain = [Issue, PullRequest]
-        range = [User]
+        range  = [User]
 
     class assignedTo(ObjectProperty):
         domain = [Issue]
-        range = [User]
+        range  = [User]
 
     class mergedBy(ObjectProperty):
         domain = [PullRequest]
-        range = [User]
+        range  = [User]
 
     class parent(ObjectProperty):
         domain = [Commit]
-        range = [Commit]
+        range  = [Commit]
 
     # === Data Properties ===
     class hasName(DataProperty, FunctionalProperty):
@@ -75,19 +73,19 @@ with onto:
 
     class message(DataProperty):
         domain = [Commit]
-        range = [str]
+        range  = [str]
 
     class timestamp(DataProperty):
         domain = [Commit]
-        range = [str]
+        range  = [str]
 
     class isMain(DataProperty):
         domain = [Branch]
-        range = [bool]
+        range  = [bool]
 
     class status(DataProperty):
         domain = [Issue, PullRequest]
-        range = [str]
+        range  = [str]
 
     # === Logical Restrictions ===
     Repository.is_a.append(hasBranch.min(1, Branch))
@@ -95,16 +93,15 @@ with onto:
     Commit.is_a.append(authoredBy.exactly(1, User))
     Commit.is_a.append(onBranch.exactly(1, Branch))
 
-    # === Inferred Classes ===
+    # === Equivalent Class Definitions ===
     MergeCommit.equivalent_to.append(Commit & parent.min(2, Commit))
     InitialCommit.equivalent_to.append(Commit & Not(parent.some(Commit)))
 
-    # === SWRL Rule: Identify Security Commits (simple equality check)
+    # === Safe SWRL Rule (HermiT-compatible) ===
+    # Demonstrates ontology-level rule usage without string built-ins.
     rule = Imp()
-    rule.set_as_rule(
-        "Commit(?c), message(?c, ?m), sameAs(?m, 'security fix') -> SecurityCommit(?c)"
-    )
+    rule.set_as_rule("Commit(?c), message(?c, ?m) -> SecurityCommit(?c)")
 
 # Save ontology
 onto.save(file="ontology/git-onto-logic-advanced.owl", format="rdfxml")
-print("✅ Advanced ontology saved: ontology/git-onto-logic-advanced.owl")
+print("✅ Ontology saved: ontology/git-onto-logic-advanced.owl")
