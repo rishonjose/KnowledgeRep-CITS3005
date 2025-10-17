@@ -1,5 +1,5 @@
 # --------------------------------------------------------
-# Git-Onto-Logic Ontology Population Script (Final)
+# Git-Onto-Logic Ontology Population Script (Final Version)
 # Author: Saayella
 # --------------------------------------------------------
 import json
@@ -157,7 +157,7 @@ for iobj in issues:
         issue.openedBy.append(user_map[user_login])
 
 # --------------------------------------------------------
-# === Create pull requests and link ===
+# === Create pull requests and link (with robust fallback) ===
 # --------------------------------------------------------
 for pobj in prs:
     repo = repo_map.get(pobj["repo_id"])
@@ -168,23 +168,68 @@ for pobj in prs:
     pr = onto.PullRequest(pr_iri)
     pr.title = [pobj.get("title", "Untitled PR")]
     pr.state = [pobj.get("state", "open")]
-    pr.mergedAt = [pobj.get("merged_at") or ""]
+
+    merged_at_value = pobj.get("merged_at")
+    if merged_at_value:
+        pr.mergedAt = [merged_at_value]
 
     repo.hasPullRequest.append(pr)
 
+    # Link to user
     user_login = pobj.get("user_login")
     if user_login and user_login in user_map:
         pr.openedBy.append(user_map[user_login])
 
-    base_branch = branch_map.get((pobj["repo_id"], pobj.get("base_branch")))
-    head_branch = branch_map.get((pobj["repo_id"], pobj.get("head_branch")))
+    # === Robust base/head branch linking ===
+    repo_id = pobj["repo_id"]
+    base_name = (pobj.get("base_branch") or "").lower()
+    head_name = (pobj.get("head_branch") or "").lower()
 
+    base_branch = None
+    head_branch = None
+
+    # 1️⃣ Try exact match
+    for (rid, bname), b in branch_map.items():
+        if rid != repo_id:
+            continue
+        if bname.lower() == base_name:
+            base_branch = b
+        if bname.lower() == head_name:
+            head_branch = b
+
+    # 2️⃣ Try partial match if not found
+    if not base_branch:
+        for (rid, bname), b in branch_map.items():
+            if rid == repo_id and base_name in bname.lower():
+                base_branch = b
+                break
+    if not head_branch:
+        for (rid, bname), b in branch_map.items():
+            if rid == repo_id and head_name in bname.lower():
+                head_branch = b
+                break
+
+    # 3️⃣ Fallback: use any 'main' or 'master' branch as base
+    if not base_branch:
+        for (rid, bname), b in branch_map.items():
+            if rid == repo_id and bname.lower() in ["main", "master"]:
+                base_branch = b
+                break
+    if not head_branch:
+        for (rid, bname), b in branch_map.items():
+            if rid == repo_id and bname.lower() not in ["main", "master"]:
+                head_branch = b
+                break
+
+    # Link branches to PR
     if base_branch:
         pr.hasBaseBranch.append(base_branch)
     if head_branch:
         pr.hasHeadBranch.append(head_branch)
-        if pobj.get("merged_at"):
-            head_branch.mergedInto.append(base_branch)
+
+    # 4️⃣ If merged, assert mergedInto relation
+    if merged_at_value and base_branch and head_branch:
+        head_branch.mergedInto.append(base_branch)
 
 # --------------------------------------------------------
 # === Manual reasoning (lightweight inference) ===

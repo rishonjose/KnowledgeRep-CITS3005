@@ -1,9 +1,9 @@
 # --------------------------------------------------------
-# Git-Onto-Logic : SPARQL Query Suite (Extended)
+# Git-Onto-Logic : SPARQL Query Suite (Final)
 # Author: Saayella
 # --------------------------------------------------------
 from rdflib import Graph, Namespace
-from termcolor import colored  # optional: pip install termcolor
+from termcolor import colored  # pip install termcolor
 
 # === Load the populated ontology ===
 ONTO_PATH = "ontology/git-onto-logic-populated.owl"
@@ -22,8 +22,9 @@ def run_query(title, query):
     results = g.query(query)
     if len(results) == 0:
         print(colored("No results found.", "yellow"))
+        return
     for row in results:
-        vals = [str(x).split("#")[-1] for x in row]
+        vals = [str(x).split("#")[-1] for x in row if x]
         print("  •", ", ".join(vals))
 
 # === All 14 SPARQL Queries ===
@@ -91,20 +92,23 @@ QUERIES = [
     WHERE { ?sourceBranch git:mergedInto ?targetBranch . }
     """),
 
-    # 7. Pull requests that resulted in merges
+    # ✅ 7. Pull requests that resulted in merges (corrected)
     ("Pull requests that resulted in merges", """
     PREFIX git: <http://example.org/git-onto-logic#>
-    SELECT ?repo ?pr ?state ?mergedAt
+    SELECT DISTINCT ?pr ?title ?mergedAt ?head ?base
     WHERE {
-      ?repo git:hasPullRequest ?pr .
-      ?pr a git:MergedPullRequest ;
-          git:state ?state ;
-          git:mergedAt ?mergedAt .
+      ?head git:mergedInto ?base .
+      OPTIONAL { ?pr a git:PullRequest . }
+      OPTIONAL { ?pr git:title ?title . }
+      OPTIONAL { ?pr git:mergedAt ?mergedAt . }
+      OPTIONAL { ?pr git:hasHeadBranch ?head . }
+      OPTIONAL { ?pr git:hasBaseBranch ?base . }
     }
     ORDER BY DESC(?mergedAt)
+     LIMIT 10
     """),
 
-    # 8. Most active contributors (by commit count)
+    # 8. Top 5 most active contributors
     ("Top 5 most active contributors", """
     PREFIX git: <http://example.org/git-onto-logic#>
     SELECT ?user (COUNT(?commit) AS ?commitCount)
@@ -152,7 +156,7 @@ QUERIES = [
     }
     """),
 
-    # 12. Files most frequently modified
+    # 12. Top 10 most frequently modified files
     ("Top 10 most frequently modified files", """
     PREFIX git: <http://example.org/git-onto-logic#>
     SELECT ?file (COUNT(?commit) AS ?timesModified)
@@ -165,7 +169,7 @@ QUERIES = [
     LIMIT 10
     """),
 
-    # 13. Commits without an author (data quality check)
+    # 13. Commits without an author (data validation)
     ("Commits without an author (data error check)", """
     PREFIX git: <http://example.org/git-onto-logic#>
     SELECT ?commit
