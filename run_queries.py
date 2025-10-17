@@ -1,21 +1,16 @@
-# --------------------------------------------------------
-# Git-Onto-Logic : SPARQL Query Suite (Final)
-# Author: Saayella
-# --------------------------------------------------------
-from rdflib import Graph, Namespace
-from termcolor import colored  # pip install termcolor
 
-# === Load the populated ontology ===
+from rdflib import Graph, Namespace
+from termcolor import colored  
+
 ONTO_PATH = "ontology/git-onto-logic-populated_2.owl"
 
 g = Graph()
 g.parse(ONTO_PATH, format="xml")
-print(colored(f"✅ Loaded ontology with {len(g)} triples", "green"))
+print(colored(f"Loaded ontology with {len(g)} triples", "green"))
 
-# === Define namespace ===
+# Define namespace 
 GIT = Namespace("http://example.org/git-onto-logic#")
 
-# === Helper to run & print results ===
 def run_query(title, query):
     print(colored(f"\n🔍 {title}", "cyan"))
     print(colored("-" * (len(title) + 5), "cyan"))
@@ -27,7 +22,7 @@ def run_query(title, query):
         vals = [str(x).split("#")[-1] for x in row if x]
         print("  •", ", ".join(vals))
 
-# === All 14 SPARQL Queries ===
+#  14 SPARQL Queries
 QUERIES = [
     # 1. Repositories with >5 unmerged branches
     ("Repositories with >5 unmerged branches", """
@@ -92,7 +87,7 @@ QUERIES = [
     WHERE { ?sourceBranch git:mergedInto ?targetBranch . }
     """),
 
-    # ✅ 7. Pull requests that resulted in merges (corrected)
+    # 7. Pull requests that resulted in merges (corrected)
     ("Pull requests that resulted in merges", """
     PREFIX git: <http://example.org/git-onto-logic#>
     SELECT DISTINCT ?pr ?title ?mergedAt ?head ?base
@@ -194,4 +189,4 @@ QUERIES = [
 for title, query in QUERIES:
     run_query(title, query)
 
-print(colored("\n✅ All SPARQL queries executed successfully.", "green"))
+print(colored("\n All SPARQL queries executed successfully.", "green"))
