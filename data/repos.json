@@ -16,5 +16,167 @@
     "repo_stars": 0,
     "repo_forks": 0,
     "repo_url": "https://github.com/cmdr2/github-actions-wizard"
+  },
+  {
+    "repo_id": 762582850,
+    "repo_name": "codersforcauses/automated-setups",
+    "repo_description": "AutoSetup of Development Environments so you can focus on what's important - delivering features to the community",
+    "repo_language": "Shell",
+    "repo_stars": 2,
+    "repo_forks": 0,
+    "repo_url": "https://github.com/codersforcauses/automated-setups"
+  },
+  {
+    "repo_id": 21737465,
+    "repo_name": "sindresorhus/awesome",
+    "repo_description": "😎 Awesome lists about all kinds of interesting topics",
+    "repo_language": null,
+    "repo_stars": 407380,
+    "repo_forks": 31911,
+    "repo_url": "https://github.com/sindresorhus/awesome"
+  },
+  {
+    "repo_id": 132750724,
+    "repo_name": "codecrafters-io/build-your-own-x",
+    "repo_description": "Master programming by recreating your favorite technologies from scratch.",
+    "repo_language": "Markdown",
+    "repo_stars": 426852,
+    "repo_forks": 40061,
+    "repo_url": "https://github.com/codecrafters-io/build-your-own-x"
+  },
+  {
+    "repo_id": 138393139,
+    "repo_name": "trimstray/the-book-of-secret-knowledge",
+    "repo_description": "A collection of inspiring lists, manuals, cheatsheets, blogs, hacks, one-liners, cli/web tools and more.",
+    "repo_language": null,
+    "repo_stars": 190083,
+    "repo_forks": 11711,
+    "repo_url": "https://github.com/trimstray/the-book-of-secret-knowledge"
+  },
+  {
+    "repo_id": 908531752,
+    "repo_name": "deepseek-ai/DeepSeek-V3",
+    "repo_description": null,
+    "repo_language": "Python",
+    "repo_stars": 99684,
+    "repo_forks": 16268,
+    "repo_url": "https://github.com/deepseek-ai/DeepSeek-V3"
+  },
+  {
+    "repo_id": 919443098,
+    "repo_name": "deepseek-ai/DeepSeek-R1",
+    "repo_description": null,
+    "repo_language": null,
+    "repo_stars": 91282,
+    "repo_forks": 11751,
+    "repo_url": "https://github.com/deepseek-ai/DeepSeek-R1"
+  },
+  {
+    "repo_id": 601538369,
+    "repo_name": "meta-llama/llama",
+    "repo_description": "Inference code for Llama models",
+    "repo_language": "Python",
+    "repo_stars": 58837,
+    "repo_forks": 9810,
+    "repo_url": "https://github.com/meta-llama/llama"
+  },
+  {
+    "repo_id": 364474335,
+    "repo_name": "google/zx",
+    "repo_description": "A tool for writing better scripts",
+    "repo_language": "JavaScript",
+    "repo_stars": 44718,
+    "repo_forks": 1176,
+    "repo_url": "https://github.com/google/zx"
+  },
+  {
+    "repo_id": 154747577,
+    "repo_name": "google-research/bert",
+    "repo_description": "TensorFlow code and pre-trained models for BERT",
+    "repo_language": "Python",
+    "repo_stars": 39582,
+    "repo_forks": 9699,
+    "repo_url": "https://github.com/google-research/bert"
+  },
+  {
+    "repo_id": 23405758,
+    "repo_name": "google/leveldb",
+    "repo_description": "LevelDB is a fast key-value storage library written at Google that provides an ordered mapping from string keys to string values.",
+    "repo_language": "C++",
+    "repo_stars": 38244,
+    "repo_forks": 8063,
+    "repo_url": "https://github.com/google/leveldb"
+  },
+  {
+    "repo_id": 80990461,
+    "repo_name": "eriklindernoren/ML-From-Scratch",
+    "repo_description": "Machine Learning From Scratch. Bare bones NumPy implementations of machine learning models and algorithms with a focus on accessibility. Aims to cover everything from linear regression to deep learning.",
+    "repo_language": "Python",
+    "repo_stars": 28798,
+    "repo_forks": 4927,
+    "repo_url": "https://github.com/eriklindernoren/ML-From-Scratch"
+  },
+  {
+    "repo_id": 170067246,
+    "repo_name": "openai/gpt-2",
+    "repo_description": "Code for the paper \"Language Models are Unsupervised Multitask Learners\"",
+    "repo_language": "Python",
+    "repo_stars": 24281,
+    "repo_forks": 5799,
+    "repo_url": "https://github.com/openai/gpt-2"
+  },
+  {
+    "repo_id": 184690694,
+    "repo_name": "openai/gpt-2-output-dataset",
+    "repo_description": "Dataset of GPT-2 outputs for research in detection, biases, and more",
+    "repo_language": "Python",
+    "repo_stars": 1998,
+    "repo_forks": 550,
+    "repo_url": "https://github.com/openai/gpt-2-output-dataset"
+  },
+  {
+    "repo_id": 718379614,
+    "repo_name": "BuilderIO/gpt-crawler",
+    "repo_description": "Crawl a site to generate knowledge files to create your own custom GPT from a URL",
+    "repo_language": "TypeScript",
+    "repo_stars": 21975,
+    "repo_forks": 2387,
+    "repo_url": "https://github.com/BuilderIO/gpt-crawler"
+  },
+  {
+    "repo_id": 993475914,
+    "repo_name": "apple/container",
+    "repo_description": "A tool for creating and running Linux containers using lightweight virtual machines on a Mac. It is written in Swift, and optimized for Apple silicon. ",
+    "repo_language": "Swift",
+    "repo_stars": 21436,
+    "repo_forks": 485,
+    "repo_url": "https://github.com/apple/container"
+  },
+  {
+    "repo_id": 402468744,
+    "repo_name": "pypa/pip-audit",
+    "repo_description": "Audits Python environments, requirements files and dependency trees for known security vulnerabilities, and can automatically fix them",
+    "repo_language": "Python",
+    "repo_stars": 1118,
+    "repo_forks": 75,
+    "repo_url": "https://github.com/pypa/pip-audit"
+  },
+  {
+    "repo_id": 1047711589,
+    "repo_name": "saayella/Digital_Finance_Greenwashing",
+    "repo_description": null,
+    "repo_language": "Python",
+    "repo_stars": 0,
+    "repo_forks": 0,
+    "repo_url": "https://github.com/saayella/Digital_Finance_Greenwashing"
+  },
+  {
+    "repo_id": 1076808869,
+    "repo_name": "rishonjose/KnowledgeRep-CITS3005",
+    "repo_description": null,
+    "repo_language": "Python",
+    "repo_stars": 0,
+    "repo_forks": 0,
+    "repo_url": "https://github.com/rishonjose/KnowledgeRep-CITS3005"
   }
 ]
