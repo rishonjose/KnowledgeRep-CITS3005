@@ -6,7 +6,7 @@ from rdflib import Graph, Namespace
 from termcolor import colored  # pip install termcolor
 
 # === Load the populated ontology ===
-ONTO_PATH = "ontology/git-onto-logic-populated.owl"
+ONTO_PATH = "ontology/git-onto-logic-populated_2.owl"
 
 g = Graph()
 g.parse(ONTO_PATH, format="xml")
