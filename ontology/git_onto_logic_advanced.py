@@ -1,13 +1,9 @@
-# --------------------------------------------------------
-# Git-Onto-Logic Redesigned Ontology
-# Author: Saayella
-# --------------------------------------------------------
 from owlready2 import *
 
 onto = get_ontology("http://example.org/git-onto-logic#")
 
 with onto:
-    # === Core Classes (1:1 with data files) ===
+    # Core Classes 
     class Repository(Thing): pass
     class Branch(Thing): pass
     class Commit(Thing): pass
@@ -16,7 +12,7 @@ with onto:
     class PullRequest(Thing): pass
     class Issue(Thing): pass
 
-    # === Inferred / Specialized Classes ===
+    # Inferred Classes
     
     class MergeCommit(Commit): pass
     class InitialCommit(Commit): pass
@@ -24,7 +20,7 @@ with onto:
     class UnmergedBranch(Branch): pass
     class MergedPullRequest(PullRequest): pass
 
-    # === Object Properties (relationships between entities) ===
+    # Object Properties 
     class hasBranch(ObjectProperty):
         domain = [Repository]
         range  = [Branch]
@@ -81,7 +77,7 @@ with onto:
         domain = [Issue]
         range  = [User]
 
-    # === Data Properties (attributes / literals) ===
+    # Data Properties 
     class repoName(DataProperty): domain = [Repository]; range = [str]
     class repoLanguage(DataProperty): domain = [Repository]; range = [str]
     class repoStars(DataProperty): domain = [Repository]; range = [int]
@@ -106,24 +102,25 @@ with onto:
     class userLogin(DataProperty): domain = [User]; range = [str]
     class userURL(DataProperty): domain = [User]; range = [str]
 
-    # === Logical Restrictions (realistic cardinalities) ===
+    # Logical Restrictions 
     Repository.is_a.append(hasBranch.min(1, Branch))
     Branch.is_a.append(hasCommit.min(1, Commit))
     Commit.is_a.append(authoredBy.min(1, User))
     Commit.is_a.append(onBranch.exactly(1, Branch))
 
-    # === Equivalent Class Definitions (reasoning) ===
-   # === Equivalent Class Definitions (reasoning) ===
-    MergeCommit.equivalent_to.append(Commit & parent.min(2, Commit))
-    InitialCommit.equivalent_to.append(Commit & Not(parent.some(Commit)))
-    UnmergedBranch.equivalent_to.append(Branch & Not(mergedInto.some(Branch)))
-    MergedPullRequest.equivalent_to.append(PullRequest & state.value("closed") & mergedAt.some(str))
+    # Equivalent Class Definitions 
+MergeCommit.equivalent_to.append(Commit & parent.min(2, Commit))
+InitialCommit.equivalent_to.append(Commit & ~parent.some(Commit))
+UnmergedBranch.equivalent_to.append(Branch & ~mergedInto.some(Branch))
+MergedPullRequest.equivalent_to.append(PullRequest & state.value("closed") & mergedAt.some(str))
 
-
-    # === Safe SWRL Rule (HermiT-compatible placeholder) ===
-    # Demonstrates rule structure; actual keyword detection done in Python
+# SWRL Placeholder (for documentation)
+with onto:
     rule = Imp()
-    rule.set_as_rule("Commit(?c), message(?c, ?m) -> SecurityCommit(?c)")
+    rule.set_as_rule("""
+        Commit(?c), message(?c, ?m) -> SecurityCommit(?c)
+    """)
+
 
 # Save ontology
 onto.save(file="ontology/git-onto-logic-redesigned.owl", format="rdfxml")
