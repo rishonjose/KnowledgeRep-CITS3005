@@ -1,6 +1,5 @@
 from flask import Blueprint, render_template, request
 from owlready2 import get_ontology
-from rdflib import Graph
 import os
 
 bp = Blueprint("routes", __name__)
@@ -10,11 +9,8 @@ bp = Blueprint("routes", __name__)
 # --------------------------------------------------------------
 ONTOLOGY_PATH = os.path.join(os.path.dirname(__file__), "../ontology/git-onto-logic-populated.owl")
 ONTOLOGY_PATH = os.path.abspath(ONTOLOGY_PATH)
-
-# Load ontology directly from local file
 onto = get_ontology(f"file://{ONTOLOGY_PATH}").load()
 
-# Helper function to safely extract property values
 def val(prop):
     """Return a consistent single value whether the property is a list or a scalar."""
     if isinstance(prop, list):
@@ -34,93 +30,88 @@ def index():
 @bp.route("/repositories")
 def repositories():
     """Display all repositories in the ontology."""
-    repos = [val(r.hasName) for r in onto.Repository.instances() if hasattr(r, "hasName")]
+    repos = sorted([
+        val(getattr(r, "repoName", None))
+        for r in onto.Repository.instances()
+        if hasattr(r, "repoName")
+    ])
     return render_template("repositories.html", repos=repos)
 
 
-@bp.route("/repository/<name>")
+@bp.route("/repository/<path:name>")
 def view_repository(name):
     """Display branches belonging to a selected repository."""
     repo = next(
         (r for r in onto.Repository.instances()
-         if hasattr(r, "hasName") and val(r.hasName).lower() == name.lower()),
+         if hasattr(r, "repoName") and val(r.repoName).lower() == name.lower()),
         None
     )
-    branches = [val(b.hasName) for b in getattr(repo, "hasBranch", [])] if repo else []
-    return render_template("branches.html", repo=name, branches=branches)
+    branches = []
+    if repo:
+        for b in getattr(repo, "hasBranch", []):
+            # Use readable branchName if it exists
+            display_name = val(getattr(b, "branchName", None)) or b.name
+            branches.append(display_name)
+    print(f"[DEBUG] Repo: {name}, hasBranch: {getattr(repo, 'hasBranch', None)}")
+    return render_template("branches.html", repo=name, branches=sorted(branches))
 
 
-@bp.route("/commits/<branch>")
-def commits(branch):
-    """Show commits associated with a given branch, with inferred labels."""
+@bp.route("/repository/<path:repo>/branch/<path:branch>")
+def view_branch_commits(repo, branch):
+    """Display commits belonging to a specific branch of a repository."""
     commits = []
-    repo_name = None
+    branch = branch.strip().lower()
 
     for b in onto.Branch.instances():
-        if hasattr(b, "hasName") and val(b.hasName).lower() == branch.lower():
-            # If ontology has repository linkage, extract it
-            if hasattr(b, "belongsTo") and b.belongsTo:
-                repo_name = val(b.belongsTo[0].hasName)
+        branch_name = val(getattr(b, "branchName", None))
+        iri_name = b.name.lower()
 
-            for c in getattr(b, "hasCommit", []):
+        # Match either the clean name or full internal name
+        if (branch_name and branch_name.lower() == branch) or iri_name == branch:
+            # Collect commits via hasCommit (direct relation)
+            linked_commits = list(getattr(b, "hasCommit", []))
+
+            # Also include commits that reference this branch via onBranch
+            for c in onto.Commit.instances():
+                if b in getattr(c, "onBranch", []):
+                    linked_commits.append(c)
+
+            # Remove duplicates (commits may appear in both lists)
+            linked_commits = list(set(linked_commits))
+
+            # Convert to display data
+            for c in linked_commits:
                 msg = val(getattr(c, "message", "(no message)"))
-                author = val(c.authoredBy[0].hasName) if hasattr(c, "authoredBy") and c.authoredBy else "(unknown)"
-                label = (
-                    "Merge" if c in onto.MergeCommit.instances()
-                    else "Initial" if c in onto.InitialCommit.instances()
-                    else "Security" if c in onto.SecurityCommit.instances()
-                    else ""
+                author = (
+                    val(getattr(c.authoredBy[0], "userLogin", "(unknown)"))
+                    if getattr(c, "authoredBy", None)
+                    else "(unknown)"
                 )
+                label = "Initial" if getattr(c, "isInitial", [False])[0] else ""
                 commits.append({
                     "message": msg,
                     "author": author,
                     "label": label,
-                    "timestamp": val(getattr(c, "timestamp", ""))
+                    "timestamp": val(getattr(c, "commitDate", ""))
                 })
+            break  # stop once the branch is matched
 
-    return render_template("commits.html", branch=branch, commits=commits, repo=repo_name)
-
+    # Sort by newest first
+    commits.sort(key=lambda x: x["timestamp"], reverse=True)
+    return render_template("commits.html", branch=branch, commits=commits, repo=repo)
 
 @bp.route("/authors")
 def authors():
     """List all authors and their commit counts."""
     authors = []
     for a in onto.User.instances():
-        name = val(getattr(a, "hasName", "(unknown)"))
+        name = val(getattr(a, "userLogin", "(unknown)"))
         count = sum(
             1 for c in onto.Commit.instances()
-            if hasattr(c, "authoredBy") and c.authoredBy and c.authoredBy[0] == a
+            if getattr(c, "authoredBy", None) and c.authoredBy[0] == a
         )
         authors.append({"name": name, "count": count})
-    return render_template("author.html", authors=authors)
-
-
-@bp.route("/issues")
-def issues():
-    """List all issues and their metadata."""
-    issues = []
-    for i in onto.Issue.instances():
-        issues.append({
-            "name": val(getattr(i, "hasName", "(unnamed)")),
-            "status": val(getattr(i, "status", "unknown")),
-            "opened_by": val(i.openedBy[0].hasName) if hasattr(i, "openedBy") and i.openedBy else "(unknown)",
-            "assigned_to": val(i.assignedTo[0].hasName) if hasattr(i, "assignedTo") and i.assignedTo else "(unassigned)"
-        })
-    return render_template("issues.html", issues=issues)
-
-
-@bp.route("/pulls")
-def pulls():
-    """List all pull requests and their metadata."""
-    pulls = []
-    for p in onto.PullRequest.instances():
-        pulls.append({
-            "name": val(getattr(p, "hasName", "(unnamed)")),
-            "status": val(getattr(p, "status", "unknown")),
-            "opened_by": val(p.openedBy[0].hasName) if hasattr(p, "openedBy") and p.openedBy else "(unknown)",
-            "merged_by": val(p.mergedBy[0].hasName) if hasattr(p, "mergedBy") and p.mergedBy else "(none)"
-        })
-    return render_template("pulls.html", pulls=pulls)
+    return render_template("author.html", authors=sorted(authors, key=lambda x: x["name"]))
 
 
 @bp.route("/sparql", methods=["GET", "POST"])
@@ -131,7 +122,6 @@ def sparql():
         query = request.form["query"].strip()
         if query:
             try:
-                # Reuse loaded ontology’s graph (no need to rebuild)
                 g = onto.world.as_rdflib_graph()
                 results = [row for row in g.query(query)]
             except Exception as e:
@@ -146,9 +136,9 @@ def validate():
     """Perform simple consistency checks on ontology instances."""
     warnings = []
     for repo in onto.Repository.instances():
-        if not getattr(repo, "hasBranch", None):
-            warnings.append(f"Repository '{val(repo.hasName)}' has no branches.")
+        if not getattr(repo, "hasBranch", []):
+            warnings.append(f"Repository '{val(repo.repoName)}' has no branches.")
     for commit in onto.Commit.instances():
-        if not getattr(commit, "authoredBy", None):
-            warnings.append(f"Commit '{val(commit.hasName)}' missing author.")
+        if not getattr(commit, "authoredBy", []):
+            warnings.append(f"Commit '{val(getattr(commit, 'message', '(unnamed)'))}' missing author.")
     return render_template("validate.html", warnings=warnings)
