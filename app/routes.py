@@ -59,46 +59,60 @@ def view_repository(name):
 @bp.route("/repository/<path:repo>/branch/<path:branch>")
 def view_branch_commits(repo, branch):
     """Display commits belonging to a specific branch of a repository."""
+    branch_str = branch.strip().lower()
+
+    # 1) find the repo object by repoName
+    repo_obj = next(
+        (r for r in onto.Repository.instances()
+         if hasattr(r, "repoName") and val(r.repoName).lower() == repo.lower()),
+        None
+    )
+    if not repo_obj:
+        return render_template("commits.html", branch=branch, commits=[], repo=repo)
+
+    # 2) find the target branch *inside this repo only*
+    target_branch = None
+    for b in getattr(repo_obj, "hasBranch", []):
+        b_display = val(getattr(b, "branchName", None))
+        if (b_display and b_display.lower() == branch_str) or b.name.lower() == branch_str:
+            target_branch = b
+            break
+
+    if not target_branch:
+        # Branch not found under this repo
+        return render_template("commits.html", branch=branch, commits=[], repo=repo)
+
+    # 3) gather commits:
+    #    - commits directly attached via hasCommit
+    #    - commits that reference this branch via onBranch
+    #    - keep only commits that are associated with this repo (their onBranch contains a branch in repo_obj.hasBranch)
+    linked = set(getattr(target_branch, "hasCommit", []))
+
+    # include commits that reference this branch via onBranch
+    for c in onto.Commit.instances():
+        if target_branch in getattr(c, "onBranch", []):
+            linked.add(c)
+
+    # repo-level filter (commit must be on at least one branch of the current repo)
+    repo_branches = set(getattr(repo_obj, "hasBranch", []))
+    linked = [c for c in linked if repo_branches.intersection(set(getattr(c, "onBranch", [])))]
+
+    # 4) convert to view-model
     commits = []
-    branch = branch.strip().lower()
+    for c in linked:
+        msg = val(getattr(c, "message", "(no message)"))
+        author = val(getattr(c.authoredBy[0], "userLogin", "(unknown)")) if getattr(c, "authoredBy", None) else "(unknown)"
+        label = "Initial" if getattr(c, "isInitial", [False])[0] else ""
+        commits.append({
+            "message": msg,
+            "author": author,
+            "label": label,
+            "timestamp": val(getattr(c, "commitDate", ""))
+        })
 
-    for b in onto.Branch.instances():
-        branch_name = val(getattr(b, "branchName", None))
-        iri_name = b.name.lower()
-
-        # Match either the clean name or full internal name
-        if (branch_name and branch_name.lower() == branch) or iri_name == branch:
-            # Collect commits via hasCommit (direct relation)
-            linked_commits = list(getattr(b, "hasCommit", []))
-
-            # Also include commits that reference this branch via onBranch
-            for c in onto.Commit.instances():
-                if b in getattr(c, "onBranch", []):
-                    linked_commits.append(c)
-
-            # Remove duplicates (commits may appear in both lists)
-            linked_commits = list(set(linked_commits))
-
-            # Convert to display data
-            for c in linked_commits:
-                msg = val(getattr(c, "message", "(no message)"))
-                author = (
-                    val(getattr(c.authoredBy[0], "userLogin", "(unknown)"))
-                    if getattr(c, "authoredBy", None)
-                    else "(unknown)"
-                )
-                label = "Initial" if getattr(c, "isInitial", [False])[0] else ""
-                commits.append({
-                    "message": msg,
-                    "author": author,
-                    "label": label,
-                    "timestamp": val(getattr(c, "commitDate", ""))
-                })
-            break  # stop once the branch is matched
-
-    # Sort by newest first
     commits.sort(key=lambda x: x["timestamp"], reverse=True)
     return render_template("commits.html", branch=branch, commits=commits, repo=repo)
+
 
 @bp.route("/authors")
 def authors():
