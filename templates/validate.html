@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block content %}
+  <h2 class="mb-3">Ontology Validation</h2>
+  {% if warnings %}
+    <div class="alert alert-warning">
+      <ul>
+        {% for w in warnings %}
+          <li>{{ w }}</li>
+        {% endfor %}
+      </ul>
+    </div>
+  {% else %}
+    <div class="alert alert-success">
+      <strong>No validation issues found.</strong>
+    </div>
+  {% endif %}
+  <a href="/" class="btn btn-link mt-3">← Back</a>
+{% endblock %}
