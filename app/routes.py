@@ -29,15 +29,21 @@ def index():
 
 @bp.route("/repositories")
 def repositories():
-    repos = sorted([val(r.hasName) for r in onto.Repository.instances() if hasattr(r, "hasName")])
+    """Display all repositories in the ontology."""
+    repos = sorted([
+        val(getattr(r, "repoName", None))
+        for r in onto.Repository.instances()
+        if hasattr(r, "repoName")
+    ])
     return render_template("repositories.html", repos=repos)
 
 
 @bp.route("/repository/<path:name>")
 def view_repository(name):
+    """Display branches belonging to a selected repository."""
     repo = next(
         (r for r in onto.Repository.instances()
-         if hasattr(r, "hasName") and val(r.hasName).lower() == name.lower()),
+         if hasattr(r, "repoName") and val(r.repoName).lower() == name.lower()),
         None
     )
     branches = []
@@ -51,12 +57,13 @@ def view_repository(name):
 
 @bp.route("/repository/<path:repo>/branch/<branch>")
 def view_branch_commits(repo, branch):
+    """Display commits belonging to a specific branch of a repository."""
     commits = []
     for b in onto.Branch.instances():
         if hasattr(b, "hasName") and val(b.hasName).lower() == branch.lower():
             for c in getattr(b, "hasCommit", []):
                 msg = val(getattr(c, "message", "(no message)"))
-                author = val(c.authoredBy[0].hasName) if getattr(c, "authoredBy", None) else "(unknown)"
+                author = val(getattr(c.authoredBy[0], "userLogin", "(unknown)")) if getattr(c, "authoredBy", None) else "(unknown)"
                 label = (
                     "Merge" if c in onto.MergeCommit.instances()
                     else "Initial" if c in onto.InitialCommit.instances()
@@ -75,9 +82,10 @@ def view_branch_commits(repo, branch):
 
 @bp.route("/authors")
 def authors():
+    """List all authors and their commit counts."""
     authors = []
     for a in onto.User.instances():
-        name = val(getattr(a, "hasName", "(unknown)"))
+        name = val(getattr(a, "userLogin", "(unknown)"))
         count = sum(
             1 for c in onto.Commit.instances()
             if getattr(c, "authoredBy", None) and c.authoredBy[0] == a
@@ -88,6 +96,7 @@ def authors():
 
 @bp.route("/sparql", methods=["GET", "POST"])
 def sparql():
+    """Run SPARQL queries directly on the already-loaded ontology."""
     results, query, error = [], "", None
     if request.method == "POST":
         query = request.form["query"].strip()
@@ -104,11 +113,12 @@ def sparql():
 
 @bp.route("/validate")
 def validate():
+    """Perform simple consistency checks on ontology instances."""
     warnings = []
     for repo in onto.Repository.instances():
         if not getattr(repo, "hasBranch", []):
-            warnings.append(f"Repository '{val(repo.hasName)}' has no branches.")
+            warnings.append(f"Repository '{val(repo.repoName)}' has no branches.")
     for commit in onto.Commit.instances():
         if not getattr(commit, "authoredBy", []):
-            warnings.append(f"Commit '{val(commit.hasName)}' missing author.")
+            warnings.append(f"Commit '{val(getattr(commit, 'message', '(unnamed)'))}' missing author.")
     return render_template("validate.html", warnings=warnings)
