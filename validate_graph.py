@@ -1,21 +1,36 @@
-# --------------------------------------------------------
-# Validate Git-Onto-Logic Graph using pySHACL
-# --------------------------------------------------------
 from pyshacl import validate
 from rdflib import Graph
+from termcolor import colored
 
-data_graph = Graph().parse("ontology/git-onto-logic-populated.owl", format="xml")
-shapes_graph = Graph().parse("ontology/git-onto-logic-shapes.ttl", format="turtle")
+#  File paths 
+DATA_FILE = "knowledge_graph.owl"
+SHACL_FILE = "shacl.ttl"
 
-results = validate(
+print(colored("Running SHACL Validation...", "cyan"))
+
+# Load RDF and SHACL 
+data_graph = Graph().parse(DATA_FILE, format="xml")
+shacl_graph = Graph().parse(SHACL_FILE, format="turtle")
+
+# Validate 
+conforms, results_graph, results_text = validate(
     data_graph,
-    shacl_graph=shapes_graph,
-    inference='rdfs',
-    abort_on_first=False,
-    allow_infos=True,
-    allow_warnings=True
+    shacl_graph=shacl_graph,
+    inference="rdfs",
+    abort_on_error=False,
+    meta_shacl=False,
+    debug=False
 )
 
-conforms, results_graph, results_text = results
-print("✅ Validation Result:", conforms)
+# Print results 
+if conforms:
+    print(colored("Graph conforms to SHACL shapes!", "green"))
+else:
+    print(colored("Graph does NOT conform to SHACL shapes!", "red"))
+
+print("\n Validation Report ")
 print(results_text)
+
+# Save report 
+results_graph.serialize("validation_report.ttl", format="turtle")
+print(colored("\n📄 Saved detailed report to validation_report.ttl", "yellow"))

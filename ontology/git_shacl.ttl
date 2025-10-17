@@ -1,0 +1,132 @@
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix git: <http://example.org/git-onto-logic#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+######################################################################
+# Repository Rules
+######################################################################
+git:RepositoryShape a sh:NodeShape ;
+    sh:targetClass git:Repository ;
+    sh:property [
+        sh:path git:hasBranch ;
+        sh:minCount 1 ;
+        sh:message "Each repository must have at least one branch." ;
+    ] .
+
+######################################################################
+# Branch Rules
+######################################################################
+git:BranchShape a sh:NodeShape ;
+    sh:targetClass git:Branch ;
+    sh:property [
+        sh:path git:hasCommit ;
+        sh:minCount 1 ;
+        sh:message "Each branch must have at least one commit." ;
+    ] ;
+    sh:property [
+        sh:path git:branchName ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:message "Each branch must have a branch name." ;
+    ] .
+
+######################################################################
+# Commit Rules
+######################################################################
+git:CommitShape a sh:NodeShape ;
+    sh:targetClass git:Commit ;
+    sh:property [
+        sh:path git:authoredBy ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each commit must have exactly one author." ;
+    ] ;
+    sh:property [
+        sh:path git:onBranch ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Each commit must belong to exactly one branch." ;
+    ] ;
+    sh:property [
+        sh:path git:commitSHA ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:message "Commit must have a SHA string." ;
+    ] .
+
+######################################################################
+# User Rules
+######################################################################
+git:UserShape a sh:NodeShape ;
+    sh:targetClass git:User ;
+    sh:property [
+        sh:path git:userLogin ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:message "User must have a login name." ;
+    ] .
+
+######################################################################
+# File Rules
+######################################################################
+git:FileShape a sh:NodeShape ;
+    sh:targetClass git:File ;
+    sh:property [
+        sh:path git:fileName ;
+        sh:minCount 1 ;
+        sh:datatype xsd:string ;
+        sh:message "File must have a name." ;
+    ] ;
+    sh:property [
+        sh:path git:fileChanges ;
+        sh:datatype xsd:integer ;
+        sh:minInclusive 0 ;
+        sh:message "File change count must be non-negative." ;
+    ] .
+
+######################################################################
+# Pull Request Rules
+######################################################################
+git:PullRequestShape a sh:NodeShape ;
+    sh:targetClass git:PullRequest ;
+    sh:property [
+        sh:path git:state ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:message "Pull request must have a state (open/closed)." ;
+    ] ;
+    sh:property [
+        sh:path git:mergedAt ;
+        sh:datatype xsd:string ;
+        sh:minCount 0 ;
+        sh:message "mergedAt (if present) must be a valid string date." ;
+    ] .
+
+######################################################################
+# Issue Rules
+######################################################################
+git:IssueShape a sh:NodeShape ;
+    sh:targetClass git:Issue ;
+    sh:property [
+        sh:path git:title ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:message "Each issue must have a title." ;
+    ] ;
+    sh:property [
+        sh:path git:state ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:message "Each issue must have a state." ;
+    ] .
+
+######################################################################
+# Concurrent Contributor Rules
+######################################################################
+git:ConcurrentContributorShape a sh:NodeShape ;
+    sh:targetClass git:ConcurrentContributor ;
+    sh:property [
+        sh:path git:userLogin ;
+        sh:minCount 1 ;
+        sh:message "Concurrent contributor must have a login ID." ;
+    ] .

@@ -28,7 +28,7 @@ with onto:
     class hasCommit(ObjectProperty):
         domain = [Branch]
         range  = [Commit]
-
+    
     class onBranch(ObjectProperty):
         domain = [Commit]
         range  = [Branch]
@@ -77,28 +77,27 @@ with onto:
         domain = [Issue]
         range  = [User]
 
+    class isConcurrentContributor(DataProperty):
+        domain = [User]
+        range = [bool]
+
     # Data Properties 
     class repoName(DataProperty): domain = [Repository]; range = [str]
     class repoLanguage(DataProperty): domain = [Repository]; range = [str]
     class repoStars(DataProperty): domain = [Repository]; range = [int]
     class repoForks(DataProperty): domain = [Repository]; range = [int]
-
     class branchName(DataProperty): domain = [Branch]; range = [str]
     class isDefault(DataProperty): domain = [Branch]; range = [bool]
-
     class commitSHA(DataProperty): domain = [Commit]; range = [str]
     class message(DataProperty): domain = [Commit]; range = [str]
     class commitDate(DataProperty): domain = [Commit]; range = [str]
     class isInitial(DataProperty): domain = [Commit]; range = [bool]
-
     class fileName(DataProperty): domain = [File]; range = [str]
     class fileStatus(DataProperty): domain = [File]; range = [str]
     class fileChanges(DataProperty): domain = [File]; range = [int]
-
     class title(DataProperty): domain = [Issue, PullRequest]; range = [str]
     class state(DataProperty): domain = [Issue, PullRequest]; range = [str]
     class mergedAt(DataProperty): domain = [PullRequest]; range = [str]
-
     class userLogin(DataProperty): domain = [User]; range = [str]
     class userURL(DataProperty): domain = [User]; range = [str]
 
@@ -109,10 +108,10 @@ with onto:
     Commit.is_a.append(onBranch.exactly(1, Branch))
 
     # Equivalent Class Definitions 
-MergeCommit.equivalent_to.append(Commit & parent.min(2, Commit))
-InitialCommit.equivalent_to.append(Commit & ~parent.some(Commit))
-UnmergedBranch.equivalent_to.append(Branch & ~mergedInto.some(Branch))
-MergedPullRequest.equivalent_to.append(PullRequest & state.value("closed") & mergedAt.some(str))
+    MergeCommit.equivalent_to.append(Commit & parent.min(2, Commit))
+    InitialCommit.equivalent_to.append(Commit & ~parent.some(Commit))
+    UnmergedBranch.equivalent_to.append(Branch & ~mergedInto.some(Branch))
+    MergedPullRequest.equivalent_to.append(PullRequest & state.value("closed") & mergedAt.some(str))
 
 # SWRL Placeholder (for documentation)
 with onto:
@@ -123,5 +122,5 @@ with onto:
 
 
 # Save ontology
-onto.save(file="ontology/git-onto-logic-redesigned.owl", format="rdfxml")
-print("✅ Ontology saved: ontology/git-onto-logic-redesigned.owl")
+onto.save(file="ontology.owl", format="rdfxml")
+print(" Ontology saved: ontology.owl")

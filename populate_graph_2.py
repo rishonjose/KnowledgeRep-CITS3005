@@ -1,30 +1,21 @@
-# --------------------------------------------------------
-# Git-Onto-Logic Ontology Population Script (with Concurrent Contributor Detection)
-# Author: Saayella
-# --------------------------------------------------------
 import json
 from pathlib import Path
 from owlready2 import *
 from datetime import datetime
 from collections import defaultdict
 
-# === Load ontology schema ===
+#  Load ontology schema
 onto = get_ontology("ontology/git-onto-logic-redesigned.owl").load()
-
-# === Add new inferred class ===
 with onto:
     class ConcurrentContributor(onto.User): pass
-
-# === Dataset folder path ===
+# Data
 DATA_DIR = Path("data")
-
-# === Helper: load JSON ===
 def load_json(filename):
     path = DATA_DIR / filename
     with open(path, "r", encoding="utf-8") as f:
         return json.load(f)
 
-# === Load dataset files ===
+# Dataset files 
 repos    = load_json("repos.json")
 branches = load_json("branches.json")
 commits  = load_json("commits.json")
@@ -33,15 +24,14 @@ files    = load_json("files.json")
 issues   = load_json("issues.json")
 prs      = load_json("pulls.json")
 
-# === Cache dictionaries ===
+# Cache dictionaries 
 repo_map = {}
 branch_map = {}
 user_map = {}
 commit_map = {}
 
-# --------------------------------------------------------
-# === Create repository individuals ===
-# --------------------------------------------------------
+# Create repository individuals 
+
 for r in repos:
     repo_iri = f"repo_{r['repo_id']}"
     repo = onto.Repository(repo_iri)
@@ -51,9 +41,7 @@ for r in repos:
     repo.repoForks = [int(r.get("repo_forks", 0))]
     repo_map[r["repo_id"]] = repo
 
-# --------------------------------------------------------
-# === Create user individuals ===
-# --------------------------------------------------------
+# Create user individuals
 for u in users:
     safe_login = u["user_login"].replace("/", "_")
     user = onto.User(f"user_{safe_login}")
@@ -61,9 +49,7 @@ for u in users:
     user.userURL = [u.get("user_url", "")]
     user_map[u["user_login"]] = user
 
-# --------------------------------------------------------
-# === Create branches and link to repos ===
-# --------------------------------------------------------
+# Create branches and link to repos 
 for b in branches:
     repo_id = b["repo_id"]
     repo = repo_map.get(repo_id)
@@ -78,9 +64,7 @@ for b in branches:
     branch_map[(repo_id, b["branch_name"])] = branch
     repo.hasBranch.append(branch)
 
-# --------------------------------------------------------
-# === Create commits and link ===
-# --------------------------------------------------------
+#  Create commits and link
 for c in commits:
     repo_id = c["repo_id"]
     branch_key = (repo_id, c["branch_name"])
@@ -125,9 +109,7 @@ for c in commits:
     if any(k in msg for k in ["security", "vulnerability"]):
         commit.is_a.append(onto.SecurityCommit)
 
-# --------------------------------------------------------
-# === Create files and link to commits ===
-# --------------------------------------------------------
+# Create files and link to commits
 for fobj in files:
     commit_sha = fobj["commit_sha"]
     commit = commit_map.get(commit_sha)
@@ -142,9 +124,7 @@ for fobj in files:
     file_ind.fileChanges = [int(fobj.get("file_changes", 0))]
     commit.updatesFile.append(file_ind)
 
-# --------------------------------------------------------
-# === Create issues and link ===
-# --------------------------------------------------------
+# Create issues and link 
 for iobj in issues:
     repo = repo_map.get(iobj["repo_id"])
     if not repo:
@@ -160,9 +140,7 @@ for iobj in issues:
     if user_login and user_login in user_map:
         issue.openedBy.append(user_map[user_login])
 
-# --------------------------------------------------------
-# === Create pull requests and link ===
-# --------------------------------------------------------
+# Create pull requests and link 
 for pobj in prs:
     repo = repo_map.get(pobj["repo_id"])
     if not repo:
@@ -190,10 +168,8 @@ for pobj in prs:
         if pobj.get("merged_at"):
             head_branch.mergedInto.append(base_branch)
 
-# --------------------------------------------------------
-# === Detect Concurrent Contributors ===
-# --------------------------------------------------------
-print("🔍 Detecting concurrent contributors...")
+# Detect Concurrent Contributors 
+print("Detecting concurrent contributors...")
 user_repo_dates = defaultdict(lambda: defaultdict(list))
 
 for c in commits:
@@ -225,15 +201,12 @@ for user, repos in user_repo_dates.items():
     if overlaps >= 3:
         concurrent_users.append(user)
 
-print(f"✅ Found {len(concurrent_users)} concurrent contributors.")
+print(f"Found {len(concurrent_users)} concurrent contributors.")
 
 for user_login in concurrent_users:
     if user_login in user_map:
         user_map[user_login].is_a.append(onto.ConcurrentContributor)
 
-# --------------------------------------------------------
-# === Manual reasoning (lightweight inference) ===
-# --------------------------------------------------------
 for c in onto.Commit.instances():
     if len(c.parent) >= 2 and onto.MergeCommit not in c.is_a:
         c.is_a.append(onto.MergeCommit)
@@ -244,10 +217,6 @@ for b in onto.Branch.instances():
     if not b.mergedInto:
         b.is_a.append(onto.UnmergedBranch)
 
-print("🧠 Manual reasoning complete (MergeCommit, InitialCommit, UnmergedBranch, ConcurrentContributor).")
-
-# --------------------------------------------------------
-# === Save populated ontology ===
-# --------------------------------------------------------
-onto.save(file="ontology/git-onto-logic-populated_2.owl", format="rdfxml")
-print("✅ Populated ontology saved: ontology/git-onto-logic-populated.owl")
+# Save populated ontology 
+onto.save(file="knowledge_graph.owl", format="rdfxml")
+print(" Populated ontology saved: knowledge_graph.owl")
