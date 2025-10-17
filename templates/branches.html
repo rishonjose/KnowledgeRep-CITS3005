@@ -5,9 +5,9 @@
     <ul class="list-group">
       {% for branch in branches %}
         <li class="list-group-item">
-          <a href="{{ url_for('routes.view_branch_commits', repo=repo, branch=branch) }}">{{ branch }}</a>
+            <a href="{{ url_for('routes.view_branch_commits', repo=repo, branch=branch) }}">{{ branch }}</a>
         </li>
-      {% endfor %}
+        {% endfor %}
     </ul>
   {% else %}
     <p>No branches found.</p>

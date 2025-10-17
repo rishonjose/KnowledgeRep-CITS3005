@@ -49,36 +49,56 @@ def view_repository(name):
     branches = []
     if repo:
         for b in getattr(repo, "hasBranch", []):
-            branch_name = val(getattr(b, "hasName", None)) or b.name
-            branches.append(branch_name)
+            # Use readable branchName if it exists
+            display_name = val(getattr(b, "branchName", None)) or b.name
+            branches.append(display_name)
     print(f"[DEBUG] Repo: {name}, hasBranch: {getattr(repo, 'hasBranch', None)}")
     return render_template("branches.html", repo=name, branches=sorted(branches))
 
 
-@bp.route("/repository/<path:repo>/branch/<branch>")
+@bp.route("/repository/<path:repo>/branch/<path:branch>")
 def view_branch_commits(repo, branch):
     """Display commits belonging to a specific branch of a repository."""
     commits = []
+    branch = branch.strip().lower()
+
     for b in onto.Branch.instances():
-        if hasattr(b, "hasName") and val(b.hasName).lower() == branch.lower():
-            for c in getattr(b, "hasCommit", []):
+        branch_name = val(getattr(b, "branchName", None))
+        iri_name = b.name.lower()
+
+        # Match either the clean name or full internal name
+        if (branch_name and branch_name.lower() == branch) or iri_name == branch:
+            # Collect commits via hasCommit (direct relation)
+            linked_commits = list(getattr(b, "hasCommit", []))
+
+            # Also include commits that reference this branch via onBranch
+            for c in onto.Commit.instances():
+                if b in getattr(c, "onBranch", []):
+                    linked_commits.append(c)
+
+            # Remove duplicates (commits may appear in both lists)
+            linked_commits = list(set(linked_commits))
+
+            # Convert to display data
+            for c in linked_commits:
                 msg = val(getattr(c, "message", "(no message)"))
-                author = val(getattr(c.authoredBy[0], "userLogin", "(unknown)")) if getattr(c, "authoredBy", None) else "(unknown)"
-                label = (
-                    "Merge" if c in onto.MergeCommit.instances()
-                    else "Initial" if c in onto.InitialCommit.instances()
-                    else "Security" if c in onto.SecurityCommit.instances()
-                    else ""
+                author = (
+                    val(getattr(c.authoredBy[0], "userLogin", "(unknown)"))
+                    if getattr(c, "authoredBy", None)
+                    else "(unknown)"
                 )
+                label = "Initial" if getattr(c, "isInitial", [False])[0] else ""
                 commits.append({
                     "message": msg,
                     "author": author,
                     "label": label,
-                    "timestamp": val(getattr(c, "timestamp", ""))
+                    "timestamp": val(getattr(c, "commitDate", ""))
                 })
+            break  # stop once the branch is matched
+
+    # Sort by newest first
     commits.sort(key=lambda x: x["timestamp"], reverse=True)
     return render_template("commits.html", branch=branch, commits=commits, repo=repo)
-
 
 @bp.route("/authors")
 def authors():
