@@ -1,224 +1,162 @@
 # --------------------------------------------------------
-# Populate Git-Onto-Logic (Advanced) Ontology with Dataset
+# Git-Onto-Logic Ontology Population Script (Redesigned)
 # Author: Saayella
 # --------------------------------------------------------
 import json
 from pathlib import Path
 from owlready2 import *
+from datetime import datetime
 
-# --------------------------------------------------------
-# Paths
-# --------------------------------------------------------
-ROOT = Path(__file__).parent
-DATA_DIR = ROOT / "data"
-ONTO_FILE = ROOT / "ontology" / "git-onto-logic-advanced.owl"
-OUTPUT_FILE = ROOT / "ontology" / "git-onto-logic-populated.owl"
+# === Load ontology schema ===
+onto = get_ontology("ontology/git-onto-logic-redesigned.owl").load()
 
-# --------------------------------------------------------
-# Helpers
-# --------------------------------------------------------
-def load_json(name):
-    p = DATA_DIR / name
-    if not p.exists():
-        print(f"⚠️  Missing {p}, skipping.")
-        return []
-    with open(p, "r", encoding="utf-8") as f:
+# === Dataset folder path ===
+DATA_DIR = Path("data")
+
+# === Helper: load JSON ===
+def load_json(filename):
+    path = DATA_DIR / filename
+    with open(path, "r", encoding="utf-8") as f:
         return json.load(f)
 
-# --------------------------------------------------------
-# Load Ontology
-# --------------------------------------------------------
-if not ONTO_FILE.exists():
-    raise FileNotFoundError("❌ Ontology file missing. Run git_onto_logic_advanced.py first.")
+# === Load all dataset files ===
+repos = load_json("repos.json")
+branches = load_json("branches.json")
+commits = load_json("commits.json")
+users = load_json("users.json")
+files = load_json("files.json")
+issues = load_json("issues.json")
+prs = load_json("pulls.json")
 
-onto = get_ontology(ONTO_FILE.as_uri()).load()
-print(f"✅ Loaded base ontology: {ONTO_FILE}")
+# === Cache dictionaries for lookups ===
+repo_map = {}
+branch_map = {}
+user_map = {}
+commit_map = {}
 
-Repository   = onto.Repository
-Branch       = onto.Branch
-Commit       = onto.Commit
-File         = onto.File
-User         = onto.User
-Issue        = onto.Issue
-PullRequest  = onto.PullRequest
+# === Create individuals for repositories ===
+for r in repos:
+    repo = onto.Repository(f"repo_{r['repo_id']}")
+    repo.repoName = [r["repo_name"]]
+    repo.repoLanguage = [r.get("repo_language", "Unknown")]
+    repo.repoStars = [r.get("repo_stars", 0)]
+    repo.repoForks = [r.get("repo_forks", 0)]
+    repo_map[r["repo_id"]] = repo
 
-# --------------------------------------------------------
-# Load Dataset
-# --------------------------------------------------------
-repos_data   = load_json("repos.json")
-branches_data= load_json("branches.json")
-commits_data = load_json("commits.json")
-files_data   = load_json("files.json")
-issues_data  = load_json("issues.json")
-prs_data     = load_json("pull_requests.json")
-users_data   = load_json("users.json")
+# === Create users ===
+for u in users:
+    user = onto.User(f"user_{u['user_login']}")
+    user.userLogin = [u["user_login"]]
+    user.userURL = [u.get("user_url", "")]
+    user_map[u["user_login"]] = user
 
-print(
-    f"📦 Dataset sizes → repos: {len(repos_data)}, branches: {len(branches_data)}, "
-    f"commits: {len(commits_data)}, files: {len(files_data)}, "
-    f"issues: {len(issues_data)}, PRs: {len(prs_data)}, users: {len(users_data)}"
-)
-
-# --------------------------------------------------------
-# Create Individuals
-# --------------------------------------------------------
-users, repos, branches, commits, files, issues, pulls = {}, {}, {}, {}, {}, {}, {}
-
-# --- Users ---
-for u in users_data:
-    login = u.get("user_login")
-    if not login or login in users:
+# === Create branches and link to repos ===
+for b in branches:
+    repo_id = b["repo_id"]
+    repo = repo_map.get(repo_id)
+    if not repo: 
         continue
-    user_ind = User(login)
-    user_ind.hasName = login
-    users[login] = user_ind
+    branch_iri = f"repo_{repo_id}__branch_{b['branch_name']}"
+    branch = onto.Branch(branch_iri)
+    branch.branchName = [b["branch_name"]]
+    branch.isDefault = [bool(b.get("is_default", False))]
+    branch_map[(repo_id, b["branch_name"])] = branch
+    repo.hasBranch.append(branch)
 
-# --- Repositories ---
-for r in repos_data:
-    rid = r["repo_id"]
-    repolabel = r.get("repo_name", f"repo_{rid}").replace("/", "_")
-    repo_ind = Repository(repolabel)
-    repo_ind.hasName = r.get("repo_name", repolabel)
-    repos[rid] = repo_ind
+# === Create commits and link ===
+for c in commits:
+    repo_id = c["repo_id"]
+    branch_key = (repo_id, c["branch_name"])
+    branch = branch_map.get(branch_key)
+    if not branch:
+        continue
 
-# --- Branches ---
-for b in branches_data:
-    rid = b["repo_id"]
-    bname = b["branch_name"]
-    key = (rid, bname)
-    branch_ind = Branch(f"{bname}_{rid}")
-    branch_ind.hasName = bname
-    branch_ind.isMain = [bool(b.get("is_default", False))]
-    branches[key] = branch_ind
-    if rid in repos:
-        repos[rid].hasBranch.append(branch_ind)
+    commit_iri = f"{c['commit_sha']}"
+    commit = onto.Commit(commit_iri)
+    commit.commitSHA = [c["commit_sha"]]
+    commit.message = [c.get("commit_message", "")]
+    commit.commitDate = [c.get("commit_date", "")]
+    commit.isInitial = [bool(c.get("is_initial", False))]
 
-# --- Commits ---
-for c in commits_data:
-    sha = c["commit_sha"]
-    rid = c["repo_id"]
-    bname = c["branch_name"]
+    branch.hasCommit.append(commit)
+    commit.onBranch.append(branch)
+
+    # Author + committer
     author_login = c.get("commit_author_login")
+    committer_login = c.get("commit_committer_login")
 
-    commit_ind = commits.get(sha) or Commit(sha)
-    commits[sha] = commit_ind
-    commit_ind.hasName = sha
-    commit_ind.message = [c.get("commit_message", "")]
-    commit_ind.timestamp = [c.get("commit_date", "")]
+    if author_login and author_login in user_map:
+        commit.authoredBy.append(user_map[author_login])
+    if committer_login and committer_login in user_map:
+        commit.committedBy.append(user_map[committer_login])
 
-    if author_login and author_login in users:
-        commit_ind.authoredBy = [users[author_login]]
+    # Parent commits (if known)
+    parents = c.get("commit_parents", [])
+    for psha in parents:
+        if psha not in commit_map:  # may appear later
+            parent_commit = onto.Commit(psha)
+            commit_map[psha] = parent_commit
+        commit.parent.append(commit_map[psha])
 
-    branch_key = (rid, bname)
-    br = branches.get(branch_key)
-    if br:
-        commit_ind.onBranch = [br]
-        br.hasCommit.append(commit_ind)
+    commit_map[c["commit_sha"]] = commit
 
-# --- Parent Relationships ---
-for c in commits_data:
-    sha = c["commit_sha"]
-    child = commits.get(sha)
-    if not child:
+    # Flag security-related commits (via Python keyword scan)
+    msg = c.get("commit_message", "").lower()
+    if any(k in msg for k in ["security", "vulnerability"]):
+        commit.is_a.append(onto.SecurityCommit)
+
+# === Create files and link ===
+for fobj in files:
+    commit_sha = fobj["commit_sha"]
+    if commit_sha not in commit_map:
         continue
-    for psha in c.get("commit_parents", []):
-        parent_commit = commits.get(psha)
-        if not parent_commit:
-            parent_commit = Commit(psha)
-            parent_commit.hasName = psha
-            commits[psha] = parent_commit
-        child.parent.append(parent_commit)
+    commit = commit_map[commit_sha]
+    file_ind = onto.File(f"{commit_sha}__{fobj['file_name'].replace('/', '_')}")
+    file_ind.fileName = [fobj["file_name"]]
+    file_ind.fileStatus = [fobj.get("file_status", "modified")]
+    file_ind.fileChanges = [int(fobj.get("file_changes", 0))]
+    commit.updatesFile.append(file_ind)
 
-# --- Files ---
-for f in files_data:
-    sha = f["commit_sha"]
-    fname = f["file_name"]
-    file_ind = files.get(fname)
-    if not file_ind:
-        file_ind = File(fname.replace("/", "_"))
-        file_ind.hasName = fname
-        files[fname] = file_ind
-    commit_ind = commits.get(sha)
-    if commit_ind:
-        commit_ind.updatesFile.append(file_ind)
+# === Create issues ===
+for iobj in issues:
+    repo = repo_map.get(iobj["repo_id"])
+    if not repo:
+        continue
+    issue = onto.Issue(f"issue_{iobj['issue_id']}")
+    issue.title = [iobj["title"]]
+    issue.state = [iobj["state"]]
+    repo.hasIssue.append(issue)
+    user_login = iobj.get("user_login")
+    if user_login and user_login in user_map:
+        issue.openedBy.append(user_map[user_login])
 
-# --- Issues ---
-for it in issues_data:
-    rid = it["repo_id"]
-    iid = it.get("issue_id") or it.get("issue_number")
-    title = it.get("title", f"Issue_{iid}")
-    state = it.get("state", "")
-    opener = it.get("user_login")
+# === Create pull requests ===
+for pobj in prs:
+    repo = repo_map.get(pobj["repo_id"])
+    if not repo:
+        continue
+    pr = onto.PullRequest(f"pr_{pobj['pr_id']}")
+    pr.title = [pobj["title"]]
+    pr.state = [pobj["state"]]
+    pr.mergedAt = [pobj.get("merged_at") or ""]
 
-    issue_ind = Issue(f"issue_{iid}")
-    issue_ind.hasName = title
-    issue_ind.status = [state]
-    issues[iid] = issue_ind
+    repo.hasPullRequest.append(pr)
 
-    repo_ind = repos.get(rid)
-    if repo_ind:
-        repo_ind.hasIssue.append(issue_ind)
-    if opener and opener in users:
-        issue_ind.openedBy = [users[opener]]
+    user_login = pobj.get("user_login")
+    if user_login and user_login in user_map:
+        pr.openedBy.append(user_map[user_login])
 
-# --- Pull Requests ---
-for pr in prs_data:
-    rid = pr["repo_id"]
-    prid = pr.get("pr_id") or pr.get("number")
-    title = pr.get("title", f"PR_{prid}")
-    state = pr.get("state", "")
-    opener = pr.get("user_login")
-    merged_at = pr.get("merged_at")
+    base_branch = branch_map.get((pobj["repo_id"], pobj["base_branch"]))
+    head_branch = branch_map.get((pobj["repo_id"], pobj["head_branch"]))
 
-    pr_ind = PullRequest(f"pr_{prid}")
-    pr_ind.hasName = title
-    pr_ind.status = [state]
-    pulls[prid] = pr_ind
+    if base_branch:
+        pr.hasBaseBranch.append(base_branch)
+    if head_branch:
+        pr.hasHeadBranch.append(head_branch)
+        # If merged, add mergedInto relation
+        if pobj.get("merged_at"):
+            head_branch.mergedInto.append(base_branch)
 
-    repo_ind = repos.get(rid)
-    if repo_ind:
-        repo_ind.hasPullRequest.append(pr_ind)
-
-    if opener and opener in users:
-        pr_ind.openedBy = [users[opener]]
-    if merged_at and opener in users:
-        pr_ind.mergedBy = [users[opener]]
-
-# --------------------------------------------------------
-# Simulate SWRL-like reasoning in Python
-# --------------------------------------------------------
-security_commits = []
-for c in Commit.instances():
-    for msg in getattr(c, "message", []):
-        if isinstance(msg, str) and ("security" in msg.lower() or "vulnerability" in msg.lower()):
-            c.is_a.append(onto.SecurityCommit)
-            security_commits.append(c)
-
-if security_commits:
-    print(f"🧩 Identified {len(security_commits)} SecurityCommit(s) via keyword rule.")
-else:
-    print("ℹ️  No commits matched 'security' or 'vulnerability' keywords.")
-
-# --------------------------------------------------------
-# Run Reasoner (HermiT)
-# --------------------------------------------------------
-print("🧠 Running OWL reasoner (HermiT)...")
-sync_reasoner()
-print("✅ Reasoning complete!")
-
-# --------------------------------------------------------
-# Summary
-# --------------------------------------------------------
-merge_commits = list(onto.MergeCommit.instances())
-init_commits  = list(onto.InitialCommit.instances())
-security_commits = list(onto.SecurityCommit.instances())
-
-print(f"📊 MergeCommits inferred: {len(merge_commits)}")
-print(f"📊 InitialCommits inferred: {len(init_commits)}")
-print(f"📊 SecurityCommits inferred (rule or SWRL): {len(security_commits)}")
-
-# --------------------------------------------------------
-# Save populated ontology
-# --------------------------------------------------------
-onto.save(file=str(OUTPUT_FILE), format="rdfxml")
-print(f"🎉 Populated ontology saved to {OUTPUT_FILE}")
+# === Save populated ontology ===
+onto.save(file="ontology/git-onto-logic-populated.owl", format="rdfxml")
+print("✅ Populated ontology saved: ontology/git-onto-logic-populated.owl")
