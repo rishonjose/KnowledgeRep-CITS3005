@@ -38,7 +38,8 @@ commit_map = {}
 for r in repos:
     repo = onto.Repository(f"repo_{r['repo_id']}")
     repo.repoName = [r["repo_name"]]
-    repo.repoLanguage = [r.get("repo_language", "Unknown")]
+    repo.repoLanguage = [r.get("repo_language") or "Unknown"]
+
     repo.repoStars = [r.get("repo_stars", 0)]
     repo.repoForks = [r.get("repo_forks", 0)]
     repo_map[r["repo_id"]] = repo
