@@ -26,6 +26,51 @@ class OntologyService:
         if value is None:
             return ""
         return value.replace("\\", "\\\\").replace('"', '\\"')
+
+    def run_custom_sparql(self, query_text: str):
+        """Run a custom SPARQL query on the loaded graph.
+        Returns a dict with keys:
+          - kind: 'SELECT' | 'ASK' | 'CONSTRUCT' | 'DESCRIBE'
+          - columns: list[str] (for SELECT)
+          - rows: list[list[str]] (for SELECT)
+          - boolean: bool (for ASK)
+          - serialization: str (for CONSTRUCT/DESCRIBE) in Turtle format
+        """
+        if not query_text or not query_text.strip():
+            raise ValueError("Empty query")
+
+        # Heuristic: determine query kind from the start of the query (ignoring prefixes and whitespace)
+        qt = re.sub(r"(^|\n)\s*PREFIX\s+[^\n]+", "", query_text, flags=re.IGNORECASE).strip()
+        first_word = re.split(r"\s+", qt, maxsplit=1)[0].upper()
+
+        # Execute using rdflib
+        if first_word == 'ASK':
+            res = self.graph.query(query_text)
+            # rdflib returns a boolean for ASK queries via boolean property or single-row/single-col
+            boolean = bool(res.askAnswer) if hasattr(res, 'askAnswer') else bool(list(res)[0][0])
+            return { 'kind': 'ASK', 'boolean': boolean }
+        elif first_word in ('CONSTRUCT', 'DESCRIBE'):
+            res_graph = self.graph.query(query_text).graph
+            # Serialize to Turtle for display
+            serialization = res_graph.serialize(format='turtle')
+            if isinstance(serialization, bytes):
+                serialization = serialization.decode('utf-8')
+            return { 'kind': first_word, 'serialization': serialization }
+        else:
+            # Default to SELECT
+            res = self.graph.query(query_text)
+            columns = [str(v) for v in res.vars] if hasattr(res, 'vars') else []
+            rows = []
+            for row in res:
+                out_row = []
+                for val in row:
+                    out_row.append(str(val))
+                rows.append(out_row)
+            return {
+                'kind': 'SELECT',
+                'columns': columns,
+                'rows': rows,
+            }
         
     def _resolve_repo_iri(self, repo_input: str):
         """Resolve a repository IRI from user input robustly.

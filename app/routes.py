@@ -98,3 +98,45 @@ def validate_graph():
             shapes_file_display='ontology/shapes.ttl',
             report_file_display='outputs/SHACL_REPORT.txt',
         ), 500
+
+@app.route('/sparql', methods=['GET', 'POST'])
+def run_sparql():
+    """Render a page to run custom SPARQL queries and display results."""
+    query_text = None
+    result = None
+    error = None
+
+    if request.method == 'POST':
+        query_text = (request.form.get('query') or '').strip()
+        if not query_text:
+            error = 'Please enter a SPARQL query.'
+        else:
+            try:
+                result = ontology_service.run_custom_sparql(query_text)
+            except Exception as e:
+                error = str(e)
+
+    # Provide a handy sample for initial load
+    sample_query = """
+PREFIX : <http://example.org/git-onto-logic#>
+SELECT ?repoName ?branchName ?sha
+WHERE {
+  ?repo a :Repository ;
+        :repoName ?repoName ;
+        :hasBranch ?branch .
+  ?branch :branchName ?branchName ;
+          :hasCommit ?commit .
+  ?commit :commitSHA ?sha .
+}
+LIMIT 10
+""".strip()
+
+    if not query_text:
+        query_text = sample_query
+
+    return render_template(
+        'run_sparql.html',
+        query_text=query_text,
+        result=result,
+        error=error,
+    )
