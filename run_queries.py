@@ -2,7 +2,7 @@
 from rdflib import Graph, Namespace
 from termcolor import colored  
 
-ONTO_PATH = "ontology/git-onto-logic-populated_2.owl"
+ONTO_PATH = "populated.owl"
 
 g = Graph()
 g.parse(ONTO_PATH, format="xml")
@@ -35,6 +35,7 @@ QUERIES = [
     }
     GROUP BY ?repo
     HAVING (COUNT(?branch) > 5)
+     LIMIT 10
     """),
 
     # 2. Users who contributed to ≥3 repositories
@@ -49,6 +50,7 @@ QUERIES = [
     }
     GROUP BY ?user
     HAVING (COUNT(DISTINCT ?repo) >= 3)
+     LIMIT 10
     """),
 
     # 3. Merge commits (inferred)
@@ -66,6 +68,7 @@ QUERIES = [
       ?commit a git:SecurityCommit ;
                git:onBranch ?branch .
     }
+     LIMIT 10
     """),
 
     # 5. Initial commits per repository
@@ -78,6 +81,7 @@ QUERIES = [
       ?commit a git:InitialCommit .
     }
     ORDER BY ?repo
+     LIMIT 10
     """),
 
     # 6. Branch merge graph
@@ -85,6 +89,7 @@ QUERIES = [
     PREFIX git: <http://example.org/git-onto-logic#>
     SELECT ?sourceBranch ?targetBranch
     WHERE { ?sourceBranch git:mergedInto ?targetBranch . }
+     LIMIT 10
     """),
 
     # 7. Pull requests that resulted in merges (corrected)
@@ -125,6 +130,7 @@ QUERIES = [
       ?branch git:hasCommit ?commit .
       ?commit a git:SecurityCommit .
     }
+     LIMIT 10
     """),
 
     # 10. Users who authored merge commits
@@ -185,7 +191,6 @@ QUERIES = [
     """),
 ]
 
-# === Run all queries ===
 for title, query in QUERIES:
     run_query(title, query)
 
