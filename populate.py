@@ -143,9 +143,15 @@ for pobj in prs:
         pr.hasHeadBranch.append(head_branch)
         if pobj.get("merged_at"):
             head_branch.mergedInto.append(base_branch)
+from datetime import datetime
+from collections import defaultdict
 
-# === Detect concurrent contributors ===
-print("🔍 Detecting concurrent contributors...")
+from datetime import datetime
+from collections import defaultdict
+
+print("🔍 Detecting concurrent contributors with overlapping repo activity...")
+
+# Map: user_login → {repo_id: [datetime list]}
 user_repo_dates = defaultdict(lambda: defaultdict(list))
 
 for c in commits:
@@ -156,30 +162,45 @@ for c in commits:
         continue
     try:
         date = datetime.strptime(date_str, "%Y-%m-%dT%H:%M:%SZ")
+        user_repo_dates[user][repo].append(date)
     except Exception:
         continue
-    user_repo_dates[user][repo].append(date)
 
 concurrent_users = []
+
 for user, repos in user_repo_dates.items():
     if len(repos) < 3:
         continue
-    repo_periods = [(min(d), max(d)) for d in repos.values()]
-    overlaps = sum(1 for i, (s1, e1) in enumerate(repo_periods)
-                     for j, (s2, e2) in enumerate(repo_periods)
-                     if i < j and s1 <= e2 and s2 <= e1)
+
+    # Compute time span for each repo
+    repo_periods = []
+    for dates in repos.values():
+        start, end = min(dates), max(dates)
+        repo_periods.append((start, end))
+
+    # Check overlap: at least 3 repositories overlap in time
+    overlaps = 0
+    for i, (s1, e1) in enumerate(repo_periods):
+        for j, (s2, e2) in enumerate(repo_periods):
+            if i < j and (s1 <= e2 and s2 <= e1):
+                overlaps += 1
+
     if overlaps >= 3:
         concurrent_users.append(user)
 
-print(f"✅ Found {len(concurrent_users)} concurrent contributors.")
+print(f"✅ Found {len(concurrent_users)} concurrent contributors with overlapping activity.")
+
+# --- Tag users ---
 for user_login in concurrent_users:
     if user_login in user_map:
         user_map[user_login].isConcurrentContributor = [True]
+        user_map[user_login].is_a.append(onto.ConcurrentContributor)
 
-# Optional: mark all others as False
+# Mark others as False
 for user in user_map.values():
     if not hasattr(user, "isConcurrentContributor"):
         user.isConcurrentContributor = [False]
+
 
 # === Manual reasoning ===
 for c in onto.Commit.instances():

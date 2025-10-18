@@ -24,6 +24,8 @@ with onto:
         domain = [Repository]
         range  = [Branch]
 
+    
+
     class hasCommit(ObjectProperty):
         domain = [Branch]
         range  = [Commit]
@@ -119,6 +121,11 @@ with onto:
     rule.set_as_rule("""
         Commit(?c), message(?c, ?m) -> SecurityCommit(?c)
     """)
+
+    class ConcurrentContributor(User): pass
+ConcurrentContributor.equivalent_to.append(
+    User & onto.isConcurrentContributor.value(True)
+)
 
 # === Save Ontology ===
 onto.save(file="ontology.owl", format="rdfxml")

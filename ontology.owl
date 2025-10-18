@@ -310,6 +310,21 @@
   </owl:equivalentClass>
 </owl:Class>
 
+<owl:Class rdf:about="#ConcurrentContributor">
+  <rdfs:subClassOf rdf:resource="#User"/>
+  <owl:equivalentClass>
+    <owl:Class>
+      <owl:intersectionOf rdf:parseType="Collection">
+        <rdf:Description rdf:about="#User"/>
+        <owl:Restriction>
+          <owl:onProperty rdf:resource="#isConcurrentContributor"/>
+          <owl:hasValue rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</owl:hasValue>
+        </owl:Restriction>
+      </owl:intersectionOf>
+    </owl:Class>
+  </owl:equivalentClass>
+</owl:Class>
+
 <swrl:Variable rdf:about="urn:swrl#c"/>
 
 <swrl:Variable rdf:about="urn:swrl#m"/>

@@ -6,7 +6,7 @@ from rdflib import Graph, Namespace
 from termcolor import colored  # pip install termcolor if needed
 
 # === Load ontology ===
-ONTO_PATH = "populated_knowledge_graph.owl"
+ONTO_PATH = "populated.owl"
 
 g = Graph()
 g.parse(ONTO_PATH, format="xml")
