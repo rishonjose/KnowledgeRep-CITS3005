@@ -5,7 +5,7 @@ from datetime import datetime
 from collections import defaultdict
 
 #  Load ontology schema 
-onto = get_ontology("ontology.owl").load()
+onto = get_ontology("outputs/ontology.owl").load()
 
 # Dataset folder path 
 DATA_DIR = Path("data")

@@ -225,11 +225,11 @@
   <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
 </owl:Class>
 
-<owl:Class rdf:about="#PullRequest">
+<owl:Class rdf:about="#Issue">
   <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
 </owl:Class>
 
-<owl:Class rdf:about="#Issue">
+<owl:Class rdf:about="#PullRequest">
   <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
 </owl:Class>
 
@@ -325,9 +325,276 @@
   </owl:equivalentClass>
 </owl:Class>
 
+<owl:NamedIndividual rdf:about="#user_rishonjose">
+  <rdf:type rdf:resource="#User"/>
+  <userLogin rdf:datatype="http://www.w3.org/2001/XMLSchema#string">rishonjose</userLogin>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#user_saayella">
+  <rdf:type rdf:resource="#User"/>
+  <userLogin rdf:datatype="http://www.w3.org/2001/XMLSchema#string">saayella</userLogin>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#user_web-flow">
+  <rdf:type rdf:resource="#User"/>
+  <userLogin rdf:datatype="http://www.w3.org/2001/XMLSchema#string">web-flow</userLogin>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#user_SachaPoulet">
+  <rdf:type rdf:resource="#User"/>
+  <userLogin rdf:datatype="http://www.w3.org/2001/XMLSchema#string">SachaPoulet</userLogin>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#repo_1076808869">
+  <rdf:type rdf:resource="#Repository"/>
+  <hasBranch rdf:resource="#branch_DATA"/>
+  <hasBranch rdf:resource="#branch_UI"/>
+  <hasBranch rdf:resource="#branch_flask"/>
+  <repoName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">rishonjose/KnowledgeRep-CITS3005</repoName>
+  <repoLanguage rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Python</repoLanguage>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#repo_965905378">
+  <rdf:type rdf:resource="#Repository"/>
+  <repoName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">rishonjose/CITS3403-Project</repoName>
+  <repoLanguage rdf:datatype="http://www.w3.org/2001/XMLSchema#string">HTML</repoLanguage>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#branch_DATA">
+  <rdf:type rdf:resource="#Branch"/>
+  <hasCommit rdf:resource="#commit_a96f585e7bd640c33c00c8a15318ac803d225d18"/>
+  <hasCommit rdf:resource="#commit_6d275bd5a8e080db22dabbac02325f6356f2920e"/>
+  <hasCommit rdf:resource="#commit_eb889f6f95bba491bb91b25ede512a9339926198"/>
+  <hasCommit rdf:resource="#commit_057e8242bed30683a3a93944147f07e37a471b5e"/>
+  <hasCommit rdf:resource="#commit_5484956191531be5da7433a47149b657d9cccb05"/>
+  <hasCommit rdf:resource="#commit_e192e24f4b97ef50feb5bbab34b278d596fe4b71"/>
+  <hasCommit rdf:resource="#commit_6719baf8b793bcbc9af45081dc168a54645aac02"/>
+  <hasCommit rdf:resource="#commit_dd8935e03154cb1a348d109afa20e540b6f40355"/>
+  <hasCommit rdf:resource="#commit_696c0d7e43551d753ca4954427d6ac01779dbbcd"/>
+  <hasCommit rdf:resource="#commit_79cb2f5e9a30e25d2b76c77389b0a51f638b4c39"/>
+  <rdf:type rdf:resource="#UnmergedBranch"/>
+  <branchName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">DATA</branchName>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#branch_UI">
+  <rdf:type rdf:resource="#Branch"/>
+  <rdf:type rdf:resource="#UnmergedBranch"/>
+  <branchName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">UI</branchName>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#branch_flask">
+  <rdf:type rdf:resource="#Branch"/>
+  <rdf:type rdf:resource="#UnmergedBranch"/>
+  <branchName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">flask</branchName>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#commit_a96f585e7bd640c33c00c8a15318ac803d225d18">
+  <rdf:type rdf:resource="#Commit"/>
+  <authoredBy rdf:resource="#user_rishonjose"/>
+  <rdf:type rdf:resource="#InitialCommit"/>
+  <commitSHA rdf:datatype="http://www.w3.org/2001/XMLSchema#string">a96f585e7bd640c33c00c8a15318ac803d225d18</commitSHA>
+  <message rdf:datatype="http://www.w3.org/2001/XMLSchema#string">UPDATED data with 20 Repos</message>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#commit_6d275bd5a8e080db22dabbac02325f6356f2920e">
+  <rdf:type rdf:resource="#Commit"/>
+  <authoredBy rdf:resource="#user_rishonjose"/>
+  <rdf:type rdf:resource="#InitialCommit"/>
+  <commitSHA rdf:datatype="http://www.w3.org/2001/XMLSchema#string">6d275bd5a8e080db22dabbac02325f6356f2920e</commitSHA>
+  <message rdf:datatype="http://www.w3.org/2001/XMLSchema#string">update routes</message>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#commit_eb889f6f95bba491bb91b25ede512a9339926198">
+  <rdf:type rdf:resource="#Commit"/>
+  <authoredBy rdf:resource="#user_saayella"/>
+  <rdf:type rdf:resource="#InitialCommit"/>
+  <commitSHA rdf:datatype="http://www.w3.org/2001/XMLSchema#string">eb889f6f95bba491bb91b25ede512a9339926198</commitSHA>
+  <message rdf:datatype="http://www.w3.org/2001/XMLSchema#string">ontology done?</message>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#commit_057e8242bed30683a3a93944147f07e37a471b5e">
+  <rdf:type rdf:resource="#Commit"/>
+  <authoredBy rdf:resource="#user_saayella"/>
+  <rdf:type rdf:resource="#InitialCommit"/>
+  <commitSHA rdf:datatype="http://www.w3.org/2001/XMLSchema#string">057e8242bed30683a3a93944147f07e37a471b5e</commitSHA>
+  <message rdf:datatype="http://www.w3.org/2001/XMLSchema#string">ontology</message>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#commit_5484956191531be5da7433a47149b657d9cccb05">
+  <rdf:type rdf:resource="#Commit"/>
+  <authoredBy rdf:resource="#user_saayella"/>
+  <rdf:type rdf:resource="#InitialCommit"/>
+  <commitSHA rdf:datatype="http://www.w3.org/2001/XMLSchema#string">5484956191531be5da7433a47149b657d9cccb05</commitSHA>
+  <message rdf:datatype="http://www.w3.org/2001/XMLSchema#string">ontology</message>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#commit_e192e24f4b97ef50feb5bbab34b278d596fe4b71">
+  <rdf:type rdf:resource="#Commit"/>
+  <authoredBy rdf:resource="#user_rishonjose"/>
+  <rdf:type rdf:resource="#InitialCommit"/>
+  <commitSHA rdf:datatype="http://www.w3.org/2001/XMLSchema#string">e192e24f4b97ef50feb5bbab34b278d596fe4b71</commitSHA>
+  <message rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Merge pull request #2 from rishonjose/UI
+
+UI</message>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#commit_6719baf8b793bcbc9af45081dc168a54645aac02">
+  <rdf:type rdf:resource="#Commit"/>
+  <authoredBy rdf:resource="#user_rishonjose"/>
+  <rdf:type rdf:resource="#InitialCommit"/>
+  <commitSHA rdf:datatype="http://www.w3.org/2001/XMLSchema#string">6719baf8b793bcbc9af45081dc168a54645aac02</commitSHA>
+  <message rdf:datatype="http://www.w3.org/2001/XMLSchema#string">update</message>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#commit_dd8935e03154cb1a348d109afa20e540b6f40355">
+  <rdf:type rdf:resource="#Commit"/>
+  <authoredBy rdf:resource="#user_rishonjose"/>
+  <rdf:type rdf:resource="#InitialCommit"/>
+  <commitSHA rdf:datatype="http://www.w3.org/2001/XMLSchema#string">dd8935e03154cb1a348d109afa20e540b6f40355</commitSHA>
+  <message rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Fixed repo traversal</message>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#commit_696c0d7e43551d753ca4954427d6ac01779dbbcd">
+  <rdf:type rdf:resource="#Commit"/>
+  <authoredBy rdf:resource="#user_rishonjose"/>
+  <rdf:type rdf:resource="#InitialCommit"/>
+  <commitSHA rdf:datatype="http://www.w3.org/2001/XMLSchema#string">696c0d7e43551d753ca4954427d6ac01779dbbcd</commitSHA>
+  <message rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Fixed Sparql Wrong Query Error</message>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#commit_79cb2f5e9a30e25d2b76c77389b0a51f638b4c39">
+  <rdf:type rdf:resource="#Commit"/>
+  <authoredBy rdf:resource="#user_rishonjose"/>
+  <rdf:type rdf:resource="#InitialCommit"/>
+  <commitSHA rdf:datatype="http://www.w3.org/2001/XMLSchema#string">79cb2f5e9a30e25d2b76c77389b0a51f638b4c39</commitSHA>
+  <message rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Updated flask, added more templates, bootstrap css for minimal styling, draft owl ontology for testing</message>
+</owl:NamedIndividual>
+
 <swrl:Variable rdf:about="urn:swrl#c"/>
 
 <swrl:Variable rdf:about="urn:swrl#m"/>
+
+<swrl:Variable rdf:about="urn:swrl#p1"/>
+
+<swrl:Variable rdf:about="urn:swrl#p2"/>
+
+<swrl:Imp>
+  <swrl:body>
+    <rdf:Description>
+      <rdf:first>
+        <swrl:ClassAtom>
+          <swrl:classPredicate rdf:resource="#Commit"/>
+          <swrl:argument1 rdf:resource="urn:swrl#c"/>
+        </swrl:ClassAtom>
+      </rdf:first>
+      <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+    </rdf:Description>
+  </swrl:body>
+  <swrl:head>
+    <rdf:Description>
+      <rdf:first>
+        <swrl:ClassAtom>
+          <swrl:classPredicate rdf:resource="#InitialCommit"/>
+          <swrl:argument1 rdf:resource="urn:swrl#c"/>
+        </swrl:ClassAtom>
+      </rdf:first>
+      <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+    </rdf:Description>
+  </swrl:head>
+</swrl:Imp>
+
+<swrl:Imp>
+  <swrl:body>
+    <rdf:Description>
+      <rdf:first>
+        <swrl:ClassAtom>
+          <swrl:classPredicate rdf:resource="#Commit"/>
+          <swrl:argument1 rdf:resource="urn:swrl#c"/>
+        </swrl:ClassAtom>
+      </rdf:first>
+      <rdf:rest>
+        <rdf:Description>
+          <rdf:first>
+            <swrl:IndividualPropertyAtom>
+              <swrl:propertyPredicate rdf:resource="#parent"/>
+              <swrl:argument1 rdf:resource="urn:swrl#c"/>
+              <swrl:argument2 rdf:resource="urn:swrl#p1"/>
+            </swrl:IndividualPropertyAtom>
+          </rdf:first>
+          <rdf:rest>
+            <rdf:Description>
+              <rdf:first>
+                <swrl:IndividualPropertyAtom>
+                  <swrl:propertyPredicate rdf:resource="#parent"/>
+                  <swrl:argument1 rdf:resource="urn:swrl#c"/>
+                  <swrl:argument2 rdf:resource="urn:swrl#p2"/>
+                </swrl:IndividualPropertyAtom>
+              </rdf:first>
+              <rdf:rest>
+                <rdf:Description>
+                  <rdf:first>
+                    <swrl:DifferentIndividualsAtom>
+                      <swrl:argument1 rdf:resource="urn:swrl#p1"/>
+                      <swrl:argument2 rdf:resource="urn:swrl#p2"/>
+                    </swrl:DifferentIndividualsAtom>
+                  </rdf:first>
+                  <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+                </rdf:Description>
+              </rdf:rest>
+            </rdf:Description>
+          </rdf:rest>
+        </rdf:Description>
+      </rdf:rest>
+    </rdf:Description>
+  </swrl:body>
+  <swrl:head>
+    <rdf:Description>
+      <rdf:first>
+        <swrl:ClassAtom>
+          <swrl:classPredicate rdf:resource="#MergeCommit"/>
+          <swrl:argument1 rdf:resource="urn:swrl#c"/>
+        </swrl:ClassAtom>
+      </rdf:first>
+      <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+    </rdf:Description>
+  </swrl:head>
+</swrl:Imp>
+
+<swrl:Imp>
+  <swrl:body>
+    <rdf:Description>
+      <rdf:first>
+        <swrl:ClassAtom>
+          <swrl:classPredicate rdf:resource="#Commit"/>
+          <swrl:argument1 rdf:resource="urn:swrl#c"/>
+        </swrl:ClassAtom>
+      </rdf:first>
+      <rdf:rest>
+        <rdf:Description>
+          <rdf:first>
+            <swrl:DatavaluedPropertyAtom>
+              <swrl:propertyPredicate rdf:resource="#message"/>
+              <swrl:argument1 rdf:resource="urn:swrl#c"/>
+              <swrl:argument2 rdf:resource="urn:swrl#m"/>
+            </swrl:DatavaluedPropertyAtom>
+          </rdf:first>
+          <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+        </rdf:Description>
+      </rdf:rest>
+    </rdf:Description>
+  </swrl:body>
+  <swrl:head>
+    <rdf:Description>
+      <rdf:first>
+        <swrl:ClassAtom>
+          <swrl:classPredicate rdf:resource="#SecurityCommit"/>
+          <swrl:argument1 rdf:resource="urn:swrl#c"/>
+        </swrl:ClassAtom>
+      </rdf:first>
+      <rdf:rest rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#nil"/>
+    </rdf:Description>
+  </swrl:head>
+</swrl:Imp>
 
 <swrl:Imp>
   <swrl:body>

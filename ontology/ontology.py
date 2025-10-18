@@ -125,5 +125,5 @@ with onto:
         User & onto.isConcurrentContributor.value(True)
     )
 
-onto.save(file="ontology.owl", format="rdfxml")
-print("Ontology saved: ontology.owl")
+onto.save(file="outputs/ontology.owl", format="rdfxml")
+print("Ontology saved: outputs/ontology.owl")

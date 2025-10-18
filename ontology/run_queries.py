@@ -1,7 +1,7 @@
 from rdflib import Graph, Namespace
 from termcolor import colored  
 
-ONTO_PATH = "populated.owl"
+ONTO_PATH = "outputs/populated.owl"
 
 g = Graph()
 g.parse(ONTO_PATH, format="xml")

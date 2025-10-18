@@ -2,8 +2,8 @@
 from pyshacl import validate
 from rdflib import Graph
 
-data_file = "populated.owl"
-shapes_file = "constraints/shapes.ttl"
+data_file = "outputs/populated.owl"
+shapes_file = "shapes.ttl"
 
 print(f"🔍 Validating {data_file} with {shapes_file} ...")
 
@@ -19,10 +19,10 @@ conforms, report_graph, report_text = validate(
     debug=False
 )
 
-print("\n📋 Validation Report:")
+print("\nValidation Report:")
 print(report_text)
-print("✅ Conforms:", conforms)
+print(" Conforms:", conforms)
 
-with open("SHACL_REPORT.txt", "w") as f:
+with open("outputs/SHACL_REPORT.txt", "w") as f:
     f.write(report_text)
-print("📁 Saved detailed report → docs/SHACL_REPORT.txt")
+print("📁 Saved detailed report → outputs/SHACL_REPORT.txt")

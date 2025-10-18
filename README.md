@@ -1,4 +1,6 @@
 # KnowledgeRep-CITS3005
+Please see the new directory structure
+
 Run ontology.py which will create ontology.owl
 then run populate.py which will populate ontology.owl with data in the data folder and create populated.owl 
 then validate populated.owl
