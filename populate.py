@@ -4,10 +4,10 @@ from owlready2 import *
 from datetime import datetime
 from collections import defaultdict
 
-# === Load ontology schema ===
+#  Load ontology schema 
 onto = get_ontology("ontology.owl").load()
 
-# === Dataset folder path ===
+# Dataset folder path 
 DATA_DIR = Path("data")
 
 def load_json(filename):
@@ -15,7 +15,7 @@ def load_json(filename):
     with open(path, "r", encoding="utf-8") as f:
         return json.load(f)
 
-# === Load dataset files ===
+# Load dataset files 
 repos    = load_json("repos.json")
 branches = load_json("branches.json")
 commits  = load_json("commits.json")
@@ -24,13 +24,13 @@ files    = load_json("files.json")
 issues   = load_json("issues.json")
 prs      = load_json("pulls.json")
 
-# === Cache dictionaries ===
+# Cache dictionaries 
 repo_map = {}
 branch_map = {}
 user_map = {}
 commit_map = {}
 
-# === Create repository individuals ===
+# Create repository individuals 
 for r in repos:
     repo_iri = f"repo_{r['repo_id']}"
     repo = onto.Repository(repo_iri)
@@ -40,7 +40,7 @@ for r in repos:
     repo.repoForks = [int(r.get("repo_forks", 0))]
     repo_map[r["repo_id"]] = repo
 
-# === Create user individuals ===
+# Create user individuals 
 for u in users:
     safe_login = u["user_login"].replace("/", "_")
     user = onto.User(f"user_{safe_login}")
@@ -48,7 +48,7 @@ for u in users:
     user.userURL = [u.get("user_url", "")]
     user_map[u["user_login"]] = user
 
-# === Create branches and link to repos ===
+# Create branches and link to repos 
 for b in branches:
     repo = repo_map.get(b["repo_id"])
     if not repo:
@@ -61,7 +61,7 @@ for b in branches:
     branch_map[(b["repo_id"], b["branch_name"])] = branch
     repo.hasBranch.append(branch)
 
-# === Create commits ===
+# Create commits 
 for c in commits:
     repo_id = c["repo_id"]
     branch_key = (repo_id, c["branch_name"])
@@ -99,7 +99,7 @@ for c in commits:
     if any(k in msg for k in ["security", "vulnerability"]):
         commit.is_a.append(onto.SecurityCommit)
 
-# === Create files ===
+# Create files 
 for fobj in files:
     commit = commit_map.get(fobj["commit_sha"])
     if not commit:
@@ -111,7 +111,7 @@ for fobj in files:
     file_ind.fileChanges = [int(fobj.get("file_changes", 0))]
     commit.updatesFile.append(file_ind)
 
-# === Create issues ===
+# Create issues 
 for iobj in issues:
     repo = repo_map.get(iobj["repo_id"])
     if not repo:
@@ -123,7 +123,7 @@ for iobj in issues:
     if (u := iobj.get("user_login")) and u in user_map:
         issue.openedBy.append(user_map[u])
 
-# === Create pull requests ===
+# Pull requests 
 for pobj in prs:
     repo = repo_map.get(pobj["repo_id"])
     if not repo:
@@ -143,17 +143,10 @@ for pobj in prs:
         pr.hasHeadBranch.append(head_branch)
         if pobj.get("merged_at"):
             head_branch.mergedInto.append(base_branch)
-from datetime import datetime
-from collections import defaultdict
 
-from datetime import datetime
-from collections import defaultdict
-
-print("🔍 Detecting concurrent contributors with overlapping repo activity...")
-
-# Map: user_login → {repo_id: [datetime list]}
 user_repo_dates = defaultdict(lambda: defaultdict(list))
 
+# Collect commit dates per user per repo
 for c in commits:
     user = c.get("commit_author_login")
     repo = c.get("repo_id")
@@ -161,8 +154,8 @@ for c in commits:
     if not (user and repo and date_str):
         continue
     try:
-        date = datetime.strptime(date_str, "%Y-%m-%dT%H:%M:%SZ")
-        user_repo_dates[user][repo].append(date)
+        dt = datetime.strptime(date_str, "%Y-%m-%dT%H:%M:%SZ")
+        user_repo_dates[user][repo].append(dt)
     except Exception:
         continue
 
@@ -170,39 +163,54 @@ concurrent_users = []
 
 for user, repos in user_repo_dates.items():
     if len(repos) < 3:
-        continue
+        continue  # must work in 3+ repos total
 
-    # Compute time span for each repo
-    repo_periods = []
-    for dates in repos.values():
-        start, end = min(dates), max(dates)
-        repo_periods.append((start, end))
+    # Compute time span per repo
+    spans = [(min(dates), max(dates)) for dates in repos.values()]
+    spans.sort(key=lambda x: x[0])  # sort by start time
 
-    # Check overlap: at least 3 repositories overlap in time
-    overlaps = 0
-    for i, (s1, e1) in enumerate(repo_periods):
-        for j, (s2, e2) in enumerate(repo_periods):
-            if i < j and (s1 <= e2 and s2 <= e1):
-                overlaps += 1
+    # Check if any 3 spans overlap simultaneously
+    found = False
+    n = len(spans)
+    for i in range(n):
+        overlap_start = spans[i][0]
+        overlap_end   = spans[i][1]
+        count = 1
+        for j in range(i + 1, n):
+            s, e = spans[j]
+            # overlap if intervals intersect
+            if s <= overlap_end and e >= overlap_start:
+                overlap_start = max(overlap_start, s)
+                overlap_end = min(overlap_end, e)
+                count += 1
+                if count >= 3:
+                    found = True
+                    break
+            else:
+                # no overlap, reset
+                overlap_start = s
+                overlap_end = e
+                count = 1
+        if found:
+            break
 
-    if overlaps >= 3:
+    if found:
         concurrent_users.append(user)
 
-print(f"✅ Found {len(concurrent_users)} concurrent contributors with overlapping activity.")
+print(f"Found {len(concurrent_users)} concurrent contributors with overlapping activity.")
 
-# --- Tag users ---
+# Tag concurrent contributors 
 for user_login in concurrent_users:
     if user_login in user_map:
         user_map[user_login].isConcurrentContributor = [True]
         user_map[user_login].is_a.append(onto.ConcurrentContributor)
 
-# Mark others as False
+# Mark all others as False
 for user in user_map.values():
     if not hasattr(user, "isConcurrentContributor"):
         user.isConcurrentContributor = [False]
 
-
-# === Manual reasoning ===
+# Reasoning since SWRL is not running for large dataset
 for c in onto.Commit.instances():
     if len(c.parent) >= 2:
         c.is_a.append(onto.MergeCommit)
@@ -212,6 +220,5 @@ for b in onto.Branch.instances():
     if not b.mergedInto:
         b.is_a.append(onto.UnmergedBranch)
 
-# === Save ontology ===
 onto.save(file="populated.owl", format="rdfxml")
-print("✅ Populated ontology saved: populated.owl")
+print(" Populated ontology saved: populated.owl")

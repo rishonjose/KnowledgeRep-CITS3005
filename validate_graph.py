@@ -3,7 +3,7 @@ from rdflib import Graph
 from termcolor import colored
 
 #  File paths 
-DATA_FILE = "knowledge_graph.owl"
+DATA_FILE = "populated.owl"
 SHACL_FILE = "shacl.ttl"
 
 print(colored("Running SHACL Validation...", "cyan"))

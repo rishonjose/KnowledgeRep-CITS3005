@@ -1,4 +1,3 @@
-
 from rdflib import Graph, Namespace
 from termcolor import colored  
 
@@ -8,7 +7,7 @@ g = Graph()
 g.parse(ONTO_PATH, format="xml")
 print(colored(f"Loaded ontology with {len(g)} triples", "green"))
 
-# Define namespace 
+# Namespace
 GIT = Namespace("http://example.org/git-onto-logic#")
 
 def run_query(title, query):
@@ -22,23 +21,24 @@ def run_query(title, query):
         vals = [str(x).split("#")[-1] for x in row if x]
         print("  •", ", ".join(vals))
 
-#  14 SPARQL Queries
+
 QUERIES = [
+
     # 1. Repositories with >5 unmerged branches
     ("Repositories with >5 unmerged branches", """
     PREFIX git: <http://example.org/git-onto-logic#>
     SELECT ?repo (COUNT(?branch) AS ?unmergedCount)
     WHERE {
-      ?repo a git:Repository .
-      ?repo git:hasBranch ?branch .
+      ?repo a git:Repository ;
+            git:hasBranch ?branch .
       ?branch a git:UnmergedBranch .
     }
     GROUP BY ?repo
     HAVING (COUNT(?branch) > 5)
-     LIMIT 10
+    LIMIT 10
     """),
 
-    # 2. Users who contributed to ≥3 repositories
+    # 2. Users who contributed to ≥3 repositories (structural)
     ("Users who contributed to ≥3 repositories", """
     PREFIX git: <http://example.org/git-onto-logic#>
     SELECT ?user (COUNT(DISTINCT ?repo) AS ?repoCount)
@@ -50,17 +50,37 @@ QUERIES = [
     }
     GROUP BY ?user
     HAVING (COUNT(DISTINCT ?repo) >= 3)
-     LIMIT 10
+    LIMIT 10
     """),
 
-    # 3. Merge commits (inferred)
+    # 3. Users with concurrent contributions to ≥3 repositories (true overlap)
+    ("Users with concurrent contributions to ≥3 repositories", """
+    PREFIX git: <http://example.org/git-onto-logic#>
+
+SELECT ?user (COUNT(DISTINCT ?repo) AS ?repoCount)
+WHERE {
+  ?user a git:ConcurrentContributor .
+  ?commit a git:Commit ;
+           git:authoredBy ?user ;
+           git:onBranch ?branch .
+  ?repo git:hasBranch ?branch .
+}
+GROUP BY ?user
+HAVING (COUNT(DISTINCT ?repo) >= 3)
+ORDER BY DESC(?repoCount)
+LIMIT 10
+
+    """),
+
+    # 4. Merge commits (≥2 parents)
     ("Merge commits (≥2 parents)", """
     PREFIX git: <http://example.org/git-onto-logic#>
     SELECT ?commit
     WHERE { ?commit a git:MergeCommit . }
+    LIMIT 10
     """),
 
-    # 4. Security commits merged into branches
+    # 5. Security commits merged into branches
     ("Security commits merged into branches", """
     PREFIX git: <http://example.org/git-onto-logic#>
     SELECT ?commit ?branch
@@ -68,10 +88,10 @@ QUERIES = [
       ?commit a git:SecurityCommit ;
                git:onBranch ?branch .
     }
-     LIMIT 10
+    LIMIT 10
     """),
 
-    # 5. Initial commits per repository
+    # 6. Initial commits per repository
     ("Initial commits per repository", """
     PREFIX git: <http://example.org/git-onto-logic#>
     SELECT ?repo ?branch ?commit
@@ -81,18 +101,18 @@ QUERIES = [
       ?commit a git:InitialCommit .
     }
     ORDER BY ?repo
-     LIMIT 10
+    LIMIT 10
     """),
 
-    # 6. Branch merge graph
+    # 7. Branch merge graph
     ("Branch merge graph (mergedInto relations)", """
     PREFIX git: <http://example.org/git-onto-logic#>
     SELECT ?sourceBranch ?targetBranch
     WHERE { ?sourceBranch git:mergedInto ?targetBranch . }
-     LIMIT 10
+    LIMIT 10
     """),
 
-    # 7. Pull requests that resulted in merges (corrected)
+    # 8. Pull requests that resulted in merges
     ("Pull requests that resulted in merges", """
     PREFIX git: <http://example.org/git-onto-logic#>
     SELECT DISTINCT ?pr ?title ?mergedAt ?head ?base
@@ -105,10 +125,10 @@ QUERIES = [
       OPTIONAL { ?pr git:hasBaseBranch ?base . }
     }
     ORDER BY DESC(?mergedAt)
-     LIMIT 10
+    LIMIT 10
     """),
 
-    # 8. Top 5 most active contributors
+    # 9. Top 5 most active contributors
     ("Top 5 most active contributors", """
     PREFIX git: <http://example.org/git-onto-logic#>
     SELECT ?user (COUNT(?commit) AS ?commitCount)
@@ -121,7 +141,7 @@ QUERIES = [
     LIMIT 5
     """),
 
-    # 9. Repositories containing security commits
+    # 10. Repositories containing security commits
     ("Repositories containing security commits", """
     PREFIX git: <http://example.org/git-onto-logic#>
     SELECT DISTINCT ?repo
@@ -130,10 +150,10 @@ QUERIES = [
       ?branch git:hasCommit ?commit .
       ?commit a git:SecurityCommit .
     }
-     LIMIT 10
+    LIMIT 10
     """),
 
-    # 10. Users who authored merge commits
+    # 11. Users who authored merge commits
     ("Users who authored merge commits", """
     PREFIX git: <http://example.org/git-onto-logic#>
     SELECT DISTINCT ?user
@@ -141,9 +161,10 @@ QUERIES = [
       ?commit a git:MergeCommit ;
                git:authoredBy ?user .
     }
+    LIMIT 10
     """),
 
-    # 11. Average number of commits per branch
+    # 12. Average number of commits per branch
     ("Average number of commits per branch", """
     PREFIX git: <http://example.org/git-onto-logic#>
     SELECT (AVG(?commitCount) AS ?averageCommits)
@@ -155,9 +176,10 @@ QUERIES = [
       }
       GROUP BY ?branch
     }
+    LIMIT 10
     """),
 
-    # 12. Top 10 most frequently modified files
+    # 13. Top 10 most frequently modified files
     ("Top 10 most frequently modified files", """
     PREFIX git: <http://example.org/git-onto-logic#>
     SELECT ?file (COUNT(?commit) AS ?timesModified)
@@ -170,7 +192,7 @@ QUERIES = [
     LIMIT 10
     """),
 
-    # 13. Commits without an author (data validation)
+    # 14. Commits without an author
     ("Commits without an author (data error check)", """
     PREFIX git: <http://example.org/git-onto-logic#>
     SELECT ?commit
@@ -178,9 +200,10 @@ QUERIES = [
       ?commit a git:Commit .
       FILTER NOT EXISTS { ?commit git:authoredBy ?user . }
     }
+    LIMIT 10
     """),
 
-    # 14. Branches with no commits (data validation)
+    # 15. Branches with no commits
     ("Branches with no commits (data error check)", """
     PREFIX git: <http://example.org/git-onto-logic#>
     SELECT ?branch
@@ -188,6 +211,7 @@ QUERIES = [
       ?branch a git:Branch .
       FILTER NOT EXISTS { ?branch git:hasCommit ?c . }
     }
+    LIMIT 10
     """),
 ]
 
