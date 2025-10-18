@@ -43,6 +43,7 @@ class OntologyService:
             FILTER(?username = "%s")
         }
         ORDER BY DESC(?date)
+        LIMIT 50
         """ % username
         
         results = []
@@ -66,6 +67,7 @@ class OntologyService:
                   git:userLogin ?username ;
                   git:userURL ?url .
         }
+        LIMIT 50
         """
         
         results = []
@@ -91,6 +93,7 @@ class OntologyService:
             FILTER(?repoName = "%s")
         }
         ORDER BY DESC(?date)
+        LIMIT 50
         """ % repository
         
         results = []
@@ -119,6 +122,7 @@ class OntologyService:
             FILTER(?branch = "%s")
         }
         ORDER BY DESC(?date)
+        LIMIT 50
         """ % branch
         
         results = []

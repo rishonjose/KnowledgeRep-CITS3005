@@ -9,6 +9,11 @@
         </div>
 
         {% if results %}
+            {% if results|length >= 50 %}
+                <div class="alert alert-warning mb-3">
+                    <p class="mb-0">Too many results, showing Top 50</p>
+                </div>
+            {% endif %}
             {% if request.form.query_type == 'user_commits' %}
                 <h4 class="mb-3">Commits by user: {{ request.form.user }}</h4>
                 <div class="table-responsive">
