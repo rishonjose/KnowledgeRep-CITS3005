@@ -220,5 +220,5 @@ for b in onto.Branch.instances():
     if not b.mergedInto:
         b.is_a.append(onto.UnmergedBranch)
 
-onto.save(file="populated.owl", format="rdfxml")
-print(" Populated ontology saved: populated.owl")
+onto.save(file="outputs/populated.owl", format="rdfxml")
+print(" Populated ontology saved: outputs/populated.owl")

@@ -3,7 +3,7 @@ from pyshacl import validate
 from rdflib import Graph
 
 data_file = "outputs/populated.owl"
-shapes_file = "shapes.ttl"
+shapes_file = "ontology/shapes.ttl"
 
 print(f"🔍 Validating {data_file} with {shapes_file} ...")
 
