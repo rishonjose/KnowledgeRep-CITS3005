@@ -112,21 +112,7 @@ LIMIT 10
     LIMIT 10
     """),
 
-    # 8. Pull requests that resulted in merges
-    ("Pull requests that resulted in merges", """
-    PREFIX git: <http://example.org/git-onto-logic#>
-    SELECT DISTINCT ?pr ?title ?mergedAt ?head ?base
-    WHERE {
-      ?head git:mergedInto ?base .
-      OPTIONAL { ?pr a git:PullRequest . }
-      OPTIONAL { ?pr git:title ?title . }
-      OPTIONAL { ?pr git:mergedAt ?mergedAt . }
-      OPTIONAL { ?pr git:hasHeadBranch ?head . }
-      OPTIONAL { ?pr git:hasBaseBranch ?base . }
-    }
-    ORDER BY DESC(?mergedAt)
-    LIMIT 10
-    """),
+    
 
     # 9. Top 5 most active contributors
     ("Top 5 most active contributors", """
