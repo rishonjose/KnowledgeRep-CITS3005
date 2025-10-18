@@ -3,22 +3,412 @@ Conforms: False
 Results (94):
 Constraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
 	Severity: sh:Violation
-	Source Shape: [ sh:message Literal("Branch must have at least one Commit.") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path git:hasCommit ]
-	Focus Node: :repo_965905378_branch_7
-	Result Path: git:hasCommit
-	Message: Branch must have at least one Commit.
+	Source Shape: [ sh:message Literal("Commit must have at least one author.") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path git:authoredBy ]
+	Focus Node: :commit_c68fd59e6c197021c795daac0d07856a39a97309
+	Result Path: git:authoredBy
+	Message: Commit must have at least one author.
 Constraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
 	Severity: sh:Violation
-	Source Shape: [ sh:message Literal("Branch must have at least one Commit.") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path git:hasCommit ]
-	Focus Node: :repo_762582850_branch_2
-	Result Path: git:hasCommit
-	Message: Branch must have at least one Commit.
+	Source Shape: [ sh:message Literal("Commit must have at least one author.") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path git:authoredBy ]
+	Focus Node: :commit_72630236513e7384cb0a2e8fffcae232135a5adc
+	Result Path: git:authoredBy
+	Message: Commit must have at least one author.
 Constraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
 	Severity: sh:Violation
-	Source Shape: [ sh:message Literal("Branch must have at least one Commit.") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path git:hasCommit ]
-	Focus Node: :repo_799498514_branch_6
-	Result Path: git:hasCommit
-	Message: Branch must have at least one Commit.
+	Source Shape: [ sh:message Literal("Commit must have at least one author.") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path git:authoredBy ]
+	Focus Node: :commit_299ccedfeca1fb3497978c288e76008a5c08e899
+	Result Path: git:authoredBy
+	Message: Commit must have at least one author.
+Constraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
+	Severity: sh:Violation
+	Source Shape: [ sh:message Literal("Commit must have at least one author.") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path git:authoredBy ]
+	Focus Node: :commit_2845af9b7f09effe27081a0c42d59f1e66cd5c20
+	Result Path: git:authoredBy
+	Message: Commit must have at least one author.
+Constraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
+	Severity: sh:Violation
+	Source Shape: [ sh:message Literal("Commit must have at least one author.") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path git:authoredBy ]
+	Focus Node: :commit_144608996a3cc5b971834a77e28d9145df1a4480
+	Result Path: git:authoredBy
+	Message: Commit must have at least one author.
+Constraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
+	Severity: sh:Violation
+	Source Shape: [ sh:message Literal("Commit must have at least one author.") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path git:authoredBy ]
+	Focus Node: :commit_edf2939c0d520ff1a0882af7272fcc691412cfbc
+	Result Path: git:authoredBy
+	Message: Commit must have at least one author.
+Constraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
+	Severity: sh:Violation
+	Source Shape: [ sh:message Literal("Commit must have at least one author.") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path git:authoredBy ]
+	Focus Node: :commit_697015b96f79428c30dda486d423cd54a555be97
+	Result Path: git:authoredBy
+	Message: Commit must have at least one author.
+Constraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
+	Severity: sh:Violation
+	Source Shape: [ sh:message Literal("Commit must have at least one author.") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path git:authoredBy ]
+	Focus Node: :commit_10bc0f2595b8672c0c1756f22051ec420036fdf2
+	Result Path: git:authoredBy
+	Message: Commit must have at least one author.
+Constraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
+	Severity: sh:Violation
+	Source Shape: [ sh:message Literal("Commit must have at least one author.") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path git:authoredBy ]
+	Focus Node: :commit_42d00a80cc0bc776f19325e9043fcf4e7892ec81
+	Result Path: git:authoredBy
+	Message: Commit must have at least one author.
+Constraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
+	Severity: sh:Violation
+	Source Shape: [ sh:message Literal("Commit must have at least one author.") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path git:authoredBy ]
+	Focus Node: :commit_c9c493f20f6bf791081ccf8ca0e7dfd7468d604b
+	Result Path: git:authoredBy
+	Message: Commit must have at least one author.
+Constraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
+	Severity: sh:Violation
+	Source Shape: [ sh:message Literal("Commit must have at least one author.") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path git:authoredBy ]
+	Focus Node: :commit_7a1d63a25cd32f38d9530bd5bde829b9ccba8561
+	Result Path: git:authoredBy
+	Message: Commit must have at least one author.
+Constraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
+	Severity: sh:Violation
+	Source Shape: [ sh:message Literal("Commit must have at least one author.") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path git:authoredBy ]
+	Focus Node: :commit_52b3c62c0bfd1268539c9b8333b6b3134b2b320e
+	Result Path: git:authoredBy
+	Message: Commit must have at least one author.
+Constraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
+	Severity: sh:Violation
+	Source Shape: [ sh:message Literal("Commit must have at least one author.") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path git:authoredBy ]
+	Focus Node: :commit_cf1b5f473259e46c667f3fb5a28bcd884ee3a102
+	Result Path: git:authoredBy
+	Message: Commit must have at least one author.
+Constraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
+	Severity: sh:Violation
+	Source Shape: [ sh:message Literal("Commit must have at least one author.") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path git:authoredBy ]
+	Focus Node: :commit_76bba139c083f7d54daa170165cad3e23c9d3ec8
+	Result Path: git:authoredBy
+	Message: Commit must have at least one author.
+Constraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
+	Severity: sh:Violation
+	Source Shape: [ sh:message Literal("Commit must have at least one author.") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path git:authoredBy ]
+	Focus Node: :commit_dd1c3c3572eb3e482e7b374d8e94ed483b98b354
+	Result Path: git:authoredBy
+	Message: Commit must have at least one author.
+Constraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
+	Severity: sh:Violation
+	Source Shape: [ sh:message Literal("Commit must have at least one author.") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path git:authoredBy ]
+	Focus Node: :commit_a360c7a8da41c12ca931200f5b3fcd37c35e56e0
+	Result Path: git:authoredBy
+	Message: Commit must have at least one author.
+Constraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
+	Severity: sh:Violation
+	Source Shape: [ sh:message Literal("Commit must have at least one author.") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path git:authoredBy ]
+	Focus Node: :commit_143d3bbd67b4b27f084883e241d78ba0f594a512
+	Result Path: git:authoredBy
+	Message: Commit must have at least one author.
+Constraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
+	Severity: sh:Violation
+	Source Shape: [ sh:message Literal("Commit must belong to a Branch.") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path git:onBranch ]
+	Focus Node: :commit_c68fd59e6c197021c795daac0d07856a39a97309
+	Result Path: git:onBranch
+	Message: Commit must belong to a Branch.
+Constraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
+	Severity: sh:Violation
+	Source Shape: [ sh:message Literal("Commit must belong to a Branch.") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path git:onBranch ]
+	Focus Node: :commit_72630236513e7384cb0a2e8fffcae232135a5adc
+	Result Path: git:onBranch
+	Message: Commit must belong to a Branch.
+Constraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
+	Severity: sh:Violation
+	Source Shape: [ sh:message Literal("Commit must belong to a Branch.") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path git:onBranch ]
+	Focus Node: :commit_299ccedfeca1fb3497978c288e76008a5c08e899
+	Result Path: git:onBranch
+	Message: Commit must belong to a Branch.
+Constraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
+	Severity: sh:Violation
+	Source Shape: [ sh:message Literal("Commit must belong to a Branch.") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path git:onBranch ]
+	Focus Node: :commit_2845af9b7f09effe27081a0c42d59f1e66cd5c20
+	Result Path: git:onBranch
+	Message: Commit must belong to a Branch.
+Constraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
+	Severity: sh:Violation
+	Source Shape: [ sh:message Literal("Commit must belong to a Branch.") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path git:onBranch ]
+	Focus Node: :commit_144608996a3cc5b971834a77e28d9145df1a4480
+	Result Path: git:onBranch
+	Message: Commit must belong to a Branch.
+Constraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
+	Severity: sh:Violation
+	Source Shape: [ sh:message Literal("Commit must belong to a Branch.") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path git:onBranch ]
+	Focus Node: :commit_edf2939c0d520ff1a0882af7272fcc691412cfbc
+	Result Path: git:onBranch
+	Message: Commit must belong to a Branch.
+Constraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
+	Severity: sh:Violation
+	Source Shape: [ sh:message Literal("Commit must belong to a Branch.") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path git:onBranch ]
+	Focus Node: :commit_697015b96f79428c30dda486d423cd54a555be97
+	Result Path: git:onBranch
+	Message: Commit must belong to a Branch.
+Constraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
+	Severity: sh:Violation
+	Source Shape: [ sh:message Literal("Commit must belong to a Branch.") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path git:onBranch ]
+	Focus Node: :commit_10bc0f2595b8672c0c1756f22051ec420036fdf2
+	Result Path: git:onBranch
+	Message: Commit must belong to a Branch.
+Constraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
+	Severity: sh:Violation
+	Source Shape: [ sh:message Literal("Commit must belong to a Branch.") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path git:onBranch ]
+	Focus Node: :commit_42d00a80cc0bc776f19325e9043fcf4e7892ec81
+	Result Path: git:onBranch
+	Message: Commit must belong to a Branch.
+Constraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
+	Severity: sh:Violation
+	Source Shape: [ sh:message Literal("Commit must belong to a Branch.") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path git:onBranch ]
+	Focus Node: :commit_c9c493f20f6bf791081ccf8ca0e7dfd7468d604b
+	Result Path: git:onBranch
+	Message: Commit must belong to a Branch.
+Constraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
+	Severity: sh:Violation
+	Source Shape: [ sh:message Literal("Commit must belong to a Branch.") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path git:onBranch ]
+	Focus Node: :commit_7a1d63a25cd32f38d9530bd5bde829b9ccba8561
+	Result Path: git:onBranch
+	Message: Commit must belong to a Branch.
+Constraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
+	Severity: sh:Violation
+	Source Shape: [ sh:message Literal("Commit must belong to a Branch.") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path git:onBranch ]
+	Focus Node: :commit_52b3c62c0bfd1268539c9b8333b6b3134b2b320e
+	Result Path: git:onBranch
+	Message: Commit must belong to a Branch.
+Constraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
+	Severity: sh:Violation
+	Source Shape: [ sh:message Literal("Commit must belong to a Branch.") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path git:onBranch ]
+	Focus Node: :commit_cf1b5f473259e46c667f3fb5a28bcd884ee3a102
+	Result Path: git:onBranch
+	Message: Commit must belong to a Branch.
+Constraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
+	Severity: sh:Violation
+	Source Shape: [ sh:message Literal("Commit must belong to a Branch.") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path git:onBranch ]
+	Focus Node: :commit_76bba139c083f7d54daa170165cad3e23c9d3ec8
+	Result Path: git:onBranch
+	Message: Commit must belong to a Branch.
+Constraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
+	Severity: sh:Violation
+	Source Shape: [ sh:message Literal("Commit must belong to a Branch.") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path git:onBranch ]
+	Focus Node: :commit_dd1c3c3572eb3e482e7b374d8e94ed483b98b354
+	Result Path: git:onBranch
+	Message: Commit must belong to a Branch.
+Constraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
+	Severity: sh:Violation
+	Source Shape: [ sh:message Literal("Commit must belong to a Branch.") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path git:onBranch ]
+	Focus Node: :commit_a360c7a8da41c12ca931200f5b3fcd37c35e56e0
+	Result Path: git:onBranch
+	Message: Commit must belong to a Branch.
+Constraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
+	Severity: sh:Violation
+	Source Shape: [ sh:message Literal("Commit must belong to a Branch.") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path git:onBranch ]
+	Focus Node: :commit_143d3bbd67b4b27f084883e241d78ba0f594a512
+	Result Path: git:onBranch
+	Message: Commit must belong to a Branch.
+Constraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
+	Severity: sh:Violation
+	Source Shape: [ sh:message Literal("Commit must have a message.") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path git:message ]
+	Focus Node: :commit_c68fd59e6c197021c795daac0d07856a39a97309
+	Result Path: git:message
+	Message: Commit must have a message.
+Constraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
+	Severity: sh:Violation
+	Source Shape: [ sh:message Literal("Commit must have a message.") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path git:message ]
+	Focus Node: :commit_72630236513e7384cb0a2e8fffcae232135a5adc
+	Result Path: git:message
+	Message: Commit must have a message.
+Constraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
+	Severity: sh:Violation
+	Source Shape: [ sh:message Literal("Commit must have a message.") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path git:message ]
+	Focus Node: :commit_299ccedfeca1fb3497978c288e76008a5c08e899
+	Result Path: git:message
+	Message: Commit must have a message.
+Constraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
+	Severity: sh:Violation
+	Source Shape: [ sh:message Literal("Commit must have a message.") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path git:message ]
+	Focus Node: :commit_2845af9b7f09effe27081a0c42d59f1e66cd5c20
+	Result Path: git:message
+	Message: Commit must have a message.
+Constraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
+	Severity: sh:Violation
+	Source Shape: [ sh:message Literal("Commit must have a message.") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path git:message ]
+	Focus Node: :commit_144608996a3cc5b971834a77e28d9145df1a4480
+	Result Path: git:message
+	Message: Commit must have a message.
+Constraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
+	Severity: sh:Violation
+	Source Shape: [ sh:message Literal("Commit must have a message.") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path git:message ]
+	Focus Node: :commit_edf2939c0d520ff1a0882af7272fcc691412cfbc
+	Result Path: git:message
+	Message: Commit must have a message.
+Constraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
+	Severity: sh:Violation
+	Source Shape: [ sh:message Literal("Commit must have a message.") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path git:message ]
+	Focus Node: :commit_697015b96f79428c30dda486d423cd54a555be97
+	Result Path: git:message
+	Message: Commit must have a message.
+Constraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
+	Severity: sh:Violation
+	Source Shape: [ sh:message Literal("Commit must have a message.") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path git:message ]
+	Focus Node: :commit_10bc0f2595b8672c0c1756f22051ec420036fdf2
+	Result Path: git:message
+	Message: Commit must have a message.
+Constraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
+	Severity: sh:Violation
+	Source Shape: [ sh:message Literal("Commit must have a message.") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path git:message ]
+	Focus Node: :commit_42d00a80cc0bc776f19325e9043fcf4e7892ec81
+	Result Path: git:message
+	Message: Commit must have a message.
+Constraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
+	Severity: sh:Violation
+	Source Shape: [ sh:message Literal("Commit must have a message.") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path git:message ]
+	Focus Node: :commit_c9c493f20f6bf791081ccf8ca0e7dfd7468d604b
+	Result Path: git:message
+	Message: Commit must have a message.
+Constraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
+	Severity: sh:Violation
+	Source Shape: [ sh:message Literal("Commit must have a message.") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path git:message ]
+	Focus Node: :commit_7a1d63a25cd32f38d9530bd5bde829b9ccba8561
+	Result Path: git:message
+	Message: Commit must have a message.
+Constraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
+	Severity: sh:Violation
+	Source Shape: [ sh:message Literal("Commit must have a message.") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path git:message ]
+	Focus Node: :commit_52b3c62c0bfd1268539c9b8333b6b3134b2b320e
+	Result Path: git:message
+	Message: Commit must have a message.
+Constraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
+	Severity: sh:Violation
+	Source Shape: [ sh:message Literal("Commit must have a message.") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path git:message ]
+	Focus Node: :commit_cf1b5f473259e46c667f3fb5a28bcd884ee3a102
+	Result Path: git:message
+	Message: Commit must have a message.
+Constraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
+	Severity: sh:Violation
+	Source Shape: [ sh:message Literal("Commit must have a message.") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path git:message ]
+	Focus Node: :commit_76bba139c083f7d54daa170165cad3e23c9d3ec8
+	Result Path: git:message
+	Message: Commit must have a message.
+Constraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
+	Severity: sh:Violation
+	Source Shape: [ sh:message Literal("Commit must have a message.") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path git:message ]
+	Focus Node: :commit_dd1c3c3572eb3e482e7b374d8e94ed483b98b354
+	Result Path: git:message
+	Message: Commit must have a message.
+Constraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
+	Severity: sh:Violation
+	Source Shape: [ sh:message Literal("Commit must have a message.") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path git:message ]
+	Focus Node: :commit_a360c7a8da41c12ca931200f5b3fcd37c35e56e0
+	Result Path: git:message
+	Message: Commit must have a message.
+Constraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
+	Severity: sh:Violation
+	Source Shape: [ sh:message Literal("Commit must have a message.") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path git:message ]
+	Focus Node: :commit_143d3bbd67b4b27f084883e241d78ba0f594a512
+	Result Path: git:message
+	Message: Commit must have a message.
+Constraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
+	Severity: sh:Violation
+	Source Shape: [ sh:message Literal("Commit must have a timestamp.") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path git:commitDate ]
+	Focus Node: :commit_c68fd59e6c197021c795daac0d07856a39a97309
+	Result Path: git:commitDate
+	Message: Commit must have a timestamp.
+Constraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
+	Severity: sh:Violation
+	Source Shape: [ sh:message Literal("Commit must have a timestamp.") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path git:commitDate ]
+	Focus Node: :commit_72630236513e7384cb0a2e8fffcae232135a5adc
+	Result Path: git:commitDate
+	Message: Commit must have a timestamp.
+Constraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
+	Severity: sh:Violation
+	Source Shape: [ sh:message Literal("Commit must have a timestamp.") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path git:commitDate ]
+	Focus Node: :commit_299ccedfeca1fb3497978c288e76008a5c08e899
+	Result Path: git:commitDate
+	Message: Commit must have a timestamp.
+Constraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
+	Severity: sh:Violation
+	Source Shape: [ sh:message Literal("Commit must have a timestamp.") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path git:commitDate ]
+	Focus Node: :commit_2845af9b7f09effe27081a0c42d59f1e66cd5c20
+	Result Path: git:commitDate
+	Message: Commit must have a timestamp.
+Constraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
+	Severity: sh:Violation
+	Source Shape: [ sh:message Literal("Commit must have a timestamp.") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path git:commitDate ]
+	Focus Node: :commit_144608996a3cc5b971834a77e28d9145df1a4480
+	Result Path: git:commitDate
+	Message: Commit must have a timestamp.
+Constraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
+	Severity: sh:Violation
+	Source Shape: [ sh:message Literal("Commit must have a timestamp.") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path git:commitDate ]
+	Focus Node: :commit_edf2939c0d520ff1a0882af7272fcc691412cfbc
+	Result Path: git:commitDate
+	Message: Commit must have a timestamp.
+Constraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
+	Severity: sh:Violation
+	Source Shape: [ sh:message Literal("Commit must have a timestamp.") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path git:commitDate ]
+	Focus Node: :commit_697015b96f79428c30dda486d423cd54a555be97
+	Result Path: git:commitDate
+	Message: Commit must have a timestamp.
+Constraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
+	Severity: sh:Violation
+	Source Shape: [ sh:message Literal("Commit must have a timestamp.") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path git:commitDate ]
+	Focus Node: :commit_10bc0f2595b8672c0c1756f22051ec420036fdf2
+	Result Path: git:commitDate
+	Message: Commit must have a timestamp.
+Constraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
+	Severity: sh:Violation
+	Source Shape: [ sh:message Literal("Commit must have a timestamp.") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path git:commitDate ]
+	Focus Node: :commit_42d00a80cc0bc776f19325e9043fcf4e7892ec81
+	Result Path: git:commitDate
+	Message: Commit must have a timestamp.
+Constraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
+	Severity: sh:Violation
+	Source Shape: [ sh:message Literal("Commit must have a timestamp.") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path git:commitDate ]
+	Focus Node: :commit_c9c493f20f6bf791081ccf8ca0e7dfd7468d604b
+	Result Path: git:commitDate
+	Message: Commit must have a timestamp.
+Constraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
+	Severity: sh:Violation
+	Source Shape: [ sh:message Literal("Commit must have a timestamp.") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path git:commitDate ]
+	Focus Node: :commit_7a1d63a25cd32f38d9530bd5bde829b9ccba8561
+	Result Path: git:commitDate
+	Message: Commit must have a timestamp.
+Constraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
+	Severity: sh:Violation
+	Source Shape: [ sh:message Literal("Commit must have a timestamp.") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path git:commitDate ]
+	Focus Node: :commit_52b3c62c0bfd1268539c9b8333b6b3134b2b320e
+	Result Path: git:commitDate
+	Message: Commit must have a timestamp.
+Constraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
+	Severity: sh:Violation
+	Source Shape: [ sh:message Literal("Commit must have a timestamp.") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path git:commitDate ]
+	Focus Node: :commit_cf1b5f473259e46c667f3fb5a28bcd884ee3a102
+	Result Path: git:commitDate
+	Message: Commit must have a timestamp.
+Constraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
+	Severity: sh:Violation
+	Source Shape: [ sh:message Literal("Commit must have a timestamp.") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path git:commitDate ]
+	Focus Node: :commit_76bba139c083f7d54daa170165cad3e23c9d3ec8
+	Result Path: git:commitDate
+	Message: Commit must have a timestamp.
+Constraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
+	Severity: sh:Violation
+	Source Shape: [ sh:message Literal("Commit must have a timestamp.") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path git:commitDate ]
+	Focus Node: :commit_dd1c3c3572eb3e482e7b374d8e94ed483b98b354
+	Result Path: git:commitDate
+	Message: Commit must have a timestamp.
+Constraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
+	Severity: sh:Violation
+	Source Shape: [ sh:message Literal("Commit must have a timestamp.") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path git:commitDate ]
+	Focus Node: :commit_a360c7a8da41c12ca931200f5b3fcd37c35e56e0
+	Result Path: git:commitDate
+	Message: Commit must have a timestamp.
+Constraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
+	Severity: sh:Violation
+	Source Shape: [ sh:message Literal("Commit must have a timestamp.") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path git:commitDate ]
+	Focus Node: :commit_143d3bbd67b4b27f084883e241d78ba0f594a512
+	Result Path: git:commitDate
+	Message: Commit must have a timestamp.
 Constraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
 	Severity: sh:Violation
 	Source Shape: [ sh:message Literal("Branch must have at least one Commit.") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path git:hasCommit ]
@@ -28,19 +418,13 @@ Constraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#
 Constraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
 	Severity: sh:Violation
 	Source Shape: [ sh:message Literal("Branch must have at least one Commit.") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path git:hasCommit ]
-	Focus Node: :repo_601538369_branch_11
+	Focus Node: :repo_79648391_branch_2
 	Result Path: git:hasCommit
 	Message: Branch must have at least one Commit.
 Constraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
 	Severity: sh:Violation
 	Source Shape: [ sh:message Literal("Branch must have at least one Commit.") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path git:hasCommit ]
-	Focus Node: :repo_601538369_branch_13
-	Result Path: git:hasCommit
-	Message: Branch must have at least one Commit.
-Constraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
-	Severity: sh:Violation
-	Source Shape: [ sh:message Literal("Branch must have at least one Commit.") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path git:hasCommit ]
-	Focus Node: :repo_601538369_branch_8
+	Focus Node: :repo_1076808869_branch_10
 	Result Path: git:hasCommit
 	Message: Branch must have at least one Commit.
 Constraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
@@ -52,7 +436,25 @@ Constraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#
 Constraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
 	Severity: sh:Violation
 	Source Shape: [ sh:message Literal("Branch must have at least one Commit.") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path git:hasCommit ]
-	Focus Node: :repo_601538369_branch_9
+	Focus Node: :repo_1076808869_branch_1
+	Result Path: git:hasCommit
+	Message: Branch must have at least one Commit.
+Constraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
+	Severity: sh:Violation
+	Source Shape: [ sh:message Literal("Branch must have at least one Commit.") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path git:hasCommit ]
+	Focus Node: :repo_965905378_branch_7
+	Result Path: git:hasCommit
+	Message: Branch must have at least one Commit.
+Constraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
+	Severity: sh:Violation
+	Source Shape: [ sh:message Literal("Branch must have at least one Commit.") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path git:hasCommit ]
+	Focus Node: :repo_799498514_branch_6
+	Result Path: git:hasCommit
+	Message: Branch must have at least one Commit.
+Constraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
+	Severity: sh:Violation
+	Source Shape: [ sh:message Literal("Branch must have at least one Commit.") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path git:hasCommit ]
+	Focus Node: :repo_601538369_branch_10
 	Result Path: git:hasCommit
 	Message: Branch must have at least one Commit.
 Constraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
@@ -64,7 +466,91 @@ Constraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#
 Constraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
 	Severity: sh:Violation
 	Source Shape: [ sh:message Literal("Branch must have at least one Commit.") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path git:hasCommit ]
+	Focus Node: :repo_1076808869_branch_5
+	Result Path: git:hasCommit
+	Message: Branch must have at least one Commit.
+Constraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
+	Severity: sh:Violation
+	Source Shape: [ sh:message Literal("Branch must have at least one Commit.") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path git:hasCommit ]
+	Focus Node: :repo_79648391_branch_9
+	Result Path: git:hasCommit
+	Message: Branch must have at least one Commit.
+Constraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
+	Severity: sh:Violation
+	Source Shape: [ sh:message Literal("Branch must have at least one Commit.") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path git:hasCommit ]
+	Focus Node: :repo_601538369_branch_8
+	Result Path: git:hasCommit
+	Message: Branch must have at least one Commit.
+Constraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
+	Severity: sh:Violation
+	Source Shape: [ sh:message Literal("Branch must have at least one Commit.") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path git:hasCommit ]
+	Focus Node: :repo_762582850_branch_2
+	Result Path: git:hasCommit
+	Message: Branch must have at least one Commit.
+Constraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
+	Severity: sh:Violation
+	Source Shape: [ sh:message Literal("Branch must have at least one Commit.") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path git:hasCommit ]
+	Focus Node: :repo_601538369_branch_11
+	Result Path: git:hasCommit
+	Message: Branch must have at least one Commit.
+Constraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
+	Severity: sh:Violation
+	Source Shape: [ sh:message Literal("Branch must have at least one Commit.") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path git:hasCommit ]
+	Focus Node: :repo_799498514_branch_3
+	Result Path: git:hasCommit
+	Message: Branch must have at least one Commit.
+Constraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
+	Severity: sh:Violation
+	Source Shape: [ sh:message Literal("Branch must have at least one Commit.") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path git:hasCommit ]
+	Focus Node: :repo_1076808869_branch_8
+	Result Path: git:hasCommit
+	Message: Branch must have at least one Commit.
+Constraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
+	Severity: sh:Violation
+	Source Shape: [ sh:message Literal("Branch must have at least one Commit.") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path git:hasCommit ]
+	Focus Node: :repo_601538369_branch_16
+	Result Path: git:hasCommit
+	Message: Branch must have at least one Commit.
+Constraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
+	Severity: sh:Violation
+	Source Shape: [ sh:message Literal("Branch must have at least one Commit.") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path git:hasCommit ]
+	Focus Node: :repo_601538369_branch_14
+	Result Path: git:hasCommit
+	Message: Branch must have at least one Commit.
+Constraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
+	Severity: sh:Violation
+	Source Shape: [ sh:message Literal("Branch must have at least one Commit.") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path git:hasCommit ]
+	Focus Node: :repo_965905378_branch_3
+	Result Path: git:hasCommit
+	Message: Branch must have at least one Commit.
+Constraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
+	Severity: sh:Violation
+	Source Shape: [ sh:message Literal("Branch must have at least one Commit.") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path git:hasCommit ]
+	Focus Node: :repo_601538369_branch_7
+	Result Path: git:hasCommit
+	Message: Branch must have at least one Commit.
+Constraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
+	Severity: sh:Violation
+	Source Shape: [ sh:message Literal("Branch must have at least one Commit.") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path git:hasCommit ]
+	Focus Node: :repo_601538369_branch_9
+	Result Path: git:hasCommit
+	Message: Branch must have at least one Commit.
+Constraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
+	Severity: sh:Violation
+	Source Shape: [ sh:message Literal("Branch must have at least one Commit.") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path git:hasCommit ]
 	Focus Node: :repo_601538369_branch_3
+	Result Path: git:hasCommit
+	Message: Branch must have at least one Commit.
+Constraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
+	Severity: sh:Violation
+	Source Shape: [ sh:message Literal("Branch must have at least one Commit.") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path git:hasCommit ]
+	Focus Node: :repo_601538369_branch_13
+	Result Path: git:hasCommit
+	Message: Branch must have at least one Commit.
+Constraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
+	Severity: sh:Violation
+	Source Shape: [ sh:message Literal("Branch must have at least one Commit.") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path git:hasCommit ]
+	Focus Node: :repo_79648391_branch_6
 	Result Path: git:hasCommit
 	Message: Branch must have at least one Commit.
 Constraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
@@ -79,489 +565,3 @@ Constraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#
 	Focus Node: :repo_79648391_branch_10
 	Result Path: git:hasCommit
 	Message: Branch must have at least one Commit.
-Constraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
-	Severity: sh:Violation
-	Source Shape: [ sh:message Literal("Branch must have at least one Commit.") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path git:hasCommit ]
-	Focus Node: :repo_601538369_branch_7
-	Result Path: git:hasCommit
-	Message: Branch must have at least one Commit.
-Constraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
-	Severity: sh:Violation
-	Source Shape: [ sh:message Literal("Branch must have at least one Commit.") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path git:hasCommit ]
-	Focus Node: :repo_601538369_branch_14
-	Result Path: git:hasCommit
-	Message: Branch must have at least one Commit.
-Constraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
-	Severity: sh:Violation
-	Source Shape: [ sh:message Literal("Branch must have at least one Commit.") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path git:hasCommit ]
-	Focus Node: :repo_799498514_branch_3
-	Result Path: git:hasCommit
-	Message: Branch must have at least one Commit.
-Constraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
-	Severity: sh:Violation
-	Source Shape: [ sh:message Literal("Branch must have at least one Commit.") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path git:hasCommit ]
-	Focus Node: :repo_79648391_branch_6
-	Result Path: git:hasCommit
-	Message: Branch must have at least one Commit.
-Constraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
-	Severity: sh:Violation
-	Source Shape: [ sh:message Literal("Branch must have at least one Commit.") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path git:hasCommit ]
-	Focus Node: :repo_79648391_branch_2
-	Result Path: git:hasCommit
-	Message: Branch must have at least one Commit.
-Constraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
-	Severity: sh:Violation
-	Source Shape: [ sh:message Literal("Branch must have at least one Commit.") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path git:hasCommit ]
-	Focus Node: :repo_79648391_branch_9
-	Result Path: git:hasCommit
-	Message: Branch must have at least one Commit.
-Constraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
-	Severity: sh:Violation
-	Source Shape: [ sh:message Literal("Branch must have at least one Commit.") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path git:hasCommit ]
-	Focus Node: :repo_601538369_branch_16
-	Result Path: git:hasCommit
-	Message: Branch must have at least one Commit.
-Constraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
-	Severity: sh:Violation
-	Source Shape: [ sh:message Literal("Branch must have at least one Commit.") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path git:hasCommit ]
-	Focus Node: :repo_965905378_branch_3
-	Result Path: git:hasCommit
-	Message: Branch must have at least one Commit.
-Constraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
-	Severity: sh:Violation
-	Source Shape: [ sh:message Literal("Branch must have at least one Commit.") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path git:hasCommit ]
-	Focus Node: :repo_1076808869_branch_5
-	Result Path: git:hasCommit
-	Message: Branch must have at least one Commit.
-Constraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
-	Severity: sh:Violation
-	Source Shape: [ sh:message Literal("Branch must have at least one Commit.") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path git:hasCommit ]
-	Focus Node: :repo_1076808869_branch_1
-	Result Path: git:hasCommit
-	Message: Branch must have at least one Commit.
-Constraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
-	Severity: sh:Violation
-	Source Shape: [ sh:message Literal("Branch must have at least one Commit.") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path git:hasCommit ]
-	Focus Node: :repo_1076808869_branch_10
-	Result Path: git:hasCommit
-	Message: Branch must have at least one Commit.
-Constraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
-	Severity: sh:Violation
-	Source Shape: [ sh:message Literal("Branch must have at least one Commit.") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path git:hasCommit ]
-	Focus Node: :repo_1076808869_branch_8
-	Result Path: git:hasCommit
-	Message: Branch must have at least one Commit.
-Constraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
-	Severity: sh:Violation
-	Source Shape: [ sh:message Literal("Branch must have at least one Commit.") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path git:hasCommit ]
-	Focus Node: :repo_601538369_branch_10
-	Result Path: git:hasCommit
-	Message: Branch must have at least one Commit.
-Constraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
-	Severity: sh:Violation
-	Source Shape: [ sh:message Literal("Commit must have at least one author.") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path git:authoredBy ]
-	Focus Node: :commit_42d00a80cc0bc776f19325e9043fcf4e7892ec81
-	Result Path: git:authoredBy
-	Message: Commit must have at least one author.
-Constraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
-	Severity: sh:Violation
-	Source Shape: [ sh:message Literal("Commit must have at least one author.") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path git:authoredBy ]
-	Focus Node: :commit_10bc0f2595b8672c0c1756f22051ec420036fdf2
-	Result Path: git:authoredBy
-	Message: Commit must have at least one author.
-Constraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
-	Severity: sh:Violation
-	Source Shape: [ sh:message Literal("Commit must have at least one author.") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path git:authoredBy ]
-	Focus Node: :commit_c9c493f20f6bf791081ccf8ca0e7dfd7468d604b
-	Result Path: git:authoredBy
-	Message: Commit must have at least one author.
-Constraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
-	Severity: sh:Violation
-	Source Shape: [ sh:message Literal("Commit must have at least one author.") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path git:authoredBy ]
-	Focus Node: :commit_697015b96f79428c30dda486d423cd54a555be97
-	Result Path: git:authoredBy
-	Message: Commit must have at least one author.
-Constraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
-	Severity: sh:Violation
-	Source Shape: [ sh:message Literal("Commit must have at least one author.") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path git:authoredBy ]
-	Focus Node: :commit_7a1d63a25cd32f38d9530bd5bde829b9ccba8561
-	Result Path: git:authoredBy
-	Message: Commit must have at least one author.
-Constraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
-	Severity: sh:Violation
-	Source Shape: [ sh:message Literal("Commit must have at least one author.") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path git:authoredBy ]
-	Focus Node: :commit_2845af9b7f09effe27081a0c42d59f1e66cd5c20
-	Result Path: git:authoredBy
-	Message: Commit must have at least one author.
-Constraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
-	Severity: sh:Violation
-	Source Shape: [ sh:message Literal("Commit must have at least one author.") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path git:authoredBy ]
-	Focus Node: :commit_52b3c62c0bfd1268539c9b8333b6b3134b2b320e
-	Result Path: git:authoredBy
-	Message: Commit must have at least one author.
-Constraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
-	Severity: sh:Violation
-	Source Shape: [ sh:message Literal("Commit must have at least one author.") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path git:authoredBy ]
-	Focus Node: :commit_dd1c3c3572eb3e482e7b374d8e94ed483b98b354
-	Result Path: git:authoredBy
-	Message: Commit must have at least one author.
-Constraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
-	Severity: sh:Violation
-	Source Shape: [ sh:message Literal("Commit must have at least one author.") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path git:authoredBy ]
-	Focus Node: :commit_76bba139c083f7d54daa170165cad3e23c9d3ec8
-	Result Path: git:authoredBy
-	Message: Commit must have at least one author.
-Constraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
-	Severity: sh:Violation
-	Source Shape: [ sh:message Literal("Commit must have at least one author.") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path git:authoredBy ]
-	Focus Node: :commit_a360c7a8da41c12ca931200f5b3fcd37c35e56e0
-	Result Path: git:authoredBy
-	Message: Commit must have at least one author.
-Constraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
-	Severity: sh:Violation
-	Source Shape: [ sh:message Literal("Commit must have at least one author.") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path git:authoredBy ]
-	Focus Node: :commit_c68fd59e6c197021c795daac0d07856a39a97309
-	Result Path: git:authoredBy
-	Message: Commit must have at least one author.
-Constraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
-	Severity: sh:Violation
-	Source Shape: [ sh:message Literal("Commit must have at least one author.") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path git:authoredBy ]
-	Focus Node: :commit_edf2939c0d520ff1a0882af7272fcc691412cfbc
-	Result Path: git:authoredBy
-	Message: Commit must have at least one author.
-Constraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
-	Severity: sh:Violation
-	Source Shape: [ sh:message Literal("Commit must have at least one author.") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path git:authoredBy ]
-	Focus Node: :commit_72630236513e7384cb0a2e8fffcae232135a5adc
-	Result Path: git:authoredBy
-	Message: Commit must have at least one author.
-Constraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
-	Severity: sh:Violation
-	Source Shape: [ sh:message Literal("Commit must have at least one author.") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path git:authoredBy ]
-	Focus Node: :commit_144608996a3cc5b971834a77e28d9145df1a4480
-	Result Path: git:authoredBy
-	Message: Commit must have at least one author.
-Constraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
-	Severity: sh:Violation
-	Source Shape: [ sh:message Literal("Commit must have at least one author.") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path git:authoredBy ]
-	Focus Node: :commit_299ccedfeca1fb3497978c288e76008a5c08e899
-	Result Path: git:authoredBy
-	Message: Commit must have at least one author.
-Constraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
-	Severity: sh:Violation
-	Source Shape: [ sh:message Literal("Commit must have at least one author.") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path git:authoredBy ]
-	Focus Node: :commit_143d3bbd67b4b27f084883e241d78ba0f594a512
-	Result Path: git:authoredBy
-	Message: Commit must have at least one author.
-Constraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
-	Severity: sh:Violation
-	Source Shape: [ sh:message Literal("Commit must have at least one author.") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path git:authoredBy ]
-	Focus Node: :commit_cf1b5f473259e46c667f3fb5a28bcd884ee3a102
-	Result Path: git:authoredBy
-	Message: Commit must have at least one author.
-Constraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
-	Severity: sh:Violation
-	Source Shape: [ sh:message Literal("Commit must belong to a Branch.") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path git:onBranch ]
-	Focus Node: :commit_42d00a80cc0bc776f19325e9043fcf4e7892ec81
-	Result Path: git:onBranch
-	Message: Commit must belong to a Branch.
-Constraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
-	Severity: sh:Violation
-	Source Shape: [ sh:message Literal("Commit must belong to a Branch.") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path git:onBranch ]
-	Focus Node: :commit_10bc0f2595b8672c0c1756f22051ec420036fdf2
-	Result Path: git:onBranch
-	Message: Commit must belong to a Branch.
-Constraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
-	Severity: sh:Violation
-	Source Shape: [ sh:message Literal("Commit must belong to a Branch.") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path git:onBranch ]
-	Focus Node: :commit_c9c493f20f6bf791081ccf8ca0e7dfd7468d604b
-	Result Path: git:onBranch
-	Message: Commit must belong to a Branch.
-Constraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
-	Severity: sh:Violation
-	Source Shape: [ sh:message Literal("Commit must belong to a Branch.") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path git:onBranch ]
-	Focus Node: :commit_697015b96f79428c30dda486d423cd54a555be97
-	Result Path: git:onBranch
-	Message: Commit must belong to a Branch.
-Constraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
-	Severity: sh:Violation
-	Source Shape: [ sh:message Literal("Commit must belong to a Branch.") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path git:onBranch ]
-	Focus Node: :commit_7a1d63a25cd32f38d9530bd5bde829b9ccba8561
-	Result Path: git:onBranch
-	Message: Commit must belong to a Branch.
-Constraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
-	Severity: sh:Violation
-	Source Shape: [ sh:message Literal("Commit must belong to a Branch.") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path git:onBranch ]
-	Focus Node: :commit_2845af9b7f09effe27081a0c42d59f1e66cd5c20
-	Result Path: git:onBranch
-	Message: Commit must belong to a Branch.
-Constraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
-	Severity: sh:Violation
-	Source Shape: [ sh:message Literal("Commit must belong to a Branch.") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path git:onBranch ]
-	Focus Node: :commit_52b3c62c0bfd1268539c9b8333b6b3134b2b320e
-	Result Path: git:onBranch
-	Message: Commit must belong to a Branch.
-Constraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
-	Severity: sh:Violation
-	Source Shape: [ sh:message Literal("Commit must belong to a Branch.") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path git:onBranch ]
-	Focus Node: :commit_dd1c3c3572eb3e482e7b374d8e94ed483b98b354
-	Result Path: git:onBranch
-	Message: Commit must belong to a Branch.
-Constraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
-	Severity: sh:Violation
-	Source Shape: [ sh:message Literal("Commit must belong to a Branch.") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path git:onBranch ]
-	Focus Node: :commit_76bba139c083f7d54daa170165cad3e23c9d3ec8
-	Result Path: git:onBranch
-	Message: Commit must belong to a Branch.
-Constraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
-	Severity: sh:Violation
-	Source Shape: [ sh:message Literal("Commit must belong to a Branch.") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path git:onBranch ]
-	Focus Node: :commit_a360c7a8da41c12ca931200f5b3fcd37c35e56e0
-	Result Path: git:onBranch
-	Message: Commit must belong to a Branch.
-Constraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
-	Severity: sh:Violation
-	Source Shape: [ sh:message Literal("Commit must belong to a Branch.") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path git:onBranch ]
-	Focus Node: :commit_c68fd59e6c197021c795daac0d07856a39a97309
-	Result Path: git:onBranch
-	Message: Commit must belong to a Branch.
-Constraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
-	Severity: sh:Violation
-	Source Shape: [ sh:message Literal("Commit must belong to a Branch.") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path git:onBranch ]
-	Focus Node: :commit_edf2939c0d520ff1a0882af7272fcc691412cfbc
-	Result Path: git:onBranch
-	Message: Commit must belong to a Branch.
-Constraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
-	Severity: sh:Violation
-	Source Shape: [ sh:message Literal("Commit must belong to a Branch.") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path git:onBranch ]
-	Focus Node: :commit_72630236513e7384cb0a2e8fffcae232135a5adc
-	Result Path: git:onBranch
-	Message: Commit must belong to a Branch.
-Constraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
-	Severity: sh:Violation
-	Source Shape: [ sh:message Literal("Commit must belong to a Branch.") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path git:onBranch ]
-	Focus Node: :commit_144608996a3cc5b971834a77e28d9145df1a4480
-	Result Path: git:onBranch
-	Message: Commit must belong to a Branch.
-Constraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
-	Severity: sh:Violation
-	Source Shape: [ sh:message Literal("Commit must belong to a Branch.") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path git:onBranch ]
-	Focus Node: :commit_299ccedfeca1fb3497978c288e76008a5c08e899
-	Result Path: git:onBranch
-	Message: Commit must belong to a Branch.
-Constraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
-	Severity: sh:Violation
-	Source Shape: [ sh:message Literal("Commit must belong to a Branch.") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path git:onBranch ]
-	Focus Node: :commit_143d3bbd67b4b27f084883e241d78ba0f594a512
-	Result Path: git:onBranch
-	Message: Commit must belong to a Branch.
-Constraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
-	Severity: sh:Violation
-	Source Shape: [ sh:message Literal("Commit must belong to a Branch.") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path git:onBranch ]
-	Focus Node: :commit_cf1b5f473259e46c667f3fb5a28bcd884ee3a102
-	Result Path: git:onBranch
-	Message: Commit must belong to a Branch.
-Constraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
-	Severity: sh:Violation
-	Source Shape: [ sh:message Literal("Commit must have a message.") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path git:message ]
-	Focus Node: :commit_42d00a80cc0bc776f19325e9043fcf4e7892ec81
-	Result Path: git:message
-	Message: Commit must have a message.
-Constraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
-	Severity: sh:Violation
-	Source Shape: [ sh:message Literal("Commit must have a message.") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path git:message ]
-	Focus Node: :commit_10bc0f2595b8672c0c1756f22051ec420036fdf2
-	Result Path: git:message
-	Message: Commit must have a message.
-Constraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
-	Severity: sh:Violation
-	Source Shape: [ sh:message Literal("Commit must have a message.") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path git:message ]
-	Focus Node: :commit_c9c493f20f6bf791081ccf8ca0e7dfd7468d604b
-	Result Path: git:message
-	Message: Commit must have a message.
-Constraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
-	Severity: sh:Violation
-	Source Shape: [ sh:message Literal("Commit must have a message.") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path git:message ]
-	Focus Node: :commit_697015b96f79428c30dda486d423cd54a555be97
-	Result Path: git:message
-	Message: Commit must have a message.
-Constraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
-	Severity: sh:Violation
-	Source Shape: [ sh:message Literal("Commit must have a message.") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path git:message ]
-	Focus Node: :commit_7a1d63a25cd32f38d9530bd5bde829b9ccba8561
-	Result Path: git:message
-	Message: Commit must have a message.
-Constraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
-	Severity: sh:Violation
-	Source Shape: [ sh:message Literal("Commit must have a message.") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path git:message ]
-	Focus Node: :commit_2845af9b7f09effe27081a0c42d59f1e66cd5c20
-	Result Path: git:message
-	Message: Commit must have a message.
-Constraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
-	Severity: sh:Violation
-	Source Shape: [ sh:message Literal("Commit must have a message.") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path git:message ]
-	Focus Node: :commit_52b3c62c0bfd1268539c9b8333b6b3134b2b320e
-	Result Path: git:message
-	Message: Commit must have a message.
-Constraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
-	Severity: sh:Violation
-	Source Shape: [ sh:message Literal("Commit must have a message.") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path git:message ]
-	Focus Node: :commit_dd1c3c3572eb3e482e7b374d8e94ed483b98b354
-	Result Path: git:message
-	Message: Commit must have a message.
-Constraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
-	Severity: sh:Violation
-	Source Shape: [ sh:message Literal("Commit must have a message.") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path git:message ]
-	Focus Node: :commit_76bba139c083f7d54daa170165cad3e23c9d3ec8
-	Result Path: git:message
-	Message: Commit must have a message.
-Constraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
-	Severity: sh:Violation
-	Source Shape: [ sh:message Literal("Commit must have a message.") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path git:message ]
-	Focus Node: :commit_a360c7a8da41c12ca931200f5b3fcd37c35e56e0
-	Result Path: git:message
-	Message: Commit must have a message.
-Constraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
-	Severity: sh:Violation
-	Source Shape: [ sh:message Literal("Commit must have a message.") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path git:message ]
-	Focus Node: :commit_c68fd59e6c197021c795daac0d07856a39a97309
-	Result Path: git:message
-	Message: Commit must have a message.
-Constraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
-	Severity: sh:Violation
-	Source Shape: [ sh:message Literal("Commit must have a message.") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path git:message ]
-	Focus Node: :commit_edf2939c0d520ff1a0882af7272fcc691412cfbc
-	Result Path: git:message
-	Message: Commit must have a message.
-Constraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
-	Severity: sh:Violation
-	Source Shape: [ sh:message Literal("Commit must have a message.") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path git:message ]
-	Focus Node: :commit_72630236513e7384cb0a2e8fffcae232135a5adc
-	Result Path: git:message
-	Message: Commit must have a message.
-Constraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
-	Severity: sh:Violation
-	Source Shape: [ sh:message Literal("Commit must have a message.") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path git:message ]
-	Focus Node: :commit_144608996a3cc5b971834a77e28d9145df1a4480
-	Result Path: git:message
-	Message: Commit must have a message.
-Constraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
-	Severity: sh:Violation
-	Source Shape: [ sh:message Literal("Commit must have a message.") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path git:message ]
-	Focus Node: :commit_299ccedfeca1fb3497978c288e76008a5c08e899
-	Result Path: git:message
-	Message: Commit must have a message.
-Constraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
-	Severity: sh:Violation
-	Source Shape: [ sh:message Literal("Commit must have a message.") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path git:message ]
-	Focus Node: :commit_143d3bbd67b4b27f084883e241d78ba0f594a512
-	Result Path: git:message
-	Message: Commit must have a message.
-Constraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
-	Severity: sh:Violation
-	Source Shape: [ sh:message Literal("Commit must have a message.") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path git:message ]
-	Focus Node: :commit_cf1b5f473259e46c667f3fb5a28bcd884ee3a102
-	Result Path: git:message
-	Message: Commit must have a message.
-Constraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
-	Severity: sh:Violation
-	Source Shape: [ sh:message Literal("Commit must have a timestamp.") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path git:commitDate ]
-	Focus Node: :commit_42d00a80cc0bc776f19325e9043fcf4e7892ec81
-	Result Path: git:commitDate
-	Message: Commit must have a timestamp.
-Constraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
-	Severity: sh:Violation
-	Source Shape: [ sh:message Literal("Commit must have a timestamp.") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path git:commitDate ]
-	Focus Node: :commit_10bc0f2595b8672c0c1756f22051ec420036fdf2
-	Result Path: git:commitDate
-	Message: Commit must have a timestamp.
-Constraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
-	Severity: sh:Violation
-	Source Shape: [ sh:message Literal("Commit must have a timestamp.") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path git:commitDate ]
-	Focus Node: :commit_c9c493f20f6bf791081ccf8ca0e7dfd7468d604b
-	Result Path: git:commitDate
-	Message: Commit must have a timestamp.
-Constraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
-	Severity: sh:Violation
-	Source Shape: [ sh:message Literal("Commit must have a timestamp.") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path git:commitDate ]
-	Focus Node: :commit_697015b96f79428c30dda486d423cd54a555be97
-	Result Path: git:commitDate
-	Message: Commit must have a timestamp.
-Constraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
-	Severity: sh:Violation
-	Source Shape: [ sh:message Literal("Commit must have a timestamp.") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path git:commitDate ]
-	Focus Node: :commit_7a1d63a25cd32f38d9530bd5bde829b9ccba8561
-	Result Path: git:commitDate
-	Message: Commit must have a timestamp.
-Constraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
-	Severity: sh:Violation
-	Source Shape: [ sh:message Literal("Commit must have a timestamp.") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path git:commitDate ]
-	Focus Node: :commit_2845af9b7f09effe27081a0c42d59f1e66cd5c20
-	Result Path: git:commitDate
-	Message: Commit must have a timestamp.
-Constraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
-	Severity: sh:Violation
-	Source Shape: [ sh:message Literal("Commit must have a timestamp.") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path git:commitDate ]
-	Focus Node: :commit_52b3c62c0bfd1268539c9b8333b6b3134b2b320e
-	Result Path: git:commitDate
-	Message: Commit must have a timestamp.
-Constraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
-	Severity: sh:Violation
-	Source Shape: [ sh:message Literal("Commit must have a timestamp.") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path git:commitDate ]
-	Focus Node: :commit_dd1c3c3572eb3e482e7b374d8e94ed483b98b354
-	Result Path: git:commitDate
-	Message: Commit must have a timestamp.
-Constraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
-	Severity: sh:Violation
-	Source Shape: [ sh:message Literal("Commit must have a timestamp.") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path git:commitDate ]
-	Focus Node: :commit_76bba139c083f7d54daa170165cad3e23c9d3ec8
-	Result Path: git:commitDate
-	Message: Commit must have a timestamp.
-Constraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
-	Severity: sh:Violation
-	Source Shape: [ sh:message Literal("Commit must have a timestamp.") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path git:commitDate ]
-	Focus Node: :commit_a360c7a8da41c12ca931200f5b3fcd37c35e56e0
-	Result Path: git:commitDate
-	Message: Commit must have a timestamp.
-Constraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
-	Severity: sh:Violation
-	Source Shape: [ sh:message Literal("Commit must have a timestamp.") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path git:commitDate ]
-	Focus Node: :commit_c68fd59e6c197021c795daac0d07856a39a97309
-	Result Path: git:commitDate
-	Message: Commit must have a timestamp.
-Constraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
-	Severity: sh:Violation
-	Source Shape: [ sh:message Literal("Commit must have a timestamp.") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path git:commitDate ]
-	Focus Node: :commit_edf2939c0d520ff1a0882af7272fcc691412cfbc
-	Result Path: git:commitDate
-	Message: Commit must have a timestamp.
-Constraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
-	Severity: sh:Violation
-	Source Shape: [ sh:message Literal("Commit must have a timestamp.") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path git:commitDate ]
-	Focus Node: :commit_72630236513e7384cb0a2e8fffcae232135a5adc
-	Result Path: git:commitDate
-	Message: Commit must have a timestamp.
-Constraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
-	Severity: sh:Violation
-	Source Shape: [ sh:message Literal("Commit must have a timestamp.") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path git:commitDate ]
-	Focus Node: :commit_144608996a3cc5b971834a77e28d9145df1a4480
-	Result Path: git:commitDate
-	Message: Commit must have a timestamp.
-Constraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
-	Severity: sh:Violation
-	Source Shape: [ sh:message Literal("Commit must have a timestamp.") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path git:commitDate ]
-	Focus Node: :commit_299ccedfeca1fb3497978c288e76008a5c08e899
-	Result Path: git:commitDate
-	Message: Commit must have a timestamp.
-Constraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
-	Severity: sh:Violation
-	Source Shape: [ sh:message Literal("Commit must have a timestamp.") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path git:commitDate ]
-	Focus Node: :commit_143d3bbd67b4b27f084883e241d78ba0f594a512
-	Result Path: git:commitDate
-	Message: Commit must have a timestamp.
-Constraint Violation in MinCountConstraintComponent (http://www.w3.org/ns/shacl#MinCountConstraintComponent):
-	Severity: sh:Violation
-	Source Shape: [ sh:message Literal("Commit must have a timestamp.") ; sh:minCount Literal("1", datatype=xsd:integer) ; sh:path git:commitDate ]
-	Focus Node: :commit_cf1b5f473259e46c667f3fb5a28bcd884ee3a102
-	Result Path: git:commitDate
-	Message: Commit must have a timestamp.

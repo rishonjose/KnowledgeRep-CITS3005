@@ -81,7 +81,6 @@ for c in commits:
 
     # Skip commits that have neither author nor committer
     if not author_login and not committer_login:
-        print(f"⚠️ Skipping commit {c['commit_sha']} (no author or committer).")
         continue
 
     commit_iri = f"commit_{safe_iri(c['commit_sha'])}"
