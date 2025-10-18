@@ -27,37 +27,29 @@ git:BranchShape a sh:NodeShape ;
     sh:message "A branch should not be merged into more than one branch." ;
   ] .
 
-######## Commit ########
 git:CommitShape a sh:NodeShape ;
   sh:targetClass git:Commit ;
   sh:property [
-    sh:path git:message ;
-    sh:minCount 1 ;
-    sh:datatype xsd:string ;
-    sh:message "Each commit should have a message." ;
-  ] ;
-  sh:property [
     sh:path git:authoredBy ;
     sh:minCount 1 ;
-    sh:message "Each commit must be linked to a user via authoredBy." ;
-  ] ;
-  sh:property [
-    sh:path git:committedAt ;
-    sh:minCount 1 ;
-    sh:datatype xsd:dateTime ;
-    sh:message "Each commit must have a committedAt timestamp (xsd:dateTime)." ;
+    sh:message "Commit must have at least one author." ;
   ] ;
   sh:property [
     sh:path git:onBranch ;
     sh:minCount 1 ;
-    sh:message "Each commit must belong to at least one branch." ;
+    sh:message "Commit must belong to a Branch." ;
   ] ;
   sh:property [
-    sh:path git:parent ;
-    sh:minCount 0 ;
-    sh:maxCount 10 ;
-    sh:message "Commit parents should be reasonable in number (0 for initial, ≥2 for merges)." ;
+    sh:path git:message ;                # <-- was git:commitMessage
+    sh:minCount 1 ;
+    sh:message "Commit must have a message." ;
+  ] ;
+  sh:property [
+    sh:path git:commitDate ;
+    sh:minCount 1 ;
+    sh:message "Commit must have a timestamp." ;
   ] .
+
 
 ######## Pull Request ########
 git:PullRequestShape a sh:NodeShape ;

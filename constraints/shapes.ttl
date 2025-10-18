@@ -1,0 +1,69 @@
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix git: <http://example.org/git-onto-logic#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+#################################################################
+# Repository Shape
+#################################################################
+git:RepositoryShape a sh:NodeShape ;
+    sh:targetClass git:Repository ;
+    sh:property [
+        sh:path git:hasBranch ;
+        sh:minCount 1 ;
+        sh:message "Each Repository must have at least one Branch." ;
+    ] .
+
+#################################################################
+# Branch Shape
+#################################################################
+git:BranchShape a sh:NodeShape ;
+    sh:targetClass git:Branch ;
+    sh:property [
+        sh:path git:branchName ;
+        sh:minCount 1 ;
+        sh:datatype xsd:string ;
+        sh:message "Branch must have a name." ;
+    ] ;
+    sh:property [
+        sh:path git:hasCommit ;
+        sh:minCount 1 ;
+        sh:message "Branch must have at least one Commit." ;
+    ] .
+@prefix sh:  <http://www.w3.org/ns/shacl#> .
+@prefix git: <http://example.org/git-onto-logic#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+git:CommitShape a sh:NodeShape ;
+  sh:targetClass git:Commit ;
+  sh:property [
+    sh:path git:authoredBy ;
+    sh:minCount 1 ;
+    sh:message "Commit must have at least one author." ;
+  ] ;
+  sh:property [
+    sh:path git:onBranch ;
+    sh:minCount 1 ;
+    sh:message "Commit must belong to a Branch." ;
+  ] ;
+  sh:property [
+    sh:path git:message ;                # <-- was git:commitMessage
+    sh:minCount 1 ;
+    sh:message "Commit must have a message." ;
+  ] ;
+  sh:property [
+    sh:path git:commitDate ;
+    sh:minCount 1 ;
+    sh:message "Commit must have a timestamp." ;
+  ] .
+
+
+#################################################################
+# User Shape
+#################################################################
+git:UserShape a sh:NodeShape ;
+    sh:targetClass git:User ;
+    sh:property [
+        sh:path git:userLogin ;
+        sh:minCount 1 ;
+        sh:message "User must have a login name." ;
+    ] .
