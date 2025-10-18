@@ -15,7 +15,13 @@
                 </div>
             {% endif %}
             {% if request.form.query_type == 'user_commits' %}
-                <h4 class="mb-3">Commits by user: {{ request.form.user }}</h4>
+                <h4 class="mb-3">
+                    {% if request.form.user %}
+                        Commits by user: {{ request.form.user }}
+                    {% else %}
+                        All Commits
+                    {% endif %}
+                </h4>
                 <div class="table-responsive">
                     <table class="table table-hover">
                         <thead class="table-light">
@@ -63,7 +69,13 @@
                 </div>
 
             {% elif request.form.query_type == 'merge_commits' %}
-                <h4 class="mb-3">Merge commits in repository: {{ request.form.repository }}</h4>
+                <h4 class="mb-3">
+                    {% if request.form.repository %}
+                        Merge commits in repository: {{ request.form.repository }}
+                    {% else %}
+                        All Merge Commits
+                    {% endif %}
+                </h4>
                 <div class="table-responsive">
                     <table class="table table-hover">
                         <thead class="table-light">
@@ -88,7 +100,13 @@
                 </div>
 
             {% elif request.form.query_type == 'security_commits' %}
-                <h4 class="mb-3">Security-related commits in branch: {{ request.form.branch }}</h4>
+                <h4 class="mb-3">
+                    {% if request.form.branch %}
+                        Security-related commits in branch: {{ request.form.branch }}
+                    {% else %}
+                        All Security-related Commits
+                    {% endif %}
+                </h4>
                 <div class="table-responsive">
                     <table class="table table-hover">
                         <thead class="table-light">

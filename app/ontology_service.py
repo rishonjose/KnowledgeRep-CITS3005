@@ -27,7 +27,7 @@ class OntologyService:
         return []
     
     def _get_user_commits(self, username):
-        """Find all commits by a specific user"""
+        """Find all commits by a specific user, or all commits if no username is provided"""
         query = """
         PREFIX git: <http://example.org/git-onto-logic#>
         SELECT ?commit ?message ?date ?repo ?branch
@@ -40,11 +40,11 @@ class OntologyService:
             ?branch git:branchName ?branchName ;
                     ^git:hasBranch ?repository .
             ?repository git:repoName ?repo .
-            FILTER(?username = "%s")
+            %s
         }
         ORDER BY DESC(?date)
         LIMIT 50
-        """ % username
+        """ % (f'FILTER(?username = "{username}")' if username else '')
         
         results = []
         for row in self.graph.query(query):
@@ -79,7 +79,7 @@ class OntologyService:
         return results
 
     def _get_merge_commits(self, repository):
-        """Find all merge commits in a repository"""
+        """Find all merge commits in a repository, or all merge commits if no repository is provided"""
         query = """
         PREFIX git: <http://example.org/git-onto-logic#>
         SELECT ?commit ?message ?date ?branch
@@ -90,11 +90,11 @@ class OntologyService:
             ?commit a git:MergeCommit ;
                     git:message ?message ;
                     git:commitDate ?date .
-            FILTER(?repoName = "%s")
+            %s
         }
         ORDER BY DESC(?date)
         LIMIT 50
-        """ % repository
+        """ % (f'FILTER(?repoName = "{repository}")' if repository else '')
         
         results = []
         for row in self.graph.query(query):
@@ -107,7 +107,7 @@ class OntologyService:
         return results
 
     def _get_security_commits(self, branch):
-        """Find commits with security/vulnerability messages in a branch"""
+        """Find commits with security/vulnerability messages in a branch, or all security commits if no branch is provided"""
         query = """
         PREFIX git: <http://example.org/git-onto-logic#>
         SELECT ?commit ?message ?date ?user
@@ -119,11 +119,11 @@ class OntologyService:
                     git:onBranch ?branchObj .
             ?user git:userLogin ?userLogin .
             ?branchObj git:branchName ?branch .
-            FILTER(?branch = "%s")
+            %s
         }
         ORDER BY DESC(?date)
         LIMIT 50
-        """ % branch
+        """ % (f'FILTER(?branch = "{branch}")' if branch else '')
         
         results = []
         for row in self.graph.query(query):

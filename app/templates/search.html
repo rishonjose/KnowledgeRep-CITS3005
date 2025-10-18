@@ -21,24 +21,24 @@
                     </div>
 
                     <div id="user-input" class="mb-3" style="display:none;">
-                        <label for="user" class="form-label">GitHub Username</label>
+                        <label for="user" class="form-label">GitHub Username (Optional)</label>
                         <input type="text" class="form-control" id="user" name="user" 
-                               placeholder="Enter GitHub username" required>
-                        <div class="form-text">Example: sindresorhus, bokub</div>
+                               placeholder="Enter GitHub username">
+                        <div class="form-text">Example: sindresorhus, bokub. Leave empty to show all users.</div>
                     </div>
 
                     <div id="repository-input" class="mb-3" style="display:none;">
-                        <label for="repository" class="form-label">Repository Name</label>
+                        <label for="repository" class="form-label">Repository Name (Optional)</label>
                         <input type="text" class="form-control" id="repository" name="repository" 
-                               placeholder="Enter repository name" required>
-                        <div class="form-text">Full repository name without owner, e.g., 'p2p-chat'</div>
+                               placeholder="Enter repository name">
+                        <div class="form-text">Full repository name without owner, e.g., 'p2p-chat'. Leave empty to show all repositories.</div>
                     </div>
 
                     <div id="branch-input" class="mb-3" style="display:none;">
-                        <label for="branch" class="form-label">Branch Name</label>
+                        <label for="branch" class="form-label">Branch Name (Optional)</label>
                         <input type="text" class="form-control" id="branch" name="branch" 
-                               placeholder="Enter branch name" required>
-                        <div class="form-text">Branch name, e.g., 'main', 'master', 'develop'</div>
+                               placeholder="Enter branch name">
+                        <div class="form-text">Branch name, e.g., 'main', 'master', 'develop'. Leave empty to show all branches.</div>
                     </div>
 
                     <button type="submit" class="btn btn-primary">Search</button>
@@ -80,26 +80,14 @@ function toggleInputs() {
     switch(queryType) {
         case 'user_commits':
             document.getElementById('user-input').style.display = 'block';
-            document.getElementById('user').required = true;
-            document.getElementById('repository').required = false;
-            document.getElementById('branch').required = false;
             break;
         case 'merge_commits':
             document.getElementById('repository-input').style.display = 'block';
-            document.getElementById('repository').required = true;
-            document.getElementById('user').required = false;
-            document.getElementById('branch').required = false;
             break;
         case 'security_commits':
             document.getElementById('branch-input').style.display = 'block';
-            document.getElementById('branch').required = true;
-            document.getElementById('user').required = false;
-            document.getElementById('repository').required = false;
             break;
         case 'concurrent_contributors':
-            document.getElementById('user').required = false;
-            document.getElementById('repository').required = false;
-            document.getElementById('branch').required = false;
             break;
     }
 }
