@@ -3,41 +3,105 @@
 {% block content %}
 <div class="row">
     <div class="col-md-12">
-        <h2>Search Git Knowledge Base</h2>
-        <form method="POST" action="{{ url_for('search') }}">
-            <div class="mb-3">
-                <label for="query_type" class="form-label">Query Type</label>
-                <select class="form-select" id="query_type" name="query_type" required>
-                    <option value="">Select a query type...</option>
-                    <option value="user_commits">User Commits</option>
-                    <option value="concurrent_contributions">Concurrent Contributions</option>
-                    <option value="merge_commits">Merge Commits</option>
-                    <option value="security_commits">Security-related Commits</option>
-                </select>
-            </div>
+        <h2>Git Knowledge Base Explorer</h2>
+        <p class="lead">Search and explore Git repository knowledge using semantic queries</p>
+        
+        <div class="card mb-4">
+            <div class="card-body">
+                <form method="POST" action="{{ url_for('search') }}">
+                    <div class="mb-3">
+                        <label for="query_type" class="form-label">Select Query Type</label>
+                        <select class="form-select" id="query_type" name="query_type" required onchange="toggleInputs()">
+                            <option value="">Choose a query...</option>
+                            <option value="user_commits">Find commits by user</option>
+                            <option value="concurrent_contributors">Find concurrent contributors</option>
+                            <option value="merge_commits">Find merge commits in repository</option>
+                            <option value="security_commits">Find security-related commits in branch</option>
+                        </select>
+                    </div>
 
-            <div class="mb-3">
-                <label for="user" class="form-label">Username</label>
-                <input type="text" class="form-control" id="user" name="user">
-            </div>
+                    <div id="user-input" class="mb-3" style="display:none;">
+                        <label for="user" class="form-label">GitHub Username</label>
+                        <input type="text" class="form-control" id="user" name="user" 
+                               placeholder="Enter GitHub username" required>
+                        <div class="form-text">Example: sindresorhus, bokub</div>
+                    </div>
 
-            <div class="mb-3">
-                <label for="repository" class="form-label">Repository</label>
-                <input type="text" class="form-control" id="repository" name="repository">
-            </div>
+                    <div id="repository-input" class="mb-3" style="display:none;">
+                        <label for="repository" class="form-label">Repository Name</label>
+                        <input type="text" class="form-control" id="repository" name="repository" 
+                               placeholder="Enter repository name" required>
+                        <div class="form-text">Full repository name without owner, e.g., 'p2p-chat'</div>
+                    </div>
 
-            <div class="mb-3">
-                <label for="branch" class="form-label">Branch</label>
-                <input type="text" class="form-control" id="branch" name="branch">
-            </div>
+                    <div id="branch-input" class="mb-3" style="display:none;">
+                        <label for="branch" class="form-label">Branch Name</label>
+                        <input type="text" class="form-control" id="branch" name="branch" 
+                               placeholder="Enter branch name" required>
+                        <div class="form-text">Branch name, e.g., 'main', 'master', 'develop'</div>
+                    </div>
 
-            <div class="mb-3">
-                <label for="keyword" class="form-label">Keyword</label>
-                <input type="text" class="form-control" id="keyword" name="keyword">
+                    <button type="submit" class="btn btn-primary">Search</button>
+                </form>
             </div>
+        </div>
 
-            <button type="submit" class="btn btn-primary">Search</button>
-        </form>
+        <div class="card">
+            <div class="card-header">
+                <h5>Query Examples</h5>
+            </div>
+            <div class="card-body">
+                <h6>Find commits by user:</h6>
+                <p>Shows all commits made by a specific GitHub user across all repositories.</p>
+                
+                <h6>Find concurrent contributors:</h6>
+                <p>Lists users who have made contributions to three or more repositories with overlapping timeframes.</p>
+                
+                <h6>Find merge commits:</h6>
+                <p>Shows all merge commits in a specific repository.</p>
+                
+                <h6>Find security commits:</h6>
+                <p>Lists commits containing security or vulnerability-related messages in a specific branch.</p>
+            </div>
+        </div>
     </div>
 </div>
+
+<script>
+function toggleInputs() {
+    const queryType = document.getElementById('query_type').value;
+    
+    // Hide all inputs first
+    document.getElementById('user-input').style.display = 'none';
+    document.getElementById('repository-input').style.display = 'none';
+    document.getElementById('branch-input').style.display = 'none';
+    
+    // Show relevant inputs based on query type
+    switch(queryType) {
+        case 'user_commits':
+            document.getElementById('user-input').style.display = 'block';
+            document.getElementById('user').required = true;
+            document.getElementById('repository').required = false;
+            document.getElementById('branch').required = false;
+            break;
+        case 'merge_commits':
+            document.getElementById('repository-input').style.display = 'block';
+            document.getElementById('repository').required = true;
+            document.getElementById('user').required = false;
+            document.getElementById('branch').required = false;
+            break;
+        case 'security_commits':
+            document.getElementById('branch-input').style.display = 'block';
+            document.getElementById('branch').required = true;
+            document.getElementById('user').required = false;
+            document.getElementById('repository').required = false;
+            break;
+        case 'concurrent_contributors':
+            document.getElementById('user').required = false;
+            document.getElementById('repository').required = false;
+            document.getElementById('branch').required = false;
+            break;
+    }
+}
+</script>
 {% endblock %}

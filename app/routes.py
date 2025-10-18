@@ -22,6 +22,6 @@ def search():
         }
         
         results = ontology_service.execute_query(query_type, parameters)
-        return render_template('results.html', results=results)
+        return render_template('results.html', results=results, request=request)
     
     return render_template('search.html')
