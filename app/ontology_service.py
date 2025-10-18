@@ -1,6 +1,7 @@
 from owlready2 import *
 from rdflib import Graph, Namespace
 from rdflib.plugins.sparql import prepareQuery
+import re
 
 class OntologyService:
     def __init__(self):
@@ -17,7 +18,69 @@ class OntologyService:
         
         # Debug: Print graph size
         print(f"DEBUG: Loaded RDF graph with {len(self.graph)} triples")
+    
+    def _escape_sparql_string(self, value: str) -> str:
+        """Escape a Python string for safe inclusion as a SPARQL string literal.
+        Escapes backslashes and double quotes; leaves other characters intact.
+        """
+        if value is None:
+            return ""
+        return value.replace("\\", "\\\\").replace('"', '\\"')
         
+    def _resolve_repo_iri(self, repo_input: str):
+        """Resolve a repository IRI from user input robustly.
+        Tries in order: exact (case-insensitive), ownerless suffix match, then contains.
+        Returns (repo_iri, matched_name) or (None, None).
+        """
+        esc = self._escape_sparql_string(repo_input)
+        # 1) Exact (case-insensitive)
+        q1 = """
+        PREFIX : <http://example.org/git-onto-logic#>
+        SELECT ?repo ?rn
+        WHERE {
+            ?repo a :Repository ;
+                  :repoName ?rn .
+            FILTER(LCASE(?rn) = LCASE("%s"))
+        }
+        LIMIT 1
+        """ % esc
+
+        for row in self.graph.query(q1):
+            return str(row.repo), str(row.rn)
+
+        # 2) Ownerless suffix match: .../repo_input (case-insensitive)
+        # Only attempts if input doesn't look like owner/repo
+        if "/" not in repo_input:
+            # Use STRENDS with CONCAT to avoid regex and special escaping problems
+            q2 = """
+            PREFIX : <http://example.org/git-onto-logic#>
+            SELECT ?repo ?rn
+            WHERE {
+              ?repo a :Repository ;
+                    :repoName ?rn .
+              FILTER(STRENDS(LCASE(?rn), LCASE(CONCAT("/", "%s"))))
+            }
+            LIMIT 1
+            """ % esc
+            for row in self.graph.query(q2):
+                return str(row.repo), str(row.rn)
+
+        # 3) Contains match (case-insensitive) - fallback
+        q3 = """
+        PREFIX : <http://example.org/git-onto-logic#>
+        SELECT ?repo ?rn
+        WHERE {
+          ?repo a :Repository ;
+                :repoName ?rn .
+          FILTER(CONTAINS(LCASE(?rn), LCASE("%s")))
+        }
+        LIMIT 1
+        """ % esc
+        for row in self.graph.query(q3):
+            return str(row.repo), str(row.rn)
+
+        return None, None
+
     def execute_query(self, query_type, parameters):
         """Execute different types of SPARQL queries based on the query type"""
         if query_type == "user_commits":
@@ -84,31 +147,65 @@ class OntologyService:
 
     def _get_merge_commits(self, repository):
         """Find all merge commits in a repository, or all merge commits if no repository is provided"""
-        query = """
-        PREFIX : <http://example.org/git-onto-logic#>
-        SELECT ?commit ?message ?date ?branch
-        WHERE {
-            ?repository :repoName ?repoName ;
-                       :hasBranch ?branch .
-            ?branch :hasCommit ?commit .
-            ?commit a :MergeCommit ;
-                    :message ?message ;
-                    :commitDate ?date .
-            %s
-        }
-        ORDER BY DESC(?date)
-        LIMIT 50
-        """ % (f'FILTER(?repoName = "{repository}")' if repository else '')
-        
         results = []
-        for row in self.graph.query(query):
-            results.append({
-                'commit': str(row.commit).split('#')[-1],
-                'message': str(row.message),
-                'date': str(row.date),
-                'branch': str(row.branch).split('#')[-1]
-            })
-        return results
+        if repository:
+            # Step 1: Resolve the repository IRI from input using robust matching
+            repo_iri, matched = self._resolve_repo_iri(repository)
+            if not repo_iri:
+                print(f"DEBUG: _get_merge_commits - repository not found for input '{repository}'")
+                return []
+            else:
+                print(f"DEBUG: _get_merge_commits - resolved '{repository}' -> '{matched}' as {repo_iri}")
+
+            # Step 2: Query merge commits for that repository via its branches
+            commit_q = """
+            PREFIX : <http://example.org/git-onto-logic#>
+            SELECT ?commit ?message ?date ?branch
+            WHERE {
+              VALUES ?repo { <%s> }
+              ?repo :hasBranch ?branch .
+              ?branch :hasCommit ?commit .
+              ?commit a :MergeCommit ;
+                      :message ?message ;
+                      :commitDate ?date .
+            }
+            ORDER BY DESC(?date)
+            LIMIT 50
+            """ % repo_iri
+
+            for row in self.graph.query(commit_q):
+                results.append({
+                    'commit': str(row.commit).split('#')[-1],
+                    'message': str(row.message),
+                    'date': str(row.date),
+                    'branch': str(row.branch).split('#')[-1]
+                })
+            return results
+        else:
+            # No repository filter: return top merge commits globally
+            query = """
+            PREFIX : <http://example.org/git-onto-logic#>
+            SELECT ?commit ?message ?date ?branch
+            WHERE {
+                ?repo a :Repository ;
+                      :hasBranch ?branch .
+                ?branch :hasCommit ?commit .
+                ?commit a :MergeCommit ;
+                        :message ?message ;
+                        :commitDate ?date .
+            }
+            ORDER BY DESC(?date)
+            LIMIT 50
+            """
+
+            for row in self.graph.query(query):
+                results.append({
+                    'commit': str(row.commit).split('#')[-1],
+                    'message': str(row.message),
+                    'date': str(row.date),
+                    'branch': str(row.branch).split('#')[-1]
+                })
+            return results
 
     def _get_security_commits(self, branch):
         """Find commits with security/vulnerability messages in a branch, or all security commits if no branch is provided"""
@@ -203,36 +300,6 @@ class OntologyService:
         """Get all commits for a specific branch in a repository"""
         print(f"\nDEBUG INFORMATION:")
         print(f"Looking for commits in: repo='{repo_name}', branch='{branch_name}'")
-        
-        # First, find the repository ID
-        repo_query = """
-        PREFIX git: <http://example.org/git-onto-logic#>
-        SELECT ?repoId
-        WHERE {
-            ?repo a git:Repository ;
-                  git:repoName "%s" .
-            BIND(STRAFTER(STR(?repo), "#repo_") AS ?repoId)
-        }
-        LIMIT 1
-        """ % repo_name
-        
-        repo_results = list(self.graph.query(repo_query))
-        if not repo_results:
-            print("DEBUG: Could not find the repository ID")
-            return []
-            
-        repo_id = repo_results[0].repoId
-        print(f"DEBUG: Found repository ID: {repo_id}")
-        
-        # Now construct the branch IRI directly
-        sanitized_branch = re.sub(r'[^A-Za-z0-9_]', '_', branch_name).strip('_')
-        branch_iri = f"repo_{repo_id}__branch_{sanitized_branch}"
-        print(f"DEBUG: Constructed branch IRI: {branch_iri}")
-            
-    def get_branch_commits(self, repo_name, branch_name):
-        """Get all commits for a specific branch in a repository"""
-        print(f"\nDEBUG INFORMATION:")
-        print(f"Looking for commits in: repo='{repo_name}', branch='{branch_name}'")
         # Step 1: Resolve the exact Branch IRI for this repo + branch name
         resolve_q = """
         PREFIX : <http://example.org/git-onto-logic#>
@@ -288,56 +355,4 @@ class OntologyService:
             })
 
         print(f"DEBUG: Found {len(results)} commits for branch {branch_uri}")
-        return results
-        
-        results = []
-        query = """
-        PREFIX git: <http://example.org/git-onto-logic#>
-        SELECT DISTINCT ?sha ?message ?date ?author
-        WHERE {
-            ?branch git:hasCommit ?commit .
-            ?commit git:commitSHA ?sha ;
-                   git:message ?message ;
-                   git:commitDate ?date .
-            OPTIONAL {
-                ?commit git:authoredBy ?author_obj .
-                ?author_obj git:userLogin ?author .
-            }
-            FILTER(STR(?branch) = CONCAT(STR(git:), "%s"))
-        }
-        ORDER BY DESC(?date)
-        """ % branch_iri
-
-        print(f"\nDEBUG: Executing query for branch IRI: {branch_iri}")
-        for row in self.graph.query(query):
-            print(f"DEBUG: Found commit {row.sha}")
-            results.append({
-                'id': str(row.sha),
-                'message': str(row.message),
-                'date': str(row.date),
-                'author': str(row.author) if row.author else "Unknown"
-            })
-
-        if not results:
-            print(f"\nDEBUG: No commits found for branch IRI: {branch_iri}")
-            
-            # Verify the branch exists
-            verify_query = """
-            PREFIX git: <http://example.org/git-onto-logic#>
-            SELECT ?branch ?branchName (COUNT(?commit) as ?commitCount)
-            WHERE {
-                ?branch a git:Branch ;
-                        git:branchName ?branchName .
-                OPTIONAL { ?branch git:hasCommit ?commit }
-                FILTER(STR(?branch) = CONCAT(STR(git:), "%s"))
-            }
-            GROUP BY ?branch ?branchName
-            """ % branch_iri
-            
-            print("\nDEBUG: Verifying branch existence:")
-            for row in self.graph.query(verify_query):
-                print(f"Branch URI: {row.branch}")
-                print(f"Branch name: {row.branchName}")
-                print(f"Commit count: {row.commitCount}")
-
         return results
