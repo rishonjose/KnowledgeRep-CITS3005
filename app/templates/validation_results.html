@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row">
+  <div class="col-md-12">
+    <h1>SHACL Validation Results</h1>
+    <p class="text-muted">Data: {{ data_file_display }} | Shapes: {{ shapes_file_display }}</p>
+    {% if conforms is not none %}
+    <div class="alert {% if conforms %}alert-success{% else %}alert-danger{% endif %}" role="alert">
+      {% if conforms %}
+        The data graph conforms to the SHACL shapes.
+      {% else %}
+        The data graph does not conform to the SHACL shapes. See details below.
+      {% endif %}
+    </div>
+    <p>Detailed report saved to: <code>{{ report_file_display }}</code></p>
+    {% else %}
+    <div class="alert alert-warning" role="alert">
+      Validation could not be completed. See error message below.
+    </div>
+    {% endif %}
+
+    <h3>Report</h3>
+    <pre style="white-space: pre-wrap; background: #f8f9fa; padding: 1rem; border-radius: 4px;">{{ report_text }}</pre>
+
+    <a href="{{ url_for('index') }}" class="btn btn-secondary mt-3">Back to Home</a>
+  </div>
+  
+</div>
+{% endblock %}

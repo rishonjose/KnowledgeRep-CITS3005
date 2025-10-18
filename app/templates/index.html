@@ -29,6 +29,12 @@
                     <p>Browse the complete knowledge graph hierarchy:</p>
                     <a href="{{ url_for('browse_repos') }}" class="btn btn-success">Browse Knowledge Graph</a>
                 </div>
+                <hr>
+                <div>
+                    <h4>Validate Knowledge Graph</h4>
+                    <p>Run SHACL validation against the populated ontology to check data quality:</p>
+                    <a href="{{ url_for('validate_graph') }}" class="btn btn-warning">Validate</a>
+                </div>
             </div>
         </div>
     </div>

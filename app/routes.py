@@ -2,6 +2,9 @@ from flask import render_template, request, jsonify
 from app import app
 from app.ontology_service import OntologyService
 from urllib.parse import unquote
+import os
+from rdflib import Graph
+from pyshacl import validate
 
 ontology_service = OntologyService()
 
@@ -47,3 +50,51 @@ def search():
         return render_template('results.html', results=results, request=request)
     
     return render_template('search.html')
+
+@app.route('/validate', methods=['GET'])
+def validate_graph():
+    """Run SHACL validation and display the results."""
+    try:
+        # Determine project root from this file location (app/routes.py -> project root)
+        project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+        # Paths relative to project root
+        data_file = os.path.join(project_root, 'outputs', 'populated.owl')
+        shapes_file = os.path.join(project_root, 'ontology', 'shapes.ttl')
+        report_file = os.path.join(project_root, 'outputs', 'SHACL_REPORT.txt')
+
+        # Load graphs
+        data_g = Graph().parse(data_file, format='xml')
+        shapes_g = Graph().parse(shapes_file, format='turtle')
+
+        # Run validation
+        conforms, report_graph, report_text = validate(
+            data_graph=data_g,
+            shacl_graph=shapes_g,
+            inference='rdfs',
+            abort_on_first=False,
+            meta_shacl=False,
+            debug=False
+        )
+
+        # Persist the report to disk to match CLI behavior
+        os.makedirs(os.path.dirname(report_file), exist_ok=True)
+        with open(report_file, 'w') as f:
+            f.write(report_text)
+
+        return render_template(
+            'validation_results.html',
+            conforms=conforms,
+            report_text=report_text,
+            data_file_display=os.path.relpath(data_file, project_root),
+            shapes_file_display=os.path.relpath(shapes_file, project_root),
+            report_file_display=os.path.relpath(report_file, project_root),
+        )
+    except Exception as e:
+        return render_template(
+            'validation_results.html',
+            conforms=None,
+            report_text=str(e),
+            data_file_display='outputs/populated.owl',
+            shapes_file_display='ontology/shapes.ttl',
+            report_file_display='outputs/SHACL_REPORT.txt',
+        ), 500
