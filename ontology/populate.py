@@ -3,6 +3,12 @@ from pathlib import Path
 from owlready2 import *
 from datetime import datetime
 from collections import defaultdict
+import re
+
+def safe_iri(name: str) -> str:
+    """Sanitize string for RDF individual IRIs."""
+    name = re.sub(r'[^A-Za-z0-9_]', '_', name)  # replace invalid chars with underscore
+    return name.strip('_')
 
 #  Load ontology schema 
 onto = get_ontology("outputs/ontology.owl").load()
@@ -32,7 +38,7 @@ commit_map = {}
 
 # Create repository individuals 
 for r in repos:
-    repo_iri = f"repo_{r['repo_id']}"
+    repo_iri = f"repo_{safe_iri(str(r['repo_id']))}"
     repo = onto.Repository(repo_iri)
     repo.repoName = [r.get("repo_name", "Unknown")]
     repo.repoLanguage = [r.get("repo_language") or "Unknown"]
@@ -42,7 +48,7 @@ for r in repos:
 
 # Create user individuals 
 for u in users:
-    safe_login = u["user_login"].replace("/", "_")
+    safe_login = safe_iri(u["user_login"])
     user = onto.User(f"user_{safe_login}")
     user.userLogin = [u["user_login"]]
     user.userURL = [u.get("user_url", "")]
@@ -53,7 +59,7 @@ for b in branches:
     repo = repo_map.get(b["repo_id"])
     if not repo:
         continue
-    branch_name = b["branch_name"].replace("/", "_")
+    branch_name = safe_iri(b["branch_name"])
     branch_iri = f"repo_{b['repo_id']}__branch_{branch_name}"
     branch = onto.Branch(branch_iri)
     branch.branchName = [b["branch_name"]]
@@ -69,7 +75,15 @@ for c in commits:
     if not branch:
         continue
 
-    commit_iri = f"commit_{c['commit_sha'].replace('/', '_')}"
+    author_login = (c.get("commit_author_login") or "").strip()
+    committer_login = (c.get("commit_committer_login") or "").strip()
+
+    # Skip commits that have neither author nor committer
+    if not author_login and not committer_login:
+        print(f"⚠️ Skipping commit {c['commit_sha']} (no author or committer).")
+        continue
+
+    commit_iri = f"commit_{safe_iri(c['commit_sha'])}"
     commit = commit_map.get(c["commit_sha"]) or onto.Commit(commit_iri)
     commit_map[c["commit_sha"]] = commit
 
@@ -81,20 +95,23 @@ for c in commits:
     branch.hasCommit.append(commit)
     commit.onBranch.append(branch)
 
-    author_login = c.get("commit_author_login")
-    committer_login = c.get("commit_committer_login")
-
+    # Ensure at least one author-like link exists
     if author_login and author_login in user_map:
         commit.authoredBy.append(user_map[author_login])
+    elif committer_login and committer_login in user_map:
+        commit.authoredBy.append(user_map[committer_login])  # fallback
+
+    # Record committer if present
     if committer_login and committer_login in user_map:
         commit.committedBy.append(user_map[committer_login])
 
     # Parent commits
     for psha in c.get("commit_parents", []):
-        parent_commit = commit_map.get(psha) or onto.Commit(f"commit_{psha.replace('/', '_')}")
+        parent_commit = commit_map.get(psha) or onto.Commit(f"commit_{safe_iri(psha)}")
         commit_map[psha] = parent_commit
         commit.parent.append(parent_commit)
 
+    # Tag SecurityCommits
     msg = c.get("commit_message", "").lower()
     if any(k in msg for k in ["security", "vulnerability"]):
         commit.is_a.append(onto.SecurityCommit)
@@ -104,7 +121,7 @@ for fobj in files:
     commit = commit_map.get(fobj["commit_sha"])
     if not commit:
         continue
-    file_iri = f"{fobj['commit_sha']}__{fobj['file_name'].replace('/', '_')}"
+    file_iri = f"{safe_iri(fobj['commit_sha'])}__{safe_iri(fobj['file_name'])}"
     file_ind = onto.File(file_iri)
     file_ind.fileName = [fobj["file_name"]]
     file_ind.fileStatus = [fobj.get("file_status", "modified")]
@@ -116,7 +133,7 @@ for iobj in issues:
     repo = repo_map.get(iobj["repo_id"])
     if not repo:
         continue
-    issue = onto.Issue(f"issue_{iobj['issue_id']}")
+    issue = onto.Issue(f"issue_{safe_iri(str(iobj['issue_id']))}")
     issue.title = [iobj.get("title", "Untitled")]
     issue.state = [iobj.get("state", "open")]
     repo.hasIssue.append(issue)
@@ -128,7 +145,7 @@ for pobj in prs:
     repo = repo_map.get(pobj["repo_id"])
     if not repo:
         continue
-    pr = onto.PullRequest(f"pr_{pobj['pr_id']}")
+    pr = onto.PullRequest(f"pr_{safe_iri(str(pobj['pr_id']))}")
     pr.title = [pobj.get("title", "Untitled PR")]
     pr.state = [pobj.get("state", "open")]
     pr.mergedAt = [pobj.get("merged_at") or ""]
@@ -165,11 +182,9 @@ for user, repos in user_repo_dates.items():
     if len(repos) < 3:
         continue  # must work in 3+ repos total
 
-    # Compute time span per repo
     spans = [(min(dates), max(dates)) for dates in repos.values()]
-    spans.sort(key=lambda x: x[0])  # sort by start time
+    spans.sort(key=lambda x: x[0])
 
-    # Check if any 3 spans overlap simultaneously
     found = False
     n = len(spans)
     for i in range(n):
@@ -178,7 +193,6 @@ for user, repos in user_repo_dates.items():
         count = 1
         for j in range(i + 1, n):
             s, e = spans[j]
-            # overlap if intervals intersect
             if s <= overlap_end and e >= overlap_start:
                 overlap_start = max(overlap_start, s)
                 overlap_end = min(overlap_end, e)
@@ -187,7 +201,6 @@ for user, repos in user_repo_dates.items():
                     found = True
                     break
             else:
-                # no overlap, reset
                 overlap_start = s
                 overlap_end = e
                 count = 1

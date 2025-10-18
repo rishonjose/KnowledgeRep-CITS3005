@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12">
+        <h1>Welcome to Git Ontology Explorer</h1>
+        <p class="lead">
+            Explore Git repository knowledge using our semantic web interface.
+        </p>
+        <hr>
+        <div class="row mt-4">
+            <div class="col-md-6">
+                <h3>Features</h3>
+                <ul>
+                    <li>Search for repositories and users</li>
+                    <li>Find commits by specific users</li>
+                    <li>Identify concurrent contributions</li>
+                    <li>Discover merge commits</li>
+                    <li>Track security-related commits</li>
+                </ul>
+            </div>
+            <div class="col-md-6">
+                <h3>Get Started</h3>
+                <p>Click the button below to start exploring the Git knowledge base:</p>
+                <a href="{{ url_for('search') }}" class="btn btn-primary">Start Searching</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

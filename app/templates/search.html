@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12">
+        <h2>Search Git Knowledge Base</h2>
+        <form method="POST" action="{{ url_for('search') }}">
+            <div class="mb-3">
+                <label for="query_type" class="form-label">Query Type</label>
+                <select class="form-select" id="query_type" name="query_type" required>
+                    <option value="">Select a query type...</option>
+                    <option value="user_commits">User Commits</option>
+                    <option value="concurrent_contributions">Concurrent Contributions</option>
+                    <option value="merge_commits">Merge Commits</option>
+                    <option value="security_commits">Security-related Commits</option>
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label for="user" class="form-label">Username</label>
+                <input type="text" class="form-control" id="user" name="user">
+            </div>
+
+            <div class="mb-3">
+                <label for="repository" class="form-label">Repository</label>
+                <input type="text" class="form-control" id="repository" name="repository">
+            </div>
+
+            <div class="mb-3">
+                <label for="branch" class="form-label">Branch</label>
+                <input type="text" class="form-control" id="branch" name="branch">
+            </div>
+
+            <div class="mb-3">
+                <label for="keyword" class="form-label">Keyword</label>
+                <input type="text" class="form-control" id="keyword" name="keyword">
+            </div>
+
+            <button type="submit" class="btn btn-primary">Search</button>
+        </form>
+    </div>
+</div>
+{% endblock %}
