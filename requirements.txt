@@ -1,7 +1,8 @@
 
+Flask==3.0.0
 owlready2==0.46
 rdflib==7.0.0
 pyshacl==0.25.0
 termcolor==2.4.0
-prettytable==3.10.0
-Flask==3.0.0
+requests==2.32.3
+tqdm==4.66.5
