@@ -401,3 +401,59 @@ class OntologyService:
 
         print(f"DEBUG: Found {len(results)} commits for branch {branch_uri}")
         return results
+
+    def get_repository_issues(self, repo_name):
+        """Get all issues for a specific repository"""
+        query = """
+        PREFIX : <http://example.org/git-onto-logic#>
+        SELECT ?issue ?title ?state ?openedBy
+        WHERE {
+          ?repo a :Repository ;
+                :repoName ?rn ;
+                :hasIssue ?issue .
+          FILTER(?rn = "%s")
+          OPTIONAL { ?issue :title ?title }
+          OPTIONAL { ?issue :state ?state }
+          OPTIONAL { ?issue :openedBy ?u . ?u :userLogin ?openedBy }
+        }
+        ORDER BY ?issue
+        """ % repo_name
+
+        results = []
+        for row in self.graph.query(query):
+            results.append({
+                'id': str(row.issue).split('#')[-1],
+                'title': str(row.title) if row.title else 'Untitled',
+                'state': str(row.state) if row.state else 'unknown',
+                'opened_by': str(row.openedBy) if row.openedBy else 'Unknown',
+            })
+        return results
+
+    def get_repository_pull_requests(self, repo_name):
+        """Get all pull requests for a specific repository"""
+        query = """
+        PREFIX : <http://example.org/git-onto-logic#>
+        SELECT ?pr ?title ?state ?openedBy ?mergedAt
+        WHERE {
+          ?repo a :Repository ;
+                :repoName ?rn ;
+                :hasPullRequest ?pr .
+          FILTER(?rn = "%s")
+          OPTIONAL { ?pr :title ?title }
+          OPTIONAL { ?pr :state ?state }
+          OPTIONAL { ?pr :openedBy ?u . ?u :userLogin ?openedBy }
+          OPTIONAL { ?pr :mergedAt ?mergedAt }
+        }
+        ORDER BY ?pr
+        """ % repo_name
+
+        results = []
+        for row in self.graph.query(query):
+            results.append({
+                'id': str(row.pr).split('#')[-1],
+                'title': str(row.title) if row.title else 'Untitled',
+                'state': str(row.state) if row.state else 'unknown',
+                'opened_by': str(row.openedBy) if row.openedBy else 'Unknown',
+                'merged_at': str(row.mergedAt) if row.mergedAt else None,
+            })
+        return results

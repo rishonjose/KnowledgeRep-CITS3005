@@ -34,6 +34,20 @@ def browse_commits(repo_name, branch_name):
     commits = ontology_service.get_branch_commits(repo_name, branch_name)
     return render_template('browse_commits.html', commits=commits, repo_name=repo_name, branch_name=branch_name)
 
+@app.route('/browse/repo/<path:repo_name>/issues')
+def browse_issues(repo_name):
+    """Display all issues for a repository"""
+    repo_name = unquote(repo_name)
+    issues = ontology_service.get_repository_issues(repo_name)
+    return render_template('browse_issues.html', issues=issues, repo_name=repo_name)
+
+@app.route('/browse/repo/<path:repo_name>/pulls')
+def browse_pulls(repo_name):
+    """Display all pull requests for a repository"""
+    repo_name = unquote(repo_name)
+    pulls = ontology_service.get_repository_pull_requests(repo_name)
+    return render_template('browse_pulls.html', pulls=pulls, repo_name=repo_name)
+
 @app.route('/search', methods=['GET', 'POST'])
 def search():
     """Search interface route"""
