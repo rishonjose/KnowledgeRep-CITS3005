@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{ url_for('browse_repos') }}">Repositories</a></li>
+            <li class="breadcrumb-item"><a href="{{ url_for('browse_branches', repo_name=repo_name|urlencode) }}">{{ repo_name }}</a></li>
+            <li class="breadcrumb-item active">{{ branch_name }}</li>
+        </ol>
+    </nav>
+
+    <h1 class="mb-4">Commits in {{ branch_name }}</h1>
+    
+    <div class="list-group">
+        {% for commit in commits %}
+        <div class="list-group-item">
+            <div class="d-flex w-100 justify-content-between">
+                <h5 class="mb-1 text-monospace">{{ commit.id }}</h5>
+                <small>{{ commit.date }}</small>
+            </div>
+            <p class="mb-1">{{ commit.message }}</p>
+            <small>Authored by {{ commit.author }}</small>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

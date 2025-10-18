@@ -40,6 +40,7 @@ commit_map = {}
 for r in repos:
     repo_iri = f"repo_{safe_iri(str(r['repo_id']))}"
     repo = onto.Repository(repo_iri)
+    repo.repoID = [int(r["repo_id"])]  # Store the numeric repo ID
     repo.repoName = [r.get("repo_name", "Unknown")]
     repo.repoLanguage = [r.get("repo_language") or "Unknown"]
     repo.repoStars = [int(r.get("repo_stars", 0))]
@@ -59,8 +60,8 @@ for b in branches:
     repo = repo_map.get(b["repo_id"])
     if not repo:
         continue
-    branch_name = safe_iri(b["branch_name"])
-    branch_iri = f"repo_{b['repo_id']}__branch_{branch_name}"
+    # Use a simple counter-based IRI instead of sanitizing branch names
+    branch_iri = f"repo_{b['repo_id']}_branch_{len(repo.hasBranch)}"
     branch = onto.Branch(branch_iri)
     branch.branchName = [b["branch_name"]]
     branch.isDefault = [bool(b.get("is_default", False))]

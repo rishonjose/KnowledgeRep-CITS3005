@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <h1 class="mb-4">Git Repositories</h1>
+    
+    <div class="row">
+        {% for repo in repos %}
+        <div class="col-md-6 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">{{ repo.name }}</h5>
+                    {% if repo.description %}
+                    <p class="card-text">{{ repo.description }}</p>
+                    {% endif %}
+                    <div class="d-flex justify-content-between align-items-center">
+                        <a href="{{ url_for('browse_branches', repo_name=repo.name|urlencode) }}" class="btn btn-primary">View Branches</a>
+                        {% if repo.url %}
+                        <a href="{{ repo.url }}" target="_blank" class="btn btn-outline-secondary">View on GitHub</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
